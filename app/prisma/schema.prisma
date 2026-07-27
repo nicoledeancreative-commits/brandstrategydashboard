@@ -52,7 +52,7 @@ model Project {
   accentFont String @default("Caveat")
 
   colorPrimary   String @default("#1A1A1A")
-  colorSecondary String @default("#8A8A86")
+  colorSecondary String @default("#5C5C58")
   colorAccent1   String @default("#E5E5E5")
   colorAccent2   String @default("#FFFFFF")
 
