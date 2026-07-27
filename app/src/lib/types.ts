@@ -108,7 +108,7 @@ export const DEFAULT_PROJECT_PATCH: ProjectPatch = {
   bodyFont: "Inter",
   accentFont: "Caveat",
   colorPrimary: "#1A1A1A",
-  colorSecondary: "#8A8A86",
+  colorSecondary: "#5C5C58",
   colorAccent1: "#E5E5E5",
   colorAccent2: "#FFFFFF",
   darkLightPassYes: false,
