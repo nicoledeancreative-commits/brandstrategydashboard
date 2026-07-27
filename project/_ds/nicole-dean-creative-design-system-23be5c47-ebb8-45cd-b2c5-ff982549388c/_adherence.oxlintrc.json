@@ -1,0 +1,227 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/badge/**",
+              "components/button/**",
+              "components/card/**",
+              "components/input/**",
+              "components/text/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Manrope|Caudex))/i]",
+        "message": "Font not provided by the design system. Available: Manrope, Caudex."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|variant|key|ref|className|style|children)$/]",
+        "message": "<Badge> doesn't accept that prop. Declared props: children, variant."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary|outline)$/]",
+        "message": "<Badge> variant must be one of 'primary' | 'secondary' | 'outline'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|variant|size|disabled|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: children, variant, size, disabled."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary|outline|ghost)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'secondary' | 'outline' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md|lg)$/]",
+        "message": "<Button> size must be one of 'sm' | 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Card'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|key|ref|className|style|children)$/]",
+        "message": "<Card> doesn't accept that prop. Declared props: children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Heading'] > JSXAttribute > JSXIdentifier[name!=/^(?:level|children|key|ref|className|style|children)$/]",
+        "message": "<Heading> doesn't accept that prop. Declared props: level, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Input'] > JSXAttribute > JSXIdentifier[name!=/^(?:type|placeholder|disabled|key|ref|className|style|children)$/]",
+        "message": "<Input> doesn't accept that prop. Declared props: type, placeholder, disabled."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Badge": {
+        "replaces": []
+      },
+      "Button": {
+        "replaces": []
+      },
+      "Card": {
+        "replaces": []
+      },
+      "Heading": {
+        "replaces": []
+      },
+      "Input": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent-cool",
+      "--accent-warm",
+      "--bg-primary",
+      "--bg-secondary",
+      "--bg-tertiary",
+      "--border-primary",
+      "--border-secondary",
+      "--color-accent-1",
+      "--color-accent-2",
+      "--color-primary",
+      "--color-secondary",
+      "--font-body",
+      "--font-heading",
+      "--font-size-body",
+      "--font-size-body-lg",
+      "--font-size-body-sm",
+      "--font-size-caption",
+      "--font-size-display",
+      "--font-size-h1",
+      "--font-size-h2",
+      "--font-size-h3",
+      "--font-weight-body",
+      "--font-weight-body-lg",
+      "--font-weight-body-sm",
+      "--font-weight-caption",
+      "--font-weight-display",
+      "--font-weight-h1",
+      "--font-weight-h2",
+      "--font-weight-h3",
+      "--line-height-body",
+      "--line-height-body-lg",
+      "--line-height-body-sm",
+      "--line-height-caption",
+      "--line-height-display",
+      "--line-height-h1",
+      "--line-height-h2",
+      "--line-height-h3",
+      "--radius-full",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-sm",
+      "--radius-xl",
+      "--shadow-lg",
+      "--shadow-md",
+      "--shadow-sm",
+      "--shadow-xl",
+      "--spacing-2xl",
+      "--spacing-3xl",
+      "--spacing-lg",
+      "--spacing-md",
+      "--spacing-sm",
+      "--spacing-xl",
+      "--spacing-xs",
+      "--text-muted",
+      "--text-primary",
+      "--text-secondary"
+    ],
+    "tokenKinds": {
+      "--color-primary": "color",
+      "--color-secondary": "color",
+      "--color-accent-1": "color",
+      "--color-accent-2": "color",
+      "--text-primary": "font",
+      "--text-secondary": "font",
+      "--text-muted": "font",
+      "--bg-primary": "color",
+      "--bg-secondary": "color",
+      "--bg-tertiary": "color",
+      "--border-primary": "color",
+      "--border-secondary": "color",
+      "--accent-warm": "color",
+      "--accent-cool": "color",
+      "--font-body": "font",
+      "--font-heading": "font",
+      "--font-size-display": "font",
+      "--font-weight-display": "font",
+      "--line-height-display": "font",
+      "--font-size-h1": "font",
+      "--font-weight-h1": "font",
+      "--line-height-h1": "font",
+      "--font-size-h2": "font",
+      "--font-weight-h2": "font",
+      "--line-height-h2": "font",
+      "--font-size-h3": "font",
+      "--font-weight-h3": "font",
+      "--line-height-h3": "font",
+      "--font-size-body-lg": "font",
+      "--font-weight-body-lg": "font",
+      "--line-height-body-lg": "font",
+      "--font-size-body": "font",
+      "--font-weight-body": "font",
+      "--line-height-body": "font",
+      "--font-size-body-sm": "font",
+      "--font-weight-body-sm": "font",
+      "--line-height-body-sm": "font",
+      "--font-size-caption": "font",
+      "--font-weight-caption": "font",
+      "--line-height-caption": "font",
+      "--spacing-xs": "spacing",
+      "--spacing-sm": "spacing",
+      "--spacing-md": "spacing",
+      "--spacing-lg": "spacing",
+      "--spacing-xl": "spacing",
+      "--spacing-2xl": "spacing",
+      "--spacing-3xl": "spacing",
+      "--radius-sm": "radius",
+      "--radius-md": "radius",
+      "--radius-lg": "radius",
+      "--radius-xl": "radius",
+      "--radius-full": "radius",
+      "--shadow-sm": "shadow",
+      "--shadow-md": "shadow",
+      "--shadow-lg": "shadow",
+      "--shadow-xl": "shadow"
+    },
+    "fontFamilies": [
+      "Caudex",
+      "Manrope"
+    ]
+  }
+}

@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Poppins:wght@700;800&amp;family=Caudex:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="_ds/nicole-dean-creative-design-system-23be5c47-ebb8-45cd-b2c5-ff982549388c/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/nicole-dean-creative-design-system-23be5c47-ebb8-45cd-b2c5-ff982549388c/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/nicole-dean-creative-design-system-23be5c47-ebb8-45cd-b2c5-ff982549388c/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/nicole-dean-creative-design-system-23be5c47-ebb8-45cd-b2c5-ff982549388c/styles.css">
+  <script src="_ds/nicole-dean-creative-design-system-23be5c47-ebb8-45cd-b2c5-ff982549388c/_ds_bundle.js"></script>
+  <style>
+    :root {
+      --border-secondary: #D0D0D0;
+    }
+  </style>
+  <style>
+    ::placeholder { color: #A0A0A0; opacity: 1; }
+    .om-form-pad textarea { field-sizing: content; max-height: 480px; }
+    input[type="color"].om-color-swatch { -webkit-appearance: none; appearance: none; }
+    input[type="color"].om-color-swatch::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"].om-color-swatch::-webkit-color-swatch { border: none; border-radius:5px; }
+    input[type="color"].om-color-swatch::-moz-color-swatch { border: none; border-radius:5px; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #c4c4c0; border-radius:4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-corner { background: transparent; }
+    .om-left-panel, .om-right-panel { scrollbar-color: #c4c4c0 transparent; scrollbar-width: thin; }
+    .om-left-panel::-webkit-scrollbar, .om-right-panel::-webkit-scrollbar { background: transparent; }
+    .om-left-panel::-webkit-scrollbar-track, .om-right-panel::-webkit-scrollbar-track { background: transparent; }
+    .om-form-pad { container-type: inline-size; }
+    @container (max-width: 520px) {
+      .om-mood-upload-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    @container (max-width: 320px) {
+      .om-mood-upload-grid { grid-template-columns: repeat(1, 1fr) !important; }
+    }
+    .om-sheet-wrap { container-type: inline-size; }
+    .om-moodboard-grid { grid-auto-rows: 24.6cqw; }
+    .om-logo-grid { grid-template-columns: repeat(3, 1fr); }
+    @container (max-width: 560px) {
+      .om-logo-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    .om-moodboard-grid image-slot { width: 100% !important; height: 100% !important; display: block !important; }
+    @container (max-width: 880px) {
+      .om-moodboard-grid { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 50cqw !important; }
+      .om-laws-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 976px) {
+      .om-form-header { padding:15px 20px 12px 20px !important; }
+      .om-form-pad { padding:15px 20px !important; gap:13px !important; }
+      .om-sheet-wrap { padding:21px !important; }
+      .om-panel-content { padding:23px 16px 40px 16px !important; gap:19px !important; }
+      .om-mood-upload-grid { gap: 8px !important; }
+    }
+    @container (max-width: 560px) {
+      .om-moodboard-grid { grid-template-columns: repeat(1, 1fr) !important; grid-auto-rows: 100cqw !important; gap: 8px !important; }
+    }
+    @container (max-width: 587px) {
+      .om-stress-row { justify-content: center !important; }
+    }
+    body.om-resizing { user-select: none; }
+    .om-resizing * { user-select: none !important; }
+    .om-avatar-frame ::part(ring) { display: none !important; }
+    image-slot[data-avatar-fill] { width: 100% !important; height: 100% !important; display: block !important; }
+    image-slot#primary-logo[readonly] { width: 100% !important; height: 100% !important; display: block !important; }
+    @container (max-width: 648px) {
+      .om-toolbar { flex-wrap: wrap; }
+      .om-toolbar-export { width: 100%; }
+      .om-toolbar-export button { width: 100%; }
+    }
+    @media print {
+      .om-left-panel, .om-toolbar { display: none !important; }
+      .om-right-panel { width: 100% !important; padding: 0 !important; background: #fff !important; overflow: visible !important; height: auto !important; }
+      .om-sheet-wrap { page-break-after: always; box-shadow: none !important; margin: 0 auto !important; }
+      .om-app-root { height: auto !important; overflow: visible !important; }
+    }
+  </style>
+</helmet>
+
+<div class="om-app-root" style="display:flex; height:100vh; width:100%; overflow:hidden; font-family:'Manrope',sans-serif; background:#F4F4F2; color:#1A1A1A; position:relative;">
+
+  <sc-if value="{{ mobileBackdropVisible }}">
+    <div onClick="{{ h.closeMobileNav }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:40;"></div>
+  </sc-if>
+
+  <div style="position:fixed; top:16px; right:16px; z-index:100; display:flex; flex-direction:column; gap:8px; max-width:360px;">
+    <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
+      <div style="background:#B3261E; color:#fff; border-radius:8px; padding:11px 14px; box-shadow:0 8px 24px rgba(0,0,0,0.28); display:flex; align-items:flex-start; gap:8px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:500; line-height:1.45;">
+        <div style="flex:1;">{{ t.message }}</div>
+        <button onClick="{{ t.dismiss }}" style="background:transparent; border:none; color:#fff; font-size:15px; line-height:1; cursor:pointer; padding:0; flex-shrink:0;">×</button>
+      </div>
+    </sc-for>
+  </div>
+
+  <div class="om-left-panel" ref="{{ h.setLeftPanelRef }}" style="{{ leftPanelStyle }}">
+
+    <sc-if value="{{ sidebarCollapsed }}" hint-placeholder-val="{{ false }}">
+      <div style="width:40px; height:100%; background:#FFFFFF; display:flex; flex-direction:column; align-items:center;">
+        <button onClick="{{ h.toggleSidebar }}" title="Edit brand details" aria-label="Edit brand details" style="width:40px; height:{{ toolbarHeightPx }}; flex-shrink:0; background:#F4F4F2; border:none; border-bottom:1px solid #E5E5E0; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
+        </button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ sidebarExpanded }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:27px 32px; border-bottom:1px solid #000000; background:#000000; position:sticky; top:0; z-index:30;">
+      <button onClick="{{ h.toggleSidebar }}" title="Close" aria-label="Collapse sidebar" style="position:absolute; top:0; right:0; width:40px; height:{{ toolbarHeightPx }}; flex-shrink:0; background:transparent; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#CBCBCB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #CBCBCB; font-weight: 500; max-width: calc(100% - 72px)">Brand Strategy One Pager</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <input value="{{ f.brandName }}" onChange="{{ h.brandName }}" placeholder="Brand Name" style="field-sizing: content; min-width: 60px; max-width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; color: #CBCBCB; font-family: 'Caudex',serif; letter-spacing: 0.82px; font-size: 23px; font-weight: 700; padding: 6px 0; outline: none">
+        <input value="{{ f.industry }}" onChange="{{ h.industry }}" placeholder="Type of industry" style="field-sizing: content; min-width: 60px; max-width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; color: #CBCBCB; font-family: 'Manrope',sans-serif; font-size: 12px; font-weight: 600; padding: 4px 0; outline: none">
+      </div>
+    </div>
+
+    <div ref="{{ h.setFormFoundationRef }}" class="om-form-header" style="background: #F4F4F2; color: #1A1A1A; padding: 24px 32px; display: flex; align-items: baseline; justify-content: space-between;">
+      <div style="flex:1;">
+        <div style="font-family:'Caudex',serif; letter-spacing:0.2px; font-size:21px; font-weight:700; color:#1A1A1A;">01.&nbsp;&nbsp;Brand Foundation</div>
+        <div style="font-size: 12px; font-weight: 500; margin-top: 10px; line-height: 1.5; color: #1A1A1A">The core of your brand: what you do, who it's for, and why they choose you.</div>
+      </div>
+      <div style="font-size:25px; margin-left:16px; flex-shrink:0;"></div>
+    </div>
+
+    <div class="om-form-pad" style="padding:23px 32px; display:flex; flex-direction:column; gap:21px;">
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">What is your service or product? Be literal and concise. <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldBusinessWhat }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicBusinessWhat }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listBusinessWhat }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setBusinessWhatTaRef }}" value="{{ f.businessWhat }}" onChange="{{ h.businessWhat }}" rows="3" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">Is there a unique story behind the name — how and why did you start? <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldOriginStory }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicOriginStory }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listOriginStory }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setOriginStoryTaRef }}" value="{{ f.originStory }}" onChange="{{ h.originStory }}" rows="6" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">Who is your ideal audience? Think age, role, personality, income. <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldIdealAudience }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicIdealAudience }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listIdealAudience }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setIdealAudienceTaRef }}" value="{{ f.idealAudience }}" onChange="{{ h.idealAudience }}" rows="2" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">A direct quote from your ideal client describing that stressor <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldAudiencePainQuote }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicAudiencePainQuote }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listAudiencePainQuote }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setAudiencePainQuoteTaRef }}" value="{{ f.audiencePainQuote }}" onChange="{{ h.audiencePainQuote }}" rows="2" placeholder="&quot;My business deserves to be taken seriously, but...&quot;" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">What core stressor is keeping your ideal client up at 2am? <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldAudiencePain }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicAudiencePain }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listAudiencePain }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setAudiencePainTaRef }}" value="{{ f.audiencePain }}" onChange="{{ h.audiencePain }}" rows="2" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">Why would customers pick YOU over your competitors? <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldWhyChooseYou }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicWhyChooseYou }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listWhyChooseYou }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setWhyChooseYouTaRef }}" value="{{ f.whyChooseYou }}" onChange="{{ h.whyChooseYou }}" rows="2" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:700; margin-bottom:10px; color:#1A1A1A;">Top 2–3 competitors, and the gap you can own <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;"><span style="font-weight: 700; font-size: 12px; color: #1A1A1A"><span style="font-weight: normal;">1.</span></span><input value="{{ f.competitor1 }}" onChange="{{ h.competitor1 }}" style="flex:1; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box; min-height:40px;"></div>
+          <div style="display:flex; align-items:center; gap:8px;"><span style="font-weight: 700; font-size: 12px; color: #1A1A1A"><span style="font-weight: normal;">2.</span></span><input value="{{ f.competitor2 }}" onChange="{{ h.competitor2 }}" style="flex:1; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box; min-height:40px;"></div>
+          <div style="display:flex; align-items:center; gap:8px;"><span style="font-weight: 700; font-size: 12px; color: #1A1A1A"><span style="font-weight: normal;">3.</span></span><input value="{{ f.competitor3 }}" onChange="{{ h.competitor3 }}" style="flex:1; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box; min-height:40px;"></div>
+        </div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-top:32px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:700; color:#1A1A1A;">The Gap You Can Own <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button onClick="{{ h.boldCompetitorGap }}" title="Bold selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-weight:800; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">B</button>
+            <button onClick="{{ h.italicCompetitorGap }}" title="Italicize selection" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-style:italic; font-size:11px; cursor:pointer; color:#1A1A1A; padding:0;">I</button>
+            <button onClick="{{ h.listCompetitorGap }}" title="Bullet list" style="width:22px; height:22px; border:1px solid #D8D8D4; border-radius:4px; background:#FFFFFF; font-size:12px; cursor:pointer; color:#1A1A1A; padding:0;">•</button>
+          </div>
+        </div>
+        <textarea ref="{{ h.setCompetitorGapTaRef }}" value="{{ f.competitorGap }}" onChange="{{ h.competitorGap }}" rows="2" placeholder="What visual/verbal gap are they missing? (e.g. all sites are cold corporate blue; there's room for warm, approachable tones)" style="width: 100%; border: 1px solid #D8D8D4; border-radius: 8px; padding:11px 14px; font-family: 'Manrope',sans-serif; font-size:11px; font-weight: 400; resize: vertical; outline: none; box-sizing: border-box; min-height: 120px; background:#F4F4F2; color:#1A1A1A;"></textarea>
+      </div>
+
+    </div>
+
+    <div ref="{{ h.setFormValuesRef }}" class="om-form-header" style="background: #F4F4F2; color: #1A1A1A; padding: 24px 32px; display: flex; align-items: baseline; justify-content: space-between;;">
+      <div style="flex:1;">
+        <div style="font-family:'Caudex',serif; letter-spacing:0.2px; font-size:21px; font-weight:700; color:#1A1A1A;">02.&nbsp;Operating Values &amp; Personality</div>
+        <div style="font-size: 12px; font-weight: 500; margin-top: 10px; line-height: 1.5; color: #1A1A1A">The operational boundaries that make your brand consistent and instantly recognizable in how it behaves, not just how it looks.</div>
+      </div>
+      <div style="font-size:25px; margin-left:16px; flex-shrink:0;"></div>
+    </div>
+
+    <div class="om-form-pad" style="padding:23px 32px; display:flex; flex-direction:column; gap:21px;">
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 4px; color: #1A1A1A"><b>Select two archetypes that best describe how you naturally run your business</b> <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px; margin-top:10px;">
+          <sc-for list="{{ archetypesArr }}" as="a" hint-placeholder-count="6">
+            <div onClick="{{ a.toggle }}" style="border:1px solid #D8D8D4; background:{{ a.bg }}; border-radius:8px; padding:11px 10px; cursor:pointer; text-align:center; transition:all .15s;">
+              <div style="font-family:'Caudex',serif; font-size:11px; font-weight:700; color:{{ a.textColor }};">{{ a.label }}</div>
+              <div style="font-size:10.5px; margin-top:4px; color:{{ a.descColor }}; line-height:1.4;">{{ a.desc }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 16px; color: #1A1A1A"><b>Core value statements <span data-om-id="5c7d370d:130" style="color: rgb(214, 69, 69);">*</span></b></div>
+
+        <div style="margin-bottom:28px;">
+          <div style="font-size:12px; font-weight:700; margin-bottom:10px; color:#666666;">Value 1</div>
+          <div style="font-size: 14px; color: #1A1A1A; margin-bottom: 4px"><b>"I will always..."</b></div>
+          <input value="{{ f.value1Always }}" onChange="{{ h.value1Always }}" placeholder="deliver clean, one-page execution frameworks." style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+          <div style="font-size: 14px; color: #1A1A1A; margin-top: 16px; margin-bottom: 4px"><b>"I will never..."</b></div>
+          <input value="{{ f.value1Never }}" onChange="{{ h.value1Never }}" placeholder="overwhelm clients with dense theory manuals." style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+        </div>
+
+        <div>
+          <div style="font-size:12px; font-weight:700; margin-bottom:10px; color:#666666;">Value 2</div>
+          <div style="font-size: 14px; color: #1A1A1A; margin-bottom: 4px"><b>"I will always..."</b></div>
+          <input value="{{ f.value2Always }}" onChange="{{ h.value2Always }}" placeholder="deliver clean, one-page execution frameworks." style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+          <div style="font-size: 14px; color: #1A1A1A; margin-top: 16px; margin-bottom: 4px"><b>"I will never..."</b></div>
+          <input value="{{ f.value2Never }}" onChange="{{ h.value2Never }}" placeholder="overwhelm clients with dense theory manuals." style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:700; margin-bottom:10px; color:#666666;">Craft your core value proposition <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="font-size:11px; font-weight: 500; margin-bottom: 4px; color: #333333; margin-top: 8px"><b style="color: #1A1A1A; font-size: 14px">"I help..."</b></div>
+        <input value="{{ f.vpAudience }}" onChange="{{ h.vpAudience }}" placeholder="target audience" style="width: 100%; border: 1px solid #D8D8D4; border-radius: 8px; padding: 11px 14px; margin-bottom: 10px; font-family: 'Manrope',sans-serif; font-size:11px; font-weight: 400; outline: none; box-sizing: border-box; background:#F4F4F2; color:#1A1A1A;">
+        <div style="font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #333333; margin-top: 8px"><b style="color: #1A1A1A">"achieve..."</b></div>
+        <input value="{{ f.vpGoal }}" onChange="{{ h.vpGoal }}" placeholder="specific goal / transformation" style="width: 100%; border: 1px solid #D8D8D4; border-radius: 8px; padding: 11px 14px; margin-bottom: 10px; font-family: 'Manrope',sans-serif; font-size:11px; font-weight: 400; outline: none; box-sizing: border-box; background:#F4F4F2; color:#1A1A1A;">
+        <div style="font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #1A1A1A; margin-top: 8px"><b>"through..."</b></div>
+        <input value="{{ f.vpSystem }}" onChange="{{ h.vpSystem }}" placeholder="your unique system / values" style="width: 100%; border: 1px solid #D8D8D4; border-radius: 8px; padding: 11px 14px; font-family: 'Manrope',sans-serif; font-size:11px; font-weight: 400; outline: none; box-sizing: border-box; background:#F4F4F2; color:#1A1A1A;">
+      </div>
+
+    </div>
+
+    <div ref="{{ h.setFormVisualRef }}" class="om-form-header" style="background: #F4F4F2; color: #1A1A1A; padding: 24px 32px; display: flex; align-items: baseline; justify-content: space-between;;">
+      <div style="flex:1;">
+        <div style="font-family:'Caudex',serif; letter-spacing:0.2px; font-size:21px; font-weight:700; color:#1A1A1A;">03.&nbsp;Visual Direction</div>
+        <div style="font-size: 12px; font-weight: 500; margin-top: 10px; line-height: 1.5; color: #1A1A1A">Locking in the visual constraints: mood, type, color, and mark.</div>
+      </div>
+      <div style="font-size:25px; margin-left:16px; flex-shrink:0;"></div>
+    </div>
+
+    <div class="om-form-pad" style="padding:23px 32px; display:flex; flex-direction:column; gap:21px;">
+
+      <div>
+        <div style="font-size:12px; font-weight:700; margin-bottom:8px; color:#1A1A1A;">Words that describe your desired vibe and look <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px;">
+          <input value="{{ f.vibeWord1 }}" onChange="{{ h.vibeWord1 }}" placeholder="warm" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+          <input value="{{ f.vibeWord2 }}" onChange="{{ h.vibeWord2 }}" placeholder="confident" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+          <input value="{{ f.vibeWord3 }}" onChange="{{ h.vibeWord3 }}" placeholder="approachable" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+          <input value="{{ f.vibeWord4 }}" onChange="{{ h.vibeWord4 }}" placeholder="polished" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; outline:none; box-sizing:border-box;">
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:15px;">
+        <div style="flex:1 1 150px; min-width:150px;">
+          <div style="font-size: 11px; font-weight: 400; margin-bottom: 6px; color: #1A1A1A">Header font <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="position:relative;">
+            <input type="text" value="{{ headerFontFieldValue }}" onChange="{{ h.headerFontSearch }}" onFocus="{{ h.openHeaderFont }}" onBlur="{{ h.closeHeaderFont }}" placeholder="Search fonts" style="width:100%; border:1px solid #D8D8D4; border-radius:6px; padding:8px; font-family:'Manrope',sans-serif; font-size:11px; box-sizing:border-box; outline:none; background:#F4F4F2; color:#1A1A1A;">
+            <sc-if value="{{ headerFontOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:100%; left:0; right:0; margin-top:4px; max-height:200px; overflow-y:auto; border:1px solid #D8D8D4; border-radius:6px; background:#FFFFFF; z-index:20; box-shadow:0 6px 16px rgba(0,0,0,0.12);">
+                <div style="padding:8px 10px; font-size:11px; color:#555555; border-bottom:1px solid #eee; background:#fafafa;">{{ headerFontCountLabel }}</div>
+                <sc-for list="{{ headerFontOptions }}" as="opt" hint-placeholder-count="5">
+                  <div onClick="{{ opt.select }}" style="padding:8px; cursor:pointer; border-bottom:1px solid #eee; background:{{ opt.isSelected ? '#ECF2F2' : 'white' }}; font-family:'{{ opt.name }}',sans-serif;">{{ opt.name }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="flex:1 1 150px; min-width:150px;">
+          <div style="font-size: 11px; font-weight: 400; margin-bottom: 6px; color: #1A1A1A">Body font <span style="color:#D64545; font-weight:700;">*</span></div>
+          <div style="position:relative;">
+            <input type="text" value="{{ bodyFontFieldValue }}" onChange="{{ h.bodyFontSearch }}" onFocus="{{ h.openBodyFont }}" onBlur="{{ h.closeBodyFont }}" placeholder="Search fonts" style="width:100%; border:1px solid #D8D8D4; border-radius:6px; padding:8px; font-family:'Manrope',sans-serif; font-size:11px; box-sizing:border-box; outline:none; background:#F4F4F2; color:#1A1A1A;">
+            <sc-if value="{{ bodyFontOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:100%; left:0; right:0; margin-top:4px; max-height:200px; overflow-y:auto; border:1px solid #D8D8D4; border-radius:6px; background:#FFFFFF; z-index:20; box-shadow:0 6px 16px rgba(0,0,0,0.12);">
+                <div style="padding:8px 10px; font-size:11px; color:#555555; border-bottom:1px solid #eee; background:#fafafa;">{{ bodyFontCountLabel }}</div>
+                <sc-for list="{{ bodyFontOptions }}" as="opt" hint-placeholder-count="5">
+                  <div onClick="{{ opt.select }}" style="padding:8px; cursor:pointer; border-bottom:1px solid #eee; background:{{ opt.isSelected ? '#ECF2F2' : 'white' }}; font-family:'{{ opt.name }}',sans-serif;">{{ opt.name }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="flex:1 1 150px; min-width:150px;">
+          <div style="font-size: 11px; font-weight: 400; margin-bottom: 6px; color: #1A1A1A">Accent font</div>
+          <div style="position:relative;">
+            <input type="text" value="{{ accentFontFieldValue }}" onChange="{{ h.accentFontSearch }}" onFocus="{{ h.openAccentFont }}" onBlur="{{ h.closeAccentFont }}" placeholder="Search fonts" style="width:100%; border:1px solid #D8D8D4; border-radius:6px; padding:8px; font-family:'Manrope',sans-serif; font-size:11px; box-sizing:border-box; outline:none; background:#F4F4F2; color:#1A1A1A;">
+            <sc-if value="{{ accentFontOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:100%; left:0; right:0; margin-top:4px; max-height:200px; overflow-y:auto; border:1px solid #D8D8D4; border-radius:6px; background:#FFFFFF; z-index:20; box-shadow:0 6px 16px rgba(0,0,0,0.12);">
+                <div style="padding:8px 10px; font-size:11px; color:#555555; border-bottom:1px solid #eee; background:#fafafa;">{{ accentFontCountLabel }}</div>
+                <sc-for list="{{ accentFontOptions }}" as="opt" hint-placeholder-count="5">
+                  <div onClick="{{ opt.select }}" style="padding:8px; cursor:pointer; border-bottom:1px solid #eee; background:{{ opt.isSelected ? '#ECF2F2' : 'white' }}; font-family:'{{ opt.name }}',sans-serif;">{{ opt.name }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 10px; color: #1A1A1A">Strategic color palette <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(70px, 1fr)); gap:11px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <input type="color" class="om-color-swatch" value="{{ f.colorPrimary }}" onChange="{{ h.colorPrimary }}" style="width:100%; height:44px; border:1px solid #D8D8D4; border-radius:6px; padding:0; cursor:pointer;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase;">Primary</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <input type="color" class="om-color-swatch" value="{{ f.colorSecondary }}" onChange="{{ h.colorSecondary }}" style="width:100%; height:44px; border:1px solid #D8D8D4; border-radius:6px; padding:0; cursor:pointer;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase;">Secondary</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <input type="color" class="om-color-swatch" value="{{ f.colorAccent1 }}" onChange="{{ h.colorAccent1 }}" style="width:100%; height:44px; border:1px solid #D8D8D4; border-radius:6px; padding:0; cursor:pointer;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase;">Accent 1</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <input type="color" class="om-color-swatch" value="{{ f.colorAccent2 }}" onChange="{{ h.colorAccent2 }}" style="width:100%; height:44px; border:1px solid #D8D8D4; border-radius:6px; padding:0; cursor:pointer;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase;">Accent 2</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 10px; color: #1A1A1A">Primary Logo <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="min-width:0; display:flex; flex-direction:column; align-items:center;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="primary-logo" shape="rounded" placeholder="Drag &amp; drop your logo here" fit="contain" hint-size="100%,240px" style="display: block; width: 241px; max-width: 100%; min-width: 0; height: 240px; border: 2px dashed #01817F; border-radius: 8px; background: #1A1A1A;"></x-import>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 10px; color: #1A1A1A">Favicon <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="min-width:0; display:flex; flex-direction:column; align-items:center;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="favicon" shape="rounded" radius="8" placeholder="Drag &amp; drop your favicon here (PNG, JPG, or SVG)" fit="contain" hint-size="100%,140px" style="display: block; width: 241px; max-width: 100%; min-width: 0; height: 160px; border: 2px dashed #01817F; border-radius: 8px; background: #1A1A1A;"></x-import>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div ref="{{ h.setFormStressRef }}" class="om-form-header" style="background: #F4F4F2; color: #1A1A1A; padding: 24px 32px; display: flex; align-items: baseline; justify-content: space-between;;">
+      <div style="flex:1;">
+        <div style="font-family:'Caudex',serif; letter-spacing:0.2px; font-size:21px; font-weight:700; color:#1A1A1A;">04.&nbsp;Stress Test &amp; System Laws</div>
+        <div style="font-size: 12px; font-weight: 500; margin-top: 10px; line-height: 1.5; color: #1A1A1A">Track the six-step blueprint and lock down the absolute laws of your visual identity.</div>
+      </div>
+      <div style="font-size:25px; margin-left:16px; flex-shrink:0;"></div>
+    </div>
+
+    <div class="om-form-pad" style="padding:23px 32px; display:flex; flex-direction:column; gap:23px;">
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 8px; color: #1A1A1A">Stress test</div>
+        <div style="font-size: 11px; color: #1A1A1A; line-height: 1.4">Pulled automatically from your Section 03 upload(s) — shown at 200, 175, 149, 124, and 98px below. Upload only a logo/icon or only a wordmark and that mark is tested; upload both and you'll see both, each labeled.</div>
+      </div>
+
+      <div>
+        <div style="font-size: 12px; font-weight: 400; margin-bottom: 10px; color: #1A1A1A">The real-world stress test <span style="color:#D64545; font-weight:700;">*</span></div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+
+          <div style="border:1px solid #D8D8D4; border-radius:8px; padding:13px 16px; background:#F4F4F2;">
+            <div style="font-size: 11px; font-weight: 700; color: #1A1A1A">Dark/Light Mode Test</div>
+            <div style="font-size: 11px; color: #1A1A1A; margin-top: 4px">On a pure dark and pure light background — does the contrast hold up?</div>
+            <div style="display: flex; gap: 13px; margin-top: 8px; color: #1A1A1A">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: #1A1A1A"><input type="radio" name="darkLightPass" checked="{{ f.darkLightPass_yes }}" onChange="{{ h.darkLightPassYes }}" style="accent-color:#1A1A1A;">Pass</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: #1A1A1A"><input type="radio" name="darkLightPass" checked="{{ f.darkLightPass_no }}" onChange="{{ h.darkLightPassNo }}" style="accent-color:#1A1A1A;">Fail</label>
+            </div>
+            <sc-if value="{{ f.darkLightPass_no }}">
+              <input value="{{ f.darkLightAdj }}" onChange="{{ h.darkLightAdj }}" placeholder="Required adjustment (e.g. all-black / all-white logo version)" style="width:100%; margin-top:8px; border:none; border-bottom:1px solid #1A1A1A; padding:6px 2px; font-family:'Manrope',sans-serif; font-size:11px; outline:none; background:transparent; box-sizing:border-box;">
+            </sc-if>
+          </div>
+
+          <div style="border:1px solid #D8D8D4; border-radius:8px; padding:13px 16px; background:#F4F4F2;">
+            <div style="font-size: 11px; font-weight: 700; color: #1A1A1A">Scale Test</div>
+            <div style="font-size: 11px; color: #1A1A1A; margin-top: 4px">Across website, social, stationery, merchandise — does it hold up at every size?</div>
+            <div style="display:flex; gap:13px; margin-top:8px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: #1A1A1A"><input type="radio" name="scalePass" checked="{{ f.scalePass_yes }}" onChange="{{ h.scalePassYes }}" style="accent-color:#1A1A1A;">Pass</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: #1A1A1A"><input type="radio" name="scalePass" checked="{{ f.scalePass_no }}" onChange="{{ h.scalePassNo }}" style="accent-color:#1A1A1A;">Fail</label>
+            </div>
+            <sc-if value="{{ f.scalePass_no }}">
+              <input value="{{ f.scaleAdj }}" onChange="{{ h.scaleAdj }}" placeholder="Required adjustment (e.g. horizontal header version, stackable merch mark)" style="width:100%; margin-top:8px; border:none; border-bottom:1px solid #1A1A1A; padding:6px 2px; font-family:'Manrope',sans-serif; font-size:11px; outline:none; background:transparent; box-sizing:border-box;">
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <div style="color: #1A1A1A">
+        <div style="font-size:11px; font-weight:600; margin-bottom:8px; color:#FFFFFF;"><span style="font-weight: normal; color: var(--color-primary)"><b>Logo usage rules (when to use full wordmark vs. simplified icon) <span data-om-id="9b9cb479:226" style="color: rgb(203, 143, 22);">*</span></b></span></div>
+        <textarea value="{{ f.logoUsageRules }}" onChange="{{ h.logoUsageRules }}" rows="4" style="width:100%; border:1px solid #D8D8D4; border-radius:8px; padding:11px 14px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:400; background:#F4F4F2; color:#1A1A1A; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+      </div>
+
+    </div>
+
+
+
+    <div ref="{{ h.setFormMoodboardRef }}" class="om-form-header" style="background: #F4F4F2; padding: 24px 32px; display: flex; flex-direction:column; gap:8px;">
+      <div style="font-family: 'Caudex',serif; letter-spacing: 0.2px; font-size: 21px; font-weight: 700; color: #1A1A1A">05.&nbsp;Moodboard Imagery</div>
+      <div style="font-size: 12px; font-weight: 500; line-height: 1.5; color: #1A1A1A">Upload 8 images for the moodboard grid — each will crop to fill its frame.</div>
+    </div>
+    <div class="om-form-pad" style="padding:23px 32px;">
+      <div style="font-size: 11px; font-weight: 600; margin-bottom: 16px; color: #1A1A1A"><span style="font-weight: normal;">Upload Images&nbsp;<span style="color: rgb(196, 30, 58);">*</span></span></div>
+      <div class="om-mood-upload-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;">
+        <sc-for list="{{ moodSlotDefs }}" as="slot" hint-placeholder-count="8">
+          <div style="aspect-ratio:1; width:100%;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ slot.id }}" shape="rounded" radius="8" fit="cover" placeholder="{{ slot.label }}" hint-size="100px,100px" data-avatar-fill="1" style="width:100%; height:100%; display:block;"></x-import>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div ref="{{ h.setFormLogoVariationsRef }}" class="om-form-header" style="background: #F4F4F2; padding: 24px 32px; display: flex; flex-direction:column; gap:8px;">
+      <div style="font-family: 'Caudex',serif; letter-spacing: 0.2px; font-size: 21px; font-weight: 700; color: #1A1A1A">06.&nbsp;Logo Variations Grid</div>
+      <div style="font-size: 12px; font-weight: 500; line-height: 1.5; color: #1A1A1A">Upload 3–6 logo variations (icon, wordmark, reversed, mono, stacked, etc.) in one go — they'll display together in a grid.</div>
+    </div>
+    <div class="om-form-pad" style="padding:23px 32px; display:flex; flex-direction:column; gap:13px;">
+      <div style="font-size: 11px; font-weight: 600; color: #1A1A1A">Logo Variations&nbsp;<span style="color: rgb(196, 30, 58);">*</span></div>
+      <label style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; border:1.5px dashed rgba(0,0,0,0.25); border-radius:8px; padding:21px; cursor:pointer; text-align:center; box-sizing:border-box;">
+        <span style="font-size:11px; font-weight:700;">Click to upload logo files</span>
+        <span style="font-size:11px; color:#666;">Select 3–6 images at once (PNG, JPG, SVG)</span>
+        <input type="file" accept="image/*" multiple="1" onChange="{{ h.logoGridUpload }}" style="display:none;">
+      </label>
+      <sc-if value="{{ logoGridHasFiles }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;">
+          {{ logoGridThumbs }}
+        </div>
+      </sc-if>
+      <div style="font-size: 11px; color: #1A1A1A">{{ logoGridCountLabel }}</div>
+    </div>
+
+    <div class="om-form-pad" style="background:#F4F4F2; border-top:1px solid #E5E5E0; padding:23px 32px; margin-top:24px;">
+      <div style="font-family:'Caudex',serif; letter-spacing:0.2px; font-size:21px; font-weight:700; margin-bottom:16px; color:#1A1A1A;">Section Completion Summary</div>
+      <div style="display:flex; flex-direction:column; gap:11px;">
+        <div onClick="{{ h.scrollToFoundation }}" onMouseEnter="{{ h.hoverFoundationOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleFoundation }}">
+          <span>01. Brand Foundation</span>
+          <span style="font-size:17px;">{{ checkFoundation }}</span>
+        </div>
+        <div onClick="{{ h.scrollToValues }}" onMouseEnter="{{ h.hoverValuesOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleValues }}">
+          <span>02. Operating Values &amp; Personality</span>
+          <span style="font-size:17px;">{{ checkValues }}</span>
+        </div>
+        <div onClick="{{ h.scrollToVisual }}" onMouseEnter="{{ h.hoverVisualOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleVisual }}">
+          <span>03. Visual Direction</span>
+          <span style="font-size:17px;">{{ checkVisual }}</span>
+        </div>
+        <div onClick="{{ h.scrollToStress }}" onMouseEnter="{{ h.hoverStressOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleStress }}">
+          <span>04. Stress Test &amp; System Laws</span>
+          <span style="font-size:17px;">{{ checkStress }}</span>
+        </div>
+        <div onClick="{{ h.scrollToMoodboard }}" onMouseEnter="{{ h.hoverMoodboardOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleMoodboard }}">
+          <span>05. Moodboard Imagery</span>
+          <span style="font-size:17px;">{{ checkMoodboard }}</span>
+        </div>
+        <div onClick="{{ h.scrollToLogoVariations }}" onMouseEnter="{{ h.hoverLogoVariationsOn }}" onMouseLeave="{{ h.clearHoverSection }}" style="{{ summaryItemStyleLogoVariations }}">
+          <span>06. Logo Variations Grid</span>
+          <span style="font-size:17px;">{{ checkLogoVariations }}</span>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+
+  <sc-if value="{{ showDivider }}" hint-placeholder-val="{{ true }}">
+    <div class="om-divider" onMouseDown="{{ h.startResize }}" style="width:8px; height:100%; background:transparent; cursor:col-resize; position:relative; z-index:6; user-select:none;"></div>
+  </sc-if>
+
+  <div class="om-right-panel" style="flex:1; min-width:320px; height:100%; overflow-y:auto; background:{{ pageBg }}; container-type:inline-size;">
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div class="om-toolbar" ref="{{ h.setToolbarRef }}" style="position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; padding:15px 32px; background:{{ toolbarBg }}; color:{{ toolbarTextColor }};">
+        <div style="display:flex; align-items:center; gap:13px;">
+          <div style="font-family:'{{ f.headerFont }}',sans-serif; font-size:16px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; text-align:left;">{{ dashboardTitle }}</div>
+        </div>
+        <div class="om-toolbar-export" style="display:flex; gap:8px; position:relative;">
+          <button onClick="{{ h.save }}" style="background: transparent; color: {{ toolbarTextColor }}; border: 1px solid {{ toolbarTextColor }}; border-radius: 5px; padding: 9px 16px; font-family: 'Manrope',sans-serif; font-weight: 500; font-size:11px; cursor: pointer;">{{ saveLabel }}</button>
+          <button onClick="{{ h.reset }}" title="Reset all fields" aria-label="Reset all fields" style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; flex-shrink:0; background: transparent; border: 1px solid {{ toolbarTextColor }}; border-radius: 5px; cursor: pointer; box-sizing:border-box;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ toolbarTextColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <div class="om-toolbar" ref="{{ h.setToolbarRef }}" style="position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:15px 32px; background:{{ toolbarBg }}; color:{{ toolbarTextColor }};">
+        <div style="text-align:left; font-family:'{{ f.headerFont }}',sans-serif; font-size:16px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; white-space:normal; word-break:break-word; box-sizing:border-box;">{{ dashboardTitle }}</div>
+        <div style="display:flex; gap:8px; position:relative; flex-shrink:0;">
+          <button onClick="{{ h.save }}" style="background: transparent; color: {{ toolbarTextColor }}; border: 1px solid {{ toolbarTextColor }}; border-radius: 5px; padding: 9px 16px; font-family: 'Manrope',sans-serif; font-weight: 500; font-size:11px; cursor: pointer;">{{ saveLabel }}</button>
+          <button onClick="{{ h.reset }}" title="Reset all fields" aria-label="Reset all fields" style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; flex-shrink:0; background: transparent; border: 1px solid {{ toolbarTextColor }}; border-radius: 5px; cursor: pointer; box-sizing:border-box;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ toolbarTextColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+    </sc-if>
+
+    <div class="om-panel-content" ref="{{ h.setPanelContentRef }}" style="padding:47px 40px 80px 40px; display:flex; flex-direction:column; align-items:center; gap:31px; background:{{ pageBg }};">
+
+
+      <!-- 1. Primary Logo -->
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; padding:14px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; display:flex; align-items:center; justify-content:center; min-height:400px;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="primary-logo" shape="rounded" radius="10" fit="contain" placeholder="Primary Logo" readonly="1" hint-size="380px,380px" style="width:380px; height:380px; display:inline-block;"></x-import>
+      </div>
+
+      <!-- 2. About (Brand Foundation) -->
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Brand Foundation</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 24px 0;"></div>
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+            <div style="position:relative; background:#FFFFFF; border-radius:10px; padding:20px 18px 18px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:{{ f.colorSecondary }}; margin-bottom:8px; position:relative;">WHAT YOU DO</div>
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:12px; line-height:1.6; color:#1A1A1A; white-space:pre-wrap; position:relative;">{{ aboutBusinessWhatNodes }}</div>
+            </div>
+            <div style="position:relative; background:#FFFFFF; border-radius:10px; padding:20px 18px 18px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:{{ f.colorSecondary }}; margin-bottom:8px; position:relative;">YOUR STORY</div>
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:12px; line-height:1.6; color:#1A1A1A; white-space:pre-wrap; position:relative;">{{ aboutOriginStoryNodes }}</div>
+            </div>
+            <div style="position:relative; background:#FFFFFF; border-radius:10px; padding:20px 18px 18px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:{{ f.colorSecondary }}; margin-bottom:8px; position:relative;">YOUR CUSTOMERS</div>
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:12px; line-height:1.6; color:#1A1A1A; white-space:pre-wrap; position:relative;">{{ aboutIdealAudienceNodes }}</div>
+            </div>
+          </div>
+
+          <div style="background:{{ f.colorPrimary }}; border-radius:10px; padding:34px 38px; position:relative; overflow:hidden;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:{{ aboutPainTextColor }}; opacity:0.65; margin-bottom:12px; position:relative;">THE 2AM PROBLEM</div>
+            <div style="font-family:'{{ f.accentFont }}', serif; font-size:23px; line-height:1.4; color:{{ aboutPainTextColor }}; white-space:pre-wrap; position:relative; max-width:880px; margin-bottom:16px;">{{ aboutPainQuoteNodes }}</div>
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:14px; font-weight:400; line-height:1.6; color:{{ aboutPainTextColor }}; opacity:0.9; white-space:pre-wrap; position:relative; max-width:880px;">{{ aboutPainNodes }}</div>
+          </div>
+
+          <div style="display:flex; gap:22px; align-items:flex-start; background:#FFFFFF; border-left:5px solid {{ f.colorSecondary }}; border-radius:0 10px 10px 0; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+            <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; letter-spacing:0.06em; color:{{ f.colorSecondary }}; text-transform:uppercase; flex-shrink:0; width:150px;">Why Choose You</div>
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:13px; line-height:1.6; color:#1A1A1A; white-space:pre-wrap;">{{ aboutWhyChooseNodes }}</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; border-radius:10px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+            <div style="background:#FFFFFF; padding:22px 24px;">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:#666666; margin-bottom:14px;">THE MARKET</div>
+              <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start;">
+                <sc-for list="{{ competitorPillsArr }}" as="name" hint-placeholder-count="3">
+                  <span style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:600; color:#1A1A1A; background:#F0F0EC; border-radius:20px; padding:6px 14px; white-space:nowrap;">{{ name }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:{{ f.colorAccent2 }}; padding:22px 24px;">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:{{ aboutGapTextColor }}; opacity:0.75; margin-bottom:14px;">THE GAP YOU CAN OWN</div>
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:13px; font-weight:600; line-height:1.6; color:{{ aboutGapTextColor }}; white-space:pre-wrap;">{{ aboutGapNodes }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Operating Values -->
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Operating Values &amp; Personality</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 20px 0;"></div>
+        <sc-if value="{{ hasBothArchetypes }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; gap:15px; margin-bottom:24px;">
+            <div style="flex:1; padding:13px 16px; background:#E5E5E5; border-radius:8px;">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#333333; margin-bottom:4px;">ARCHETYPE 1</div>
+              <sc-if value="{{ archetype1Label }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; color:#1A1A1A;">{{ archetype1Label }}</div>
+                <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; color:#555555; margin-top:3px;">{{ archetype1Desc }}</div>
+              </sc-if>
+              <sc-if value="{{ notArchetype1Label }}" hint-placeholder-val="{{ true }}">
+                <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; color:#c9c9c3;">Select in the form</div>
+              </sc-if>
+            </div>
+            <div style="flex:1; padding:13px 16px; background:#E5E5E5; border-radius:8px;">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#333333; margin-bottom:4px;">ARCHETYPE 2</div>
+              <sc-if value="{{ archetype2Label }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; color:#1A1A1A;">{{ archetype2Label }}</div>
+                <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; color:#555555; margin-top:3px;">{{ archetype2Desc }}</div>
+              </sc-if>
+              <sc-if value="{{ notArchetype2Label }}" hint-placeholder-val="{{ true }}">
+                <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; color:#c9c9c3;">Select in the form</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:23px;">
+          <div style="background:#E5E5E5; border-radius:8px; padding:21px 24px;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#333333; margin-bottom:8px;">VALUE 1</div>
+            <div style="font-family:'{{ f.accentFont }}', serif; font-size:22px; line-height:1.2; color:{{ value1Color }};">{{ value1Line1 }}<br><br>{{ value1Line2 }}</div>
+          </div>
+          <div style="background:#E5E5E5; border-radius:8px; padding:21px 24px;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#333333; margin-bottom:8px;">VALUE 2</div>
+            <div style="font-family:'{{ f.accentFont }}', serif; font-size:22px; line-height:1.2; color:{{ value2Color }};">{{ value2Line1 }}<br><br>{{ value2Line2 }}</div>
+          </div>
+        </div>
+        <sc-if value="{{ hasProposition }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:23px; padding:21px 24px; background:#E5E5E5; border-radius:8px;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#333333; margin-bottom:8px;">POSITIONING</div>
+            <div style="font-family:'{{ f.accentFont }}', serif; font-size:22px; line-height:1.2; color:#1A1A1A;">I help {{ f.vpAudience }} achieve {{ f.vpGoal }} through {{ f.vpSystem }}.</div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- 7. Brand System Laws -->
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px; color:#1A1A1A;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Brand System Laws</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 32px 0;"></div>
+        <div class="om-laws-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:36px;">
+          <div>
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:#666; margin-bottom:16px;">EXACT COLOR HEX CODES</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <sc-for list="{{ colorLawsArr }}" as="c" hint-placeholder-count="4">
+                <div style="grid-column:{{ c.col }}; height:{{ c.height }}; border-radius:10px; background:{{ c.hex }}; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1); position:relative; display:flex; align-items:flex-end; padding:12px 14px; box-sizing:border-box;">
+                  <div style="display:flex; flex-direction:column; gap:2px;">
+                    <span style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:12px; font-weight:700; letter-spacing:0.03em; color:{{ c.textColor }};">{{ c.label }}</span>
+                    <span style="font-family:'Space Mono', monospace; font-size:12px; color:{{ c.textColor }}; opacity:0.85;">{{ c.hex }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:#666; margin-bottom:16px;">TYPOGRAPHY HIERARCHY</div>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div style="padding:14px 16px; border-radius:8px; background:rgba(0,34,34,0.03);">
+                <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:28px; line-height:1.2; color:#1A1A1A;">Header — {{ f.headerFont }}</div>
+              </div>
+              <div style="padding:14px 16px; border-radius:8px; background:rgba(0,34,34,0.03);">
+                <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:22px; line-height:1.2; color:#1A1A1A;">Body — {{ f.bodyFont }}</div>
+              </div>
+              <div style="padding:14px 16px; border-radius:8px; background:rgba(0,34,34,0.03);">
+                <div style="font-family:'{{ f.accentFont }}', serif; font-size:24px; line-height:1.2; color:#1A1A1A;">Accent — {{ f.accentFont }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.06em; color:#666; margin-bottom:12px;">LOGO USAGE RULES</div>
+          <div style="padding:20px 22px; border-radius:8px; background:rgba(0,34,34,0.03);">
+            <sc-if value="{{ f.logoUsageRules }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:14px; line-height:1.7; color:#333;">{{ f.logoUsageRules }}</div>
+            </sc-if>
+            <sc-if value="{{ notLogoUsageRules }}">
+              <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:14px; line-height:1.7; color:#999; font-style:italic;">Clear guidelines on when to use your full wordmark versus a simplified icon mark.</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Logo Stress Test -->
+      <div class="om-sheet-wrap om-stress-sheet" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Logo Stress Test</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 8px 0;"></div>
+        <sc-for list="{{ stressMarks }}" as="mark" hint-placeholder-count="1">
+          <div style="margin-bottom:40px;">
+            <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; margin-bottom:18px; margin-top:32px;">{{ mark.roundedLabel }}</div>
+            <div class="om-stress-row" style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:31px; padding-bottom:8px; margin-bottom:32px;">
+              <sc-for list="{{ avatarTestSizes }}" as="sz" hint-placeholder-count="5">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:13px;">
+                  <div style="width:{{ sz.px }}; height:{{ sz.px }}; flex-shrink:0; border-radius:50%; border:1.5px solid rgba(0,0,0,0.25); box-sizing:border-box;" class="om-avatar-frame">
+                    <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="stress-round-{{ $index }}" shape="circle" fit="contain" placeholder="Logo" readonly="1" data-avatar-fill="1" hint-size="80px,80px"></x-import>
+                  </div>
+                  <div style="font-family:'Space Mono', monospace; font-size:12px; font-weight:700; color:#1A1A1A; white-space:nowrap;">{{ sz.pxLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; margin-bottom:18px;">{{ mark.squareLabel }}</div>
+            <div class="om-stress-row" style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:31px; padding-bottom:8px;">
+              <sc-for list="{{ avatarTestSizes }}" as="sz" hint-placeholder-count="5">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:13px;">
+                  <div style="width:{{ sz.px }}; height:{{ sz.px }}; flex-shrink:0; border:1.5px solid rgba(0,0,0,0.25); box-sizing:border-box;" class="om-avatar-frame">
+                    <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="stress-square-{{ $index }}" shape="rect" fit="contain" placeholder="Logo" readonly="1" data-avatar-fill="1" hint-size="80px,80px"></x-import>
+                  </div>
+                  <div style="font-family:'Space Mono', monospace; font-size:12px; font-weight:700; color:#1A1A1A; white-space:nowrap;">{{ sz.pxLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; margin-bottom:18px;">Favicons</div>
+            <div class="om-stress-row" style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:31px; padding-bottom:8px;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:13px;">
+                <div style="width:16px; height:16px; flex-shrink:0; border:1.5px solid rgba(0,0,0,0.25); box-sizing:border-box;" class="om-avatar-frame">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="stress-favicon-16" shape="rect" fit="contain" placeholder="Icon" readonly="1" data-avatar-fill="1" hint-size="16px,16px"></x-import>
+                </div>
+                <div style="font-family:'Space Mono', monospace; font-size:12px; font-weight:700; color:#1A1A1A; white-space:nowrap;">16px</div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:13px;">
+                <div style="width:32px; height:32px; flex-shrink:0; border:1.5px solid rgba(0,0,0,0.25); box-sizing:border-box;" class="om-avatar-frame">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="stress-favicon-32" shape="rect" fit="contain" placeholder="Icon" readonly="1" data-avatar-fill="1" hint-size="32px,32px"></x-import>
+                </div>
+                <div style="font-family:'Space Mono', monospace; font-size:12px; font-weight:700; color:#1A1A1A; white-space:nowrap;">32px</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <!-- 6. Dark/Light Mode Test -->
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Dark / Light Mode Test</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 20px 0;"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; margin:0 -48px -44px -48px; min-height:380px;">
+          <div style="background:#000000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:17px; padding:39px 32px;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#FFFFFF;">DARK BACKGROUND</div>
+            <div style="width:220px; height:140px; border:{{ modeTestLightBorder }}; border-radius:8px;">
+              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mode-test-light" shape="rect" fit="contain" placeholder="Drop logo (jpg, png, svg)" hint-size="220px,140px"></x-import>
+            </div>
+          </div>
+          <div style="background:#FFFFFF; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:17px; padding:39px 32px;">
+            <div style="font-family:'{{ f.bodyFont }}', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#1A1A1A;">LIGHT BACKGROUND</div>
+            <div style="width:220px; height:140px; border:{{ modeTestDarkBorder }}; border-radius:8px;">
+              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mode-test-dark" shape="rect" fit="contain" placeholder="Drop logo (jpg, png, svg)" hint-size="220px,140px" style="color:#FFFFFF;"></x-import>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Moodboard -->
+      <div class="om-sheet-wrap" ref="{{ h.setMoodRef }}" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Moodboard Imagery</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 24px 0;"></div>
+        <div class="om-moodboard-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); grid-auto-rows:24.6cqw; gap:13px;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood1" shape="rounded" radius="8" fit="cover" placeholder="Image 1" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood2" shape="rounded" radius="8" fit="cover" placeholder="Image 2" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood3" shape="rounded" radius="8" fit="cover" placeholder="Image 3" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood4" shape="rounded" radius="8" fit="cover" placeholder="Image 4" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <div style="width:100%; height:100%; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); border-radius:8px; overflow:hidden; border:1px solid #1A1A1A;">
+            <sc-for list="{{ moodSwatchArr }}" as="c" hint-placeholder-count="4">
+              <div style="background:{{ c.hex }};"></div>
+            </sc-for>
+          </div>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood5" shape="rounded" radius="8" fit="cover" placeholder="Image 5" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood6" shape="rounded" radius="8" fit="cover" placeholder="Image 6" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood7" shape="rounded" radius="8" fit="cover" placeholder="Image 7" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="mood8" shape="rounded" radius="8" fit="cover" placeholder="Image 8" hint-size="100%,100%" style="width:100%; height:100%; display:block; border-radius:8px; cursor:default;"></x-import>
+        </div>
+      </div>
+
+      <div class="om-sheet-wrap" style="width:1180px; max-width:100%; background:{{ blockBg }}; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,0.18); box-sizing:border-box; position:relative; overflow:hidden; padding:43px 48px;">
+        <div style="font-family:'{{ f.headerFont }}', sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; line-height:1.1; color:{{ blockHeaderColor }}; letter-spacing:0;">Logo Variations Grid</div>
+        <div style="width:36px; height:4px; background:{{ blockHeaderColor }}; margin:8px 0 24px 0;"></div>
+        <sc-if value="{{ logoGridHasFiles }}" hint-placeholder-val="{{ false }}">
+          <div class="om-logo-grid" style="display:grid; gap:19px;">
+            {{ logoGridOutput }}
+          </div>
+        </sc-if>
+        <sc-if value="{{ notLogoGridHasFiles }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:19px;">
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+            <div style="aspect-ratio:1; background:transparent; border-radius:8px; border:1.5px dashed rgba(0,0,0,0.25);"></div>
+          </div>
+        </sc-if>
+      </div>
+
+
+    
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  MOBILE_BREAKPOINT = 1140;
+
+  state = {
+    exportMenuOpen: false,
+    leftPanelWidth: 45,
+    isResizing: false,
+    hasLogoMark: false,
+    isMobile: false,
+    sidebarOpen: true,
+    toolbarHeight: 70,
+    logoGridFiles: [],
+    toasts: [],
+    headerFontSearch: '',
+    bodyFontSearch: '',
+    accentFontSearch: '',
+    headerFontOpen: false,
+    bodyFontOpen: false,
+    accentFontOpen: false,
+    f: {
+      brandName: '', industry: '',
+      businessWhat: '', originStory: '',
+      idealAudience: '', audiencePainQuote: '', audiencePain: '', whyChooseYou: '',
+      competitor1: '', competitor2: '', competitor3: '', competitorGap: '',
+      brandVision: '',
+      vpAudience: '', vpGoal: '', vpSystem: '',
+      archetypesSelected: [],
+      value1Always: '', value1Never: '', value2Always: '', value2Never: '',
+      brandPersonality: '',
+      pinterestLink: '', vibeWord1: '', vibeWord2: '', vibeWord3: '', vibeWord4: '',
+      headerFont: 'Anton', bodyFont: 'Inter', accentFont: 'Caveat',
+      colorPrimary: '#1A1A1A', colorAccent1: '#E5E5E5', colorAccent2: '#FFFFFF', colorSecondary: '#8A8A86',
+      iconImagery: '',
+      mobileAvatarPass_yes: false, mobileAvatarPass_no: false, mobileAvatarAdj: '',
+      darkLightPass_yes: false, darkLightPass_no: false, darkLightAdj: '',
+      scalePass_yes: false, scalePass_no: false, scaleAdj: '',
+      logoUsageRules: '',
+      primaryPlatform: '', secondaryPlatform: '', contentHub: '', servicesTags: '',
+      projectGoal: '', designDecisions: ''
+    }
+  };
+
+  // Google Fonts - broad curated selection spanning serif, sans, display, script & mono
+  allFontOptions = Array.from(new Set(['Anton', 'Bebas Neue', 'Space Grotesk', 'DM Serif Display', 'Big Shoulders Display', 'Libre Caslon Display', 'Inter', 'Poppins', 'Work Sans', 'Karla', 'Nunito Sans', 'Caveat', 'Cormorant', 'Space Mono', 'Instrument Serif', 'Playfair Display', 'Raleway', 'Montserrat', 'Lato', 'Open Sans', 'Roboto', 'Oswald', 'Pacifico', 'Lora', 'Ubuntu', 'Inconsolata', 'Courier Prime', 'IBM Plex Serif', 'IBM Plex Sans', 'Merriweather', 'PT Serif', 'PT Sans',
+    'Abril Fatface', 'Alegreya', 'Alegreya Sans', 'Archivo', 'Archivo Black', 'Archivo Narrow', 'Arimo', 'Arvo', 'Asap', 'Assistant', 'Barlow', 'Barlow Condensed', 'Barlow Semi Condensed', 'Bitter', 'Bodoni Moda', 'Bricolage Grotesque', 'Bree Serif', 'Cabin', 'Cairo', 'Cantata One', 'Cardo', 'Catamaran', 'Chivo', 'Comfortaa', 'Cormorant Garamond', 'Cousine', 'Crimson Pro', 'Crimson Text', 'Dancing Script', 'DM Mono', 'DM Sans', 'Domine', 'Dosis', 'EB Garamond', 'El Messiri', 'Exo', 'Exo 2', 'Fira Code', 'Fira Sans', 'Fjalla One', 'Fraunces', 'Frank Ruhl Libre', 'Gelasio', 'Georama', 'Ibarra Real Nova', 'Inder', 'Indie Flower', 'Josefin Sans', 'Jost', 'Kalam', 'Kanit', 'Lexend', 'Libre Baskerville', 'Libre Franklin', 'Literata', 'Lobster', 'Lobster Two', 'Manrope', 'Maven Pro', 'Merriweather Sans', 'Mono', 'Mukta', 'Mulish', 'Neuton', 'Newsreader', 'Noticia Text', 'Noto Sans', 'Noto Serif', 'Nunito', 'Old Standard TT', 'Overpass', 'Oxygen', 'Pathway Gothic One', 'Petrona', 'Playfair Display SC', 'Plus Jakarta Sans', 'Prata', 'Prompt', 'Public Sans', 'Quattrocento', 'Quicksand', 'Rajdhani', 'Red Hat Display', 'Red Hat Text', 'Roboto Condensed', 'Roboto Mono', 'Roboto Serif', 'Roboto Slab', 'Rubik', 'Sacramento', 'Satisfy', 'Shadows Into Light', 'Signika', 'Slabo 27px', 'Sora', 'Source Code Pro', 'Source Sans 3', 'Source Serif 4', 'Spectral', 'Syne', 'Tenor Sans', 'Texturina', 'Tinos', 'Titillium Web', 'Urbanist', 'Varela Round', 'Vollkorn', 'Yanone Kaffeesatz', 'Yellowtail', 'Yeseva One', 'Zilla Slab',
+    'Abel', 'Actor', 'Advent Pro', 'Aleo', 'Alfa Slab One', 'Amaranth', 'Amatic SC', 'Amiri', 'Amita', 'Anonymous Pro', 'Antic', 'Antic Slab', 'Arapey', 'Arbutus Slab', 'Architects Daughter', 'Arizonia', 'Armata', 'Artifika', 'Asar', 'Asul', 'Athiti', 'Average', 'Average Sans', 'Bad Script', 'Balsamiq Sans', 'Baloo 2', 'Balthazar', 'Bangers', 'Baskervville', 'Belleza', 'BenchNine', 'Berkshire Swash', 'Beth Ellen', 'Bevan', 'BioRhyme', 'Biryani', 'Bitter Pro', 'Black Ops One', 'Bowlby One', 'Bowlby One SC', 'Boogaloo', 'Brawler', 'Bubblegum Sans', 'Buenard', 'Butterfly Kids', 'Cagliostro', 'Caladea', 'Calistoga', 'Calligraffitti', 'Candal', 'Capriola', 'Carme', 'Carrois Gothic', 'Castoro', 'Caudex', 'Century Gothic', 'Cherry Cream Soda', 'Cherry Swash', 'Chewy', 'Chonburi', 'Cinzel', 'Cinzel Decorative', 'Coda', 'Codystar', 'Coming Soon', 'Concert One', 'Contrail One', 'Cookie', 'Copse', 'Corben', 'Coustard', 'Covered By Your Grace', 'Crafty Girls', 'Creepster', 'Crete Round', 'Crushed', 'Cuprum', 'Cutive', 'Cutive Mono', 'Damion', 'Dawning of a New Day', 'Delius', 'Della Respira', 'Denk One', 'Devonshire', 'Didact Gothic', 'Diplomata', 'Do Hyeon', 'Dokdo', 'Donegal One', 'Doppio One', 'Dorsa', 'Duru Sans', 'Eagle Lake', 'East Sea Dokdo', 'Economica', 'Ephesis', 'Esteban', 'Euphoria Script', 'Ewert', 'Exile', 'Expletus Sans', 'Fanwood Text', 'Faster One', 'Fasthand', 'Federant', 'Federo', 'Felipa', 'Fenix', 'Finger Paint', 'Fjord One', 'Flamenco', 'Flavors', 'Fondamento', 'Forum', 'Francois One', 'Freckle Face', 'Fredericka the Great', 'Fredoka', 'Fresca', 'Frijole', 'Fruktur', 'Fugaz One', 'GFS Didot', 'GFS Neohellenic', 'Gabriela', 'Gaegu', 'Gafata', 'Galada', 'Galdeano', 'Galindo', 'Gamja Flower', 'Gentium Basic', 'Geo', 'Geostar', 'Geostar Fill', 'Germania One', 'Gidugu', 'Gilda Display', 'Give You Glory', 'Glass Antiqua', 'Glegoo', 'Gloria Hallelujah', 'Goblin One', 'Gochi Hand', 'Gorditas', 'Goudy Bookletter 1911', 'Graduate', 'Grand Hotel', 'Gravitas One', 'Great Vibes', 'Griffy', 'Gruppo', 'Gudea', 'Habibi', 'Hammersmith One', 'Handlee', 'Hanuman', 'Harmattan', 'Headland One', 'Henny Penny', 'Herr Von Muellerhoff', 'Hind', 'Holtwood One SC', 'Homemade Apple', 'Homenaje', 'IM Fell DW Pica', 'IM Fell Great Primer', 'Imprima', 'Inika', 'Inknut Antiqua', 'Irish Grover', 'Istok Web', 'Italiana', 'Italianno', 'Jacques Francois', 'Jaldi', 'Jim Nightshade', 'Jockey One', 'Jolly Lodger', 'Judson', 'Julee', 'Julius Sans One', 'Junge', 'Jura', 'Just Another Hand', 'Just Me Again Down Here', 'Kameron', 'Kantumruy', 'Karma', 'Kaushan Script', 'Kavoon', 'Keania One', 'Kelly Slab', 'Kenia', 'Khand', 'Khula', 'Kite One', 'Knewave', 'Kotta One', 'Koulen', 'Kranky', 'Kreon', 'Kristi', 'Krona One', 'La Belle Aurore', 'Laila', 'Lakki Reddy', 'Lancelot', 'Lateef', 'League Script', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lemonada', 'Lexend Deca', 'Lilita One', 'Lily Script One', 'Limelight', 'Linden Hill', 'Londrina Outline', 'Londrina Shadow', 'Londrina Solid', 'Loved by the King', 'Lovers Quarrel', 'Luckiest Guy', 'Lusitana', 'Lustria', 'Macondo', 'Magra', 'Maiden Orange', 'Mako', 'Mali', 'Mallanna', 'Mandali', 'Marcellus', 'Marck Script', 'Margarine', 'Marko One', 'Marmelad', 'Martel', 'Marvel', 'Mate', 'Mate SC', 'McLaren', 'Meddon', 'MedievalSharp', 'Medula One', 'Meera Inimai', 'Megrim', 'Meie Script', 'Merienda', 'Merienda One', 'Metal', 'Metal Mania', 'Metamorphous', 'Metrophobic', 'Michroma', 'Milonga', 'Miniver', 'Miriam Libre', 'Mirza', 'Miss Fajardose', 'Modak', 'Modern Antiqua', 'Mogra', 'Molengo', 'Monda', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montez', 'Moul', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Mystery Quest', 'Nanum Brush Script', 'Nanum Gothic', 'Nanum Myeongjo', 'Nanum Pen Script', 'Neucha', 'New Rocker', 'News Cycle', 'Niconne', 'Nixie One', 'Nobile', 'Nokora', 'Norican', 'Nosifer', 'Nothing You Could Do', 'Noto Sans JP', 'Nova Square', 'Numans', 'Odor Mean Chey', 'Offside', 'Oldenburg', 'Oleo Script', 'Orbitron', 'Oregano', 'Orienta', 'Original Surfer', 'Over the Rainbow', 'Overlock', 'Ovo', 'Padauk', 'Palanquin', 'Paprika', 'Parisienne', 'Passero One', 'Passion One', 'Patrick Hand', 'Patua One', 'Pavanam', 'Paytone One', 'Peralta', 'Permanent Marker', 'Petit Formal Script', 'Philosopher', 'Piedra', 'Pinyon Script', 'Plaster', 'Play', 'Playball', 'Podkova', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Pontano Sans', 'Poor Story', 'Port Lligat Sans', 'Port Lligat Slab', 'Pragati Narrow', 'Preahvihear', 'Press Start 2P', 'Princess Sofia', 'Prosto One', 'Puritan', 'Purple Purse', 'Quantico', 'Quattrocento Sans', 'Questrial', 'Quintessential', 'Qwigley', 'Racing Sans One', 'Radley', 'Rakkas', 'Rambla', 'Rammetto One', 'Ranchers', 'Rancho', 'Ranga', 'Rasa', 'Ravi Prakash', 'Redressed', 'Reenie Beanie', 'Revalia', 'Ribeye', 'Ribeye Marrow', 'Righteous', 'Risque', 'Rock Salt', 'Rokkitt', 'Romanesco', 'Ropa Sans', 'Rosario', 'Rosarivo', 'Rouge Script', 'Rozha One', 'Ruda', 'Ruge Boogie', 'Ruluko', 'Rum Raisin', 'Ruslan Display', 'Russo One', 'Ruthie', 'Rye', 'Sail', 'Salsa', 'Sanchez', 'Sancreek', 'Sarabun', 'Sarala', 'Sarina', 'Sarpanch', 'Scada', 'Schoolbell', 'Seaweed Script', 'Sevillana', 'Seymour One', 'Shadows Into Light Two', 'Shanti', 'Share', 'Share Tech', 'Share Tech Mono', 'Shojumaru', 'Short Stack', 'Siemreap', 'Sigmar One', 'Signika Negative', 'Simonetta', 'Sintony', 'Sirin Stencil', 'Six Caps', 'Skranji', 'Slabo 13px', 'Slabo 27px', 'Smokum', 'Smythe', 'Sniglet', 'Snippet', 'Snowburst One', 'Sofadi One', 'Sofia', 'Sonsie One', 'Sortdecai', 'Spicy Rice', 'Spinnaker', 'Spirax', 'Squada One', 'Sree Krushnadevaraya', 'Stalemate', 'Stalinist One', 'StardosStencil', 'Stint Ultra Condensed', 'Stint Ultra Expanded', 'Stoke', 'Strait', 'Sue Ellen Francisco', 'Sumana', 'Sunflower', 'Sunshiney', 'Supermercado One', 'Suranna', 'Suravaram', 'Suwannaphum', 'Swanky and Moo Moo', 'Syncopate', 'Tangerine', 'Taprom', 'Tauri', 'Teko', 'Telex', 'Tenali Ramakrishna', 'Text Me One', 'The Girl Next Door', 'Tienne', 'Timmana', 'Trade Winds', 'Trirong', 'Trocchi', 'Trochut', 'Trykker', 'Tulpen One', 'Ultra', 'Uncial Antiqua', 'Underdog', 'Unica One', 'UnifrakturCook', 'UnifrakturMaguntia', 'Unkempt', 'Unlock', 'Unna', 'VT323', 'Vampiro One', 'Varela', 'Vast Shadow', 'Vesper Libre', 'Vibur', 'Vidaloka', 'Viga', 'Voces', 'Volkhov', 'Vollkorn SC', 'Voltaire', 'Waiting for the Sunrise', 'Wallpoet', 'Walter Turncoat', 'Warnes', 'Wellfleet', 'Wendy One', 'Wire One', 'Yatra One', 'Yeon Sung', 'Zeyada'
+  ]));
+
+  archetypeDefs = [
+    { id: 'academic', label: 'ACADEMIC', desc: 'Precise • Clinical • Data-Driven' },
+    { id: 'innovator', label: 'INNOVATOR', desc: 'Disruptive • Cutting-Edge • Experimental' },
+    { id: 'minimalist', label: 'MINIMALIST', desc: 'Ruthlessly Simple • Streamlined' },
+    { id: 'coach', label: 'COACH', desc: 'Warm • Empathetic • Human-Focused' },
+    { id: 'anchor', label: 'ANCHOR', desc: 'Rock-Solid • Dependable • Time-Tested' },
+    { id: 'visionary', label: 'VISIONARY', desc: 'Big-Picture • Creative • Expansive' }
+  ];
+
+  sheetRefs = {};
+  formRefs = {};
+  loadedFonts = new Set(['Manrope', 'Poppins', 'Caudex']);
+
+  ensureFontsLoaded(fontNames) {
+    fontNames.forEach(name => {
+      if (!name || this.loadedFonts.has(name)) return;
+      this.loadedFonts.add(name);
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(name).replace(/%20/g, '+') + ':wght@400;500;600;700;800&display=swap';
+      document.head.appendChild(link);
+    });
+  }
+
+  SAVE_KEY = 'brandDashboardSavedData';
+
+  componentDidMount() {
+    const saved = localStorage.getItem('brandDashboardLeftPanelWidth');
+    if (saved) {
+      this.setState({ leftPanelWidth: parseInt(saved) });
+    }
+
+    try {
+      const savedData = localStorage.getItem(this.SAVE_KEY);
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        this.setState(s => ({
+          f: { ...s.f, ...(parsed.f || {}) },
+          logoGridFiles: parsed.logoGridFiles || s.logoGridFiles
+        }));
+      }
+    } catch (err) {
+      console.warn('Could not restore saved dashboard data', err);
+    }
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
+    this.checkMarks();
+    this._markInterval = setInterval(() => this.checkMarks(), 400);
+
+    // Mirror the Primary Logo upload into the stress-test slots so the
+    // user only has to drop it once. image-slot.js (loaded async via
+    // x-import) may not have run yet, so poll until ImageSlotStore exists
+    // before attaching the subscription.
+    this._logoSyncAttach = setInterval(() => {
+      if (!window.ImageSlotStore) return;
+      clearInterval(this._logoSyncAttach);
+      this._logoSyncAttach = null;
+      this._unsubLogoSync = window.ImageSlotStore.subscribe(this.syncPrimaryLogoToStressTest);
+      this.syncPrimaryLogoToStressTest();
+      this._unsubModeTestFill = window.ImageSlotStore.subscribe(this.syncModeTestFill);
+      this.syncModeTestFill();
+    }, 200);
+
+    this._mq = window.matchMedia('(max-width: ' + this.MOBILE_BREAKPOINT + 'px)');
+    this.handleMqChange({ matches: this._mq.matches });
+    if (this._mq.addEventListener) this._mq.addEventListener('change', this.handleMqChange);
+    else this._mq.addListener(this.handleMqChange);
+
+    window.addEventListener('resize', this.measureToolbarHeight);
+    setTimeout(() => this.measureToolbarHeight(), 60);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    clearInterval(this._markInterval);
+    clearTimeout(this._suppressTimeout);
+    clearTimeout(this._measureTimeout);
+    window.removeEventListener('resize', this.measureToolbarHeight);
+    if (this._logoSyncAttach) clearInterval(this._logoSyncAttach);
+    if (this._unsubLogoSync) this._unsubLogoSync();
+    if (this._unsubModeTestFill) this._unsubModeTestFill();
+    if (this._mq) {
+      if (this._mq.removeEventListener) this._mq.removeEventListener('change', this.handleMqChange);
+      else this._mq.removeListener(this.handleMqChange);
+    }
+  }
+
+  syncModeTestFill = () => {
+    const store = window.ImageSlotStore;
+    if (!store) return;
+    const modeTestLightFilled = store.get('mode-test-light') != null;
+    const modeTestDarkFilled = store.get('mode-test-dark') != null;
+    if (modeTestLightFilled !== this.state.modeTestLightFilled || modeTestDarkFilled !== this.state.modeTestDarkFilled) {
+      this.setState({ modeTestLightFilled, modeTestDarkFilled });
+    }
+  };
+
+  syncPrimaryLogoToStressTest = () => {
+    const store = window.ImageSlotStore;
+    if (!store) return;
+    const primary = store.get('primary-logo');
+    const favicon = store.get('favicon');
+    const key = JSON.stringify(primary) + '|' + JSON.stringify(favicon);
+    if (key === this._lastPrimaryLogoKey) return;
+    this._lastPrimaryLogoKey = key;
+    for (let i = 0; i < 5; i++) {
+      store.set('stress-round-' + i, primary);
+      store.set('stress-square-' + i, primary);
+    }
+    store.set('stress-favicon-16', favicon);
+    store.set('stress-favicon-32', favicon);
+  }
+
+  handleMqChange = (e) => {
+    // Crossing the breakpoint swaps the sidebar from an in-flow column to a
+    // fixed off-canvas drawer. That swap itself shouldn't animate — only
+    // explicit open/close via the Edit button should slide. Suppress the
+    // transition for the frame where the breakpoint flips, then restore it.
+    clearTimeout(this._suppressTimeout);
+    this.setState({ isMobile: e.matches, suppressSidebarTransition: true });
+    this._suppressTimeout = setTimeout(() => this.setState({ suppressSidebarTransition: false }), 50);
+    this._measureTimeout = setTimeout(() => this.measureToolbarHeight(), 60);
+  };
+
+  measureToolbarHeight = () => {
+    if (this.toolbarRef) {
+      const h = this.toolbarRef.getBoundingClientRect().height;
+      if (h && Math.round(h) !== this.state.toolbarHeight) this.setState({ toolbarHeight: Math.round(h) });
+    }
+  };
+
+  checkMarks = () => {
+    const logoEl = document.getElementById('brand-logo');
+    const hasLogoMark = !!(logoEl && logoEl.hasAttribute('data-filled'));
+    if (hasLogoMark !== this.state.hasLogoMark) {
+      this.setState({ hasLogoMark });
+    }
+  };
+
+  handleMouseMove = (e) => {
+    if (!this.state.isResizing) return;
+    const container = this.leftPanelRef?.parentElement;
+    if (!container) return;
+    const newWidth = (e.clientX / container.clientWidth) * 100;
+    if (newWidth > 25 && newWidth < 75) {
+      this.setState({ leftPanelWidth: newWidth });
+      localStorage.setItem('brandDashboardLeftPanelWidth', Math.round(newWidth));
+    }
+  };
+
+  handleMouseUp = () => {
+    document.body.classList.remove('om-resizing');
+    this.setState({ isResizing: false });
+  };
+
+  update(key, val) {
+    this.setState(s => ({ f: { ...s.f, [key]: val } }));
+  }
+
+  applyFormatting(key, marker) {
+    const el = this.formRefs && this.formRefs['ta_' + key];
+    if (!el) return;
+    const val = this.state.f[key] || '';
+    const start = el.selectionStart, end = el.selectionEnd;
+    if (start === end) return;
+    const mLen = marker.length;
+    const before = val.slice(0, start), sel = val.slice(start, end), after = val.slice(end);
+    const hasOuter = before.slice(-mLen) === marker && after.slice(0, mLen) === marker;
+    const hasInner = sel.length >= 2 * mLen && sel.slice(0, mLen) === marker && sel.slice(-mLen) === marker;
+    let newVal, newStart, newEnd;
+    if (hasOuter) {
+      newVal = before.slice(0, -mLen) + sel + after.slice(mLen);
+      newStart = start - mLen; newEnd = end - mLen;
+    } else if (hasInner) {
+      newVal = before + sel.slice(mLen, -mLen) + after;
+      newStart = start; newEnd = end - 2 * mLen;
+    } else {
+      newVal = before + marker + sel + marker + after;
+      newStart = start + mLen; newEnd = end + mLen;
+    }
+    this.update(key, newVal);
+    requestAnimationFrame(() => {
+      if (el) { el.focus(); el.setSelectionRange(newStart, newEnd); }
+    });
+  }
+
+  formatInline(text) {
+    if (!text) return text;
+    const nodes = [];
+    const re = /\*\*(.+?)\*\*|_(.+?)_/g;
+    let last = 0, m, key = 0;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) nodes.push(text.slice(last, m.index));
+      if (m[1] !== undefined) nodes.push(React.createElement('strong', { key: key++ }, m[1]));
+      else nodes.push(React.createElement('em', { key: key++ }, m[2]));
+      last = re.lastIndex;
+    }
+    if (last < text.length) nodes.push(text.slice(last));
+    return nodes;
+  }
+
+  applyBulletToggle(key) {
+    const el = this.formRefs && this.formRefs['ta_' + key];
+    if (!el) return;
+    const val = this.state.f[key] || '';
+    const start = el.selectionStart, end = el.selectionEnd;
+    const lineStart = val.lastIndexOf('\n', start - 1) + 1;
+    let lineEnd = val.indexOf('\n', end);
+    if (lineEnd === -1) lineEnd = val.length;
+    const block = val.slice(lineStart, lineEnd);
+    const lines = block.split('\n');
+    const contentLines = lines.filter(l => l.trim() !== '');
+    const allBulleted = contentLines.length > 0 && contentLines.every(l => /^\s*-\s+/.test(l));
+    const newLines = lines.map(l => {
+      if (l.trim() === '') return l;
+      if (allBulleted) return l.replace(/^\s*-\s+/, '');
+      return /^\s*-\s+/.test(l) ? l : '- ' + l;
+    });
+    const newBlock = newLines.join('\n');
+    const newVal = val.slice(0, lineStart) + newBlock + val.slice(lineEnd);
+    this.update(key, newVal);
+    const delta = newBlock.length - block.length;
+    requestAnimationFrame(() => {
+      if (el) { el.focus(); el.setSelectionRange(lineStart, lineEnd + delta); }
+    });
+  }
+
+  formatBlock(text) {
+    if (!text) return text;
+    const lines = text.split('\n');
+    const blocks = [];
+    let listBuf = [];
+    let key = 0;
+    const flushList = () => {
+      if (listBuf.length) {
+        blocks.push(React.createElement('ul', { key: key++, style: { margin: '4px 0', paddingLeft: '18px' } },
+          listBuf.map((l, i) => React.createElement('li', { key: i, style: { marginBottom: '4px' } }, this.formatInline(l)))));
+        listBuf = [];
+      }
+    };
+    lines.forEach((line) => {
+      const bulletMatch = /^\s*-\s+(.*)$/.exec(line);
+      if (bulletMatch) {
+        listBuf.push(bulletMatch[1]);
+      } else {
+        flushList();
+        if (line.trim() === '') {
+          blocks.push(React.createElement('div', { key: key++, style: { height: '8px' } }));
+        } else {
+          blocks.push(React.createElement('div', { key: key++ }, this.formatInline(line)));
+        }
+      }
+    });
+    flushList();
+    return blocks;
+  }
+
+  // --- WCAG contrast helpers ---
+  relLuminance(hex) {
+    const c = (hex || '#ffffff').replace('#', '');
+    if (c.length !== 6) return 1;
+    let r = parseInt(c.substr(0, 2), 16) / 255, g = parseInt(c.substr(2, 2), 16) / 255, b = parseInt(c.substr(4, 2), 16) / 255;
+    [r, g, b] = [r, g, b].map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  contrastRatio(hex1, hex2) {
+    const L1 = this.relLuminance(hex1), L2 = this.relLuminance(hex2);
+    const lighter = Math.max(L1, L2), darker = Math.min(L1, L2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  bestTextColor(bgHex) {
+    const rw = this.contrastRatio(bgHex, '#FFFFFF');
+    const rb = this.contrastRatio(bgHex, '#000000');
+    return rw >= rb ? { color: '#FFFFFF', ratio: rw } : { color: '#1A1A1A', ratio: rb };
+  }
+
+  addToast(message) {
+    const id = Date.now() + '_' + Math.random().toString(36).slice(2);
+    this.setState(s => ({ toasts: [...(s.toasts || []), { id, message }] }));
+    setTimeout(() => this.dismissToast(id), 9000);
+  }
+
+  DEFAULT_F = {
+    brandName: '', industry: '',
+    businessWhat: '', originStory: '',
+    idealAudience: '', audiencePainQuote: '', audiencePain: '', whyChooseYou: '',
+    competitor1: '', competitor2: '', competitor3: '', competitorGap: '',
+    brandVision: '',
+    vpAudience: '', vpGoal: '', vpSystem: '',
+    archetypesSelected: [],
+    value1Always: '', value1Never: '', value2Always: '', value2Never: '',
+    brandPersonality: '',
+    pinterestLink: '', vibeWord1: '', vibeWord2: '', vibeWord3: '', vibeWord4: '',
+    headerFont: 'Anton', bodyFont: 'Inter', accentFont: 'Caveat',
+    colorPrimary: '#1A1A1A', colorAccent1: '#E5E5E5', colorAccent2: '#FFFFFF', colorSecondary: '#8A8A86',
+    iconImagery: '',
+    mobileAvatarPass_yes: false, mobileAvatarPass_no: false, mobileAvatarAdj: '',
+    darkLightPass_yes: false, darkLightPass_no: false, darkLightAdj: '',
+    scalePass_yes: false, scalePass_no: false, scaleAdj: '',
+    logoUsageRules: '',
+    primaryPlatform: '', secondaryPlatform: '', contentHub: '', servicesTags: '',
+    projectGoal: '', designDecisions: ''
+  };
+
+  resetData() {
+    const ok = window.confirm('Reset all fields and uploaded images? This cannot be undone.');
+    if (!ok) return;
+    localStorage.removeItem(this.SAVE_KEY);
+    // Clear every image-slot's stored value via the shared store (null = empty).
+    // Covers user-fillable slots (primary-logo, favicon, mood1-8, mode-test-*)
+    // and the readonly mirrors that pull from them.
+    if (window.ImageSlotStore && window.ImageSlotStore.set) {
+      const ids = new Set();
+      document.querySelectorAll('image-slot[id]').forEach(el => ids.add(el.id));
+      ['primary-logo','favicon','top-logo','mode-test-light','mode-test-dark',
+       'mood1','mood2','mood3','mood4','mood5','mood6','mood7','mood8'].forEach(id => ids.add(id));
+      for (let i = 0; i < 6; i++) { ids.add('stress-round-' + i); ids.add('stress-square-' + i); }
+      ids.add('stress-favicon-16'); ids.add('stress-favicon-32');
+      ids.forEach(id => window.ImageSlotStore.set(id, null));
+    }
+    this.setState({ f: { ...this.DEFAULT_F }, logoGridFiles: [] });
+    this.addToast('All fields and images have been reset.');
+  }
+
+  hasFoundationContent(f) {
+    return !!(f.businessWhat || f.originStory || f.idealAudience || f.audiencePain || f.whyChooseYou || f.competitorGap);
+  }
+
+  saveData() {
+    try {
+      localStorage.setItem(this.SAVE_KEY, JSON.stringify({
+        f: this.state.f,
+        logoGridFiles: this.state.logoGridFiles
+      }));
+      this.setState({ justSaved: true });
+      clearTimeout(this._savedFlashTimeout);
+      this._savedFlashTimeout = setTimeout(() => this.setState({ justSaved: false }), 2000);
+    } catch (err) {
+      this.addToast('Could not save — your browser storage may be full.');
+    }
+  }
+
+  dismissToast(id) {
+    this.setState(s => ({ toasts: (s.toasts || []).filter(t => t.id !== id) }));
+  }
+
+  handleColorChange(key, value) {
+    this.update(key, value);
+  }
+
+  // Checks relevant to which color(s) changed ('all' on initial mount, or the specific keys touched).
+  runContrastChecks(f, changedKeys) {
+    const touched = (k) => changedKeys === 'all' || changedKeys.indexOf(k) !== -1;
+
+    if (touched('colorSecondary') || touched('colorAccent1')) {
+      const headerRatio = this.contrastRatio(f.colorSecondary, f.colorAccent1);
+      if (headerRatio < 4.5) {
+        this.addToast('Contrast error: block header text (Secondary) on block background (Accent 1) is only ' + headerRatio.toFixed(2) + ':1 — fails WCAG AA (needs 4.5:1).');
+      }
+    }
+    if (touched('colorSecondary')) {
+      const best = this.bestTextColor(f.colorSecondary);
+      if (best.ratio < 4.5) {
+        this.addToast('Contrast error: no readable text color for the header background (Secondary) — best is ' + best.ratio.toFixed(2) + ':1, fails WCAG AA.');
+      }
+    }
+    if (touched('colorAccent1')) {
+      const bodyRatio = this.contrastRatio('#1A1A1A', f.colorAccent1);
+      if (bodyRatio < 4.5) {
+        this.addToast('Contrast error: default block body text on new block background (Accent 1) is only ' + bodyRatio.toFixed(2) + ':1 — fails WCAG AA (needs 4.5:1).');
+      }
+    }
+  }
+
+  checkColorContrasts() {
+    this.runContrastChecks(this.state.f, 'all');
+  }
+
+  toggleArchetype(id) {
+    this.setState(s => {
+      let sel = s.f.archetypesSelected || [];
+      if (sel.includes(id)) {
+        sel = sel.filter(x => x !== id);
+      } else if (sel.length < 2) {
+        sel = [...sel, id];
+      } else {
+        sel = [sel[1], id];
+      }
+      return { f: { ...s.f, archetypesSelected: sel } };
+    });
+  }
+
+  handleLogoGridUpload(e) {
+    const slotsLeft = 6 - this.state.logoGridFiles.length;
+    const files = Array.from(e.target.files || []).slice(0, Math.max(0, slotsLeft));
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const item = { id: 'logo_' + Date.now() + '_' + Math.random().toString(36).slice(2), dataUrl: ev.target.result, name: file.name };
+        this.setState(s => ({ logoGridFiles: [...s.logoGridFiles, item].slice(0, 6) }));
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = '';
+  }
+
+  removeLogoGridFile(id) {
+    this.setState(s => ({ logoGridFiles: s.logoGridFiles.filter(f => f.id !== id) }));
+  }
+
+  setRadioPair(yesKey, noKey, val) {
+    this.setState(s => ({ f: { ...s.f, [yesKey]: val, [noKey]: !val } }));
+  }
+
+  contrastColor(hex) {
+    const c = (hex || '#ffffff').replace('#', '');
+    if (c.length !== 6) return '#1A1A1A';
+    const r = parseInt(c.substr(0, 2), 16), g = parseInt(c.substr(2, 2), 16), b = parseInt(c.substr(4, 2), 16);
+    const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return lum > 0.6 ? '#1A1A1A' : '#FFFFFF';
+  }
+
+  isSectionComplete(section) {
+    const f = this.state.f;
+    switch(section) {
+      case 'foundation':
+        return !!(f.businessWhat && f.idealAudience && f.audiencePain && f.whyChooseYou && f.competitor1 && f.competitorGap);
+      case 'values':
+        return !!(f.archetypesSelected.length === 2 && f.value1Always && f.value1Never && f.value2Always && f.value2Never && f.vpAudience && f.vpGoal && f.vpSystem);
+      case 'visual':
+        return !!(f.vibeWord1 && f.vibeWord2 && f.vibeWord3 && f.vibeWord4 && f.headerFont && f.bodyFont && f.colorPrimary && f.colorAccent1 && f.colorAccent2 && f.colorSecondary);
+      case 'stress':
+        return !!(f.logoUsageRules && (f.darkLightPass_yes || f.darkLightPass_no) && (f.scalePass_yes || f.scalePass_no));
+      case 'moodboard':
+        if (window.ImageSlotStore && window.ImageSlotStore.get) {
+          const allMoodIds = ['mood1', 'mood2', 'mood3', 'mood4', 'mood5', 'mood6', 'mood7', 'mood8'];
+          return allMoodIds.every(id => window.ImageSlotStore.get(id) != null);
+        }
+        return false;
+      case 'logoVariations':
+        return (this.state.logoGridFiles || []).length > 0;
+      default:
+        return false;
+    }
+  }
+
+  buildHandlers() {
+    const h = {};
+    const textKeys = [
+      'brandName', 'industry', 'businessWhat', 'originStory',
+      'idealAudience', 'audiencePainQuote', 'audiencePain', 'whyChooseYou', 'competitor1', 'competitor2', 'competitor3', 'competitorGap',
+      'vpAudience', 'vpGoal', 'vpSystem',
+      'pinterestLink', 'vibeWord1', 'vibeWord2', 'vibeWord3', 'vibeWord4',
+      'headerFont', 'bodyFont', 'accentFont',
+      'logoUsageRules',
+      'value1Always', 'value1Never', 'value2Always', 'value2Never',
+      'darkLightAdj', 'scaleAdj'
+    ];
+    textKeys.forEach(k => { h[k] = (e) => this.update(k, e.target.value); });
+
+    h.colorPrimary = (e) => this.handleColorChange('colorPrimary', e.target.value);
+    h.colorSecondary = (e) => this.handleColorChange('colorSecondary', e.target.value);
+    h.colorAccent1 = (e) => this.handleColorChange('colorAccent1', e.target.value);
+    h.colorAccent2 = (e) => this.handleColorChange('colorAccent2', e.target.value);
+    h.dismissToast = (id) => this.dismissToast(id);
+
+    h.save = () => this.saveData();
+    h.reset = () => this.resetData();
+    h.setPanelContentRef = (el) => { this.panelContentRef = el; };
+    h.setLeftPanelRef = (el) => { this.leftPanelRef = el; };
+    h.clearHoverSection = () => this.setState({ hoveredSection: null });
+    h.hoverFoundationOn = () => this.setState({ hoveredSection: 'foundation' });
+    h.hoverValuesOn = () => this.setState({ hoveredSection: 'values' });
+    h.hoverVisualOn = () => this.setState({ hoveredSection: 'visual' });
+    h.hoverStressOn = () => this.setState({ hoveredSection: 'stress' });
+    h.hoverMoodboardOn = () => this.setState({ hoveredSection: 'moodboard' });
+    h.hoverLogoVariationsOn = () => this.setState({ hoveredSection: 'logoVariations' });
+    h.setToolbarRef = (el) => {
+      this.toolbarRef = el;
+      if (el) this.measureToolbarHeight();
+    };
+    h.startResize = () => {
+      document.body.classList.add('om-resizing');
+      this.setState({ isResizing: true });
+    };
+    h.openMobileNav = () => this.setState({ sidebarOpen: true });
+    h.closeMobileNav = () => this.setState({ sidebarOpen: false });
+    h.toggleSidebar = () => {
+      this.setState(s => ({ sidebarOpen: !s.sidebarOpen }));
+    };
+    h.setMoodRef = (el) => { this.sheetRefs.mood = el; };
+    h.logoGridUpload = (e) => this.handleLogoGridUpload(e);
+
+    h.setFormFoundationRef = (el) => { this.formRefs.foundation = el; };
+    h.setFormValuesRef = (el) => { this.formRefs.values = el; };
+    h.setFormVisualRef = (el) => { this.formRefs.visual = el; };
+    h.setFormStressRef = (el) => { this.formRefs.stress = el; };
+    h.setFormMoodboardRef = (el) => { this.formRefs.moodboard = el; };
+    h.setFormLogoVariationsRef = (el) => { this.formRefs.logoVariations = el; };
+
+    const fmtFields = ['businessWhat', 'originStory', 'idealAudience', 'audiencePainQuote', 'audiencePain', 'whyChooseYou', 'competitorGap'];
+    const taRefKey = { businessWhat: 'BusinessWhat', originStory: 'OriginStory', idealAudience: 'IdealAudience', audiencePainQuote: 'AudiencePainQuote', audiencePain: 'AudiencePain', whyChooseYou: 'WhyChooseYou', competitorGap: 'CompetitorGap' };
+    fmtFields.forEach((k) => {
+      const suffix = taRefKey[k];
+      h['set' + suffix + 'TaRef'] = (el) => { this.formRefs['ta_' + k] = el; };
+      h['bold' + suffix] = () => this.applyFormatting(k, '**');
+      h['italic' + suffix] = () => this.applyFormatting(k, '_');
+      h['list' + suffix] = () => this.applyBulletToggle(k);
+    });
+
+    h.darkLightPassYes = () => this.setRadioPair('darkLightPass_yes', 'darkLightPass_no', true);
+    h.darkLightPassNo = () => this.setRadioPair('darkLightPass_yes', 'darkLightPass_no', false);
+    h.scalePassYes = () => this.setRadioPair('scalePass_yes', 'scalePass_no', true);
+    h.scalePassNo = () => this.setRadioPair('scalePass_yes', 'scalePass_no', false);
+
+    h.headerFontSearch = (e) => this.setState({ headerFontSearch: e.target.value });
+    h.bodyFontSearch = (e) => this.setState({ bodyFontSearch: e.target.value });
+    h.accentFontSearch = (e) => this.setState({ accentFontSearch: e.target.value });
+    h.selectHeaderFont = (font) => { this.update('headerFont', font); this.setState({ headerFontOpen: false, headerFontSearch: '' }); };
+    h.selectBodyFont = (font) => { this.update('bodyFont', font); this.setState({ bodyFontOpen: false, bodyFontSearch: '' }); };
+    h.selectAccentFont = (font) => { this.update('accentFont', font); this.setState({ accentFontOpen: false, accentFontSearch: '' }); };
+    h.openHeaderFont = () => this.setState({ headerFontOpen: true });
+    h.openBodyFont = () => this.setState({ bodyFontOpen: true });
+    h.openAccentFont = () => this.setState({ accentFontOpen: true });
+    h.closeHeaderFont = () => setTimeout(() => this.setState({ headerFontOpen: false }), 150);
+    h.closeBodyFont = () => setTimeout(() => this.setState({ bodyFontOpen: false }), 150);
+    h.closeAccentFont = () => setTimeout(() => this.setState({ accentFontOpen: false }), 150);
+
+    h.scrollToFoundation = () => this.scrollToFormSection('foundation');
+    h.scrollToValues = () => this.scrollToFormSection('values');
+    h.scrollToVisual = () => this.scrollToFormSection('visual');
+    h.scrollToStress = () => this.scrollToFormSection('stress');
+    h.scrollToMoodboard = () => this.scrollToFormSection('moodboard');
+    h.scrollToLogoVariations = () => this.scrollToFormSection('logoVariations');
+
+    return h;
+  }
+
+  scrollToFormSection(key) {
+    const el = this.formRefs && this.formRefs[key];
+    if (el && this.leftPanelRef) {
+      this.leftPanelRef.scrollTop = el.offsetTop - 20;
+    }
+  }
+
+  summaryItemStyle(key) {
+    const hovered = this.state.hoveredSection === key;
+    return {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      fontSize: '11px',
+      cursor: 'pointer',
+      padding: '8px',
+      borderRadius: '4px',
+      margin: '-8px',
+      color: hovered ? '#000000' : '#1A1A1A',
+      background: hovered ? '#ECF2F2' : 'transparent'
+    };
+  }
+
+  captureFullPreview() {
+    if (!window.html2canvas || !this.panelContentRef) return Promise.reject(new Error('capture unavailable'));
+    const root = this.panelContentRef;
+    const bg = this.state.f.colorPrimary;
+    // scale 3 over this page's full height (dozens of sheets/avatars/grids)
+    // was too slow / stalled html2canvas outright. The image-slot redraw
+    // pass already restores sharpness for photos/logos regardless of overall
+    // canvas scale, so 2x is enough here and keeps capture time reasonable.
+    const scale = 2;
+    // html2canvas mis-renders <image-slot>'s shadow-DOM <img> as a huge
+    // artifact bleeding past its box (worst for SVG-sourced logos). Blanking
+    // the src, detaching the node, and swapping in a rasterized snapshot all
+    // failed to suppress it reliably. html2canvas's own ignoreElements is
+    // the fix that actually holds up (verified against the real exported
+    // file): it skips the element and its shadow DOM entirely, leaving a
+    // clean blank box, which reprintImageSlots then fills with the correct
+    // image drawn from geometry captured before the capture ran.
+    const rootRect = root.getBoundingClientRect();
+    const slotData = Array.from(root.querySelectorAll('image-slot'))
+      .filter((el) => el.hasAttribute('data-filled'))
+      .map((el) => {
+        const shadowImg = el.shadowRoot && el.shadowRoot.querySelector('.frame img');
+        if (!shadowImg || !shadowImg.src) return null;
+        return {
+          originalSrc: shadowImg.src,
+          fit: el.getAttribute('fit') || 'cover',
+          shape: el.getAttribute('shape') || 'rounded',
+          radius: parseFloat(el.getAttribute('radius') || '12'),
+          frameRect: el.getBoundingClientRect(),
+          imgRect: shadowImg.getBoundingClientRect()
+        };
+      })
+      .filter(Boolean);
+    return window.html2canvas(root, {
+      backgroundColor: bg,
+      scale,
+      useCORS: true,
+      ignoreElements: (node) => node.tagName === 'IMAGE-SLOT'
+    }).then((canvas) => this.reprintImageSlots(canvas, rootRect, scale, slotData).then(() => canvas));
+  }
+
+  // Redraws each filled image-slot's real image onto the captured canvas
+  // using geometry/src gathered from the live DOM before capture.
+  reprintImageSlots(canvas, rootRect, scale, slotData) {
+    if (!slotData.length) return Promise.resolve();
+    const ctx = canvas.getContext('2d');
+    const roundRectPath = (x, y, w, h, r) => {
+      const rr = Math.min(r, w / 2, h / 2);
+      const p = new Path2D();
+      p.moveTo(x + rr, y);
+      p.arcTo(x + w, y, x + w, y + h, rr);
+      p.arcTo(x + w, y + h, x, y + h, rr);
+      p.arcTo(x, y + h, x, y, rr);
+      p.arcTo(x, y, x + w, y, rr);
+      p.closePath();
+      return p;
+    };
+    const jobs = slotData.map((s) => new Promise((resolve) => {
+      const src = new Image();
+      src.crossOrigin = 'anonymous';
+      src.onload = () => {
+        const iw = src.naturalWidth || 1, ih = src.naturalHeight || 1;
+        const { fit, frameRect, imgRect, shape, radius } = s;
+        ctx.save();
+        if (fit === 'cover') {
+          const dx = (frameRect.left - rootRect.left) * scale;
+          const dy = (frameRect.top - rootRect.top) * scale;
+          const dw = frameRect.width * scale;
+          const dh = frameRect.height * scale;
+          if (dw > 0 && dh > 0) {
+            if (shape === 'circle' || shape === 'pill') ctx.clip(roundRectPath(dx, dy, dw, dh, Math.min(dw, dh) / 2));
+            else if (shape === 'rounded') ctx.clip(roundRectPath(dx, dy, dw, dh, radius * scale));
+            const sfx = iw / (imgRect.width || 1);
+            const sx = (frameRect.left - imgRect.left) * sfx;
+            const sy = (frameRect.top - imgRect.top) * sfx;
+            const sw = frameRect.width * sfx;
+            const sh = frameRect.height * sfx;
+            ctx.drawImage(src, sx, sy, sw, sh, dx, dy, dw, dh);
+          }
+        } else {
+          const dx = (imgRect.left - rootRect.left) * scale;
+          const dy = (imgRect.top - rootRect.top) * scale;
+          const dw = imgRect.width * scale;
+          const dh = imgRect.height * scale;
+          if (dw > 0 && dh > 0) ctx.drawImage(src, 0, 0, iw, ih, dx, dy, dw, dh);
+        }
+        ctx.restore();
+        resolve();
+      };
+      src.onerror = () => resolve();
+      src.src = s.originalSrc;
+    }));
+    return Promise.all(jobs);
+  }
+
+  exportFullPNG() {
+    this.captureFullPreview().then((canvas) => {
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = (this.state.f.brandName || 'brand-dashboard').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }).catch(() => this.addToast('Could not generate PNG. Try again.'));
+  }
+
+  exportFullPDF() {
+    this.captureFullPreview().then((canvas) => {
+      if (!window.jspdf) return;
+      const { jsPDF } = window.jspdf;
+      const MAX_DIM = 10500;
+      let source = canvas;
+      const maxSide = Math.max(canvas.width, canvas.height);
+      if (maxSide > MAX_DIM) {
+        const factor = MAX_DIM / maxSide;
+        const scaled = document.createElement('canvas');
+        scaled.width = Math.round(canvas.width * factor);
+        scaled.height = Math.round(canvas.height * factor);
+        scaled.getContext('2d').drawImage(canvas, 0, 0, scaled.width, scaled.height);
+        source = scaled;
+      }
+      const w = source.width;
+      const h = source.height;
+      const doc = new jsPDF({ unit: 'px', format: [w, h], orientation: w > h ? 'landscape' : 'portrait' });
+      doc.addImage(source.toDataURL('image/png'), 'PNG', 0, 0, w, h);
+      doc.save((this.state.f.brandName || 'brand-dashboard').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.pdf');
+    }).catch(() => this.addToast('Could not generate PDF. Try again.'));
+  }
+
+  renderVals() {
+    const f = this.state.f;
+    const h = this.buildHandlers();
+
+    // Filter fonts based on search input
+    const filterFonts = (search) => {
+      const query = search.toLowerCase();
+      return this.allFontOptions.filter(font => font.toLowerCase().includes(query));
+    };
+    const CAP = 60;
+    const headerFontNames = (this.state.headerFontSearch ? filterFonts(this.state.headerFontSearch) : this.allFontOptions).slice(0, CAP);
+    const bodyFontNames = (this.state.bodyFontSearch ? filterFonts(this.state.bodyFontSearch) : this.allFontOptions).slice(0, CAP);
+    const accentFontNames = (this.state.accentFontSearch ? filterFonts(this.state.accentFontSearch) : this.allFontOptions).slice(0, CAP);
+
+    // Load webfont stylesheets on demand for whichever fonts are visible/selected
+    this.ensureFontsLoaded([f.headerFont, f.bodyFont, f.accentFont, ...headerFontNames, ...bodyFontNames, ...accentFontNames]);
+
+    // Build option objects with bound select handlers (template holes can't call arbitrary functions)
+    const headerFontOptions = headerFontNames.map(name => ({ name, isSelected: f.headerFont === name, select: () => h.selectHeaderFont(name) }));
+    const bodyFontOptions = bodyFontNames.map(name => ({ name, isSelected: f.bodyFont === name, select: () => h.selectBodyFont(name) }));
+    const accentFontOptions = accentFontNames.map(name => ({ name, isSelected: f.accentFont === name, select: () => h.selectAccentFont(name) }));
+
+    const sel = f.archetypesSelected || [];
+    const archetypesArr = this.archetypeDefs.map(a => {
+      const isSel = sel.includes(a.id);
+      return {
+        ...a,
+        toggle: () => this.toggleArchetype(a.id),
+        borderColor: isSel ? '#1A1A1A' : '#D8D8D4',
+        bg: isSel ? '#002222' : '#F4F4F2',
+        textColor: isSel ? '#FFFFFF' : '#1A1A1A',
+        descColor: isSel ? '#CBCBCB' : '#666666'
+      };
+    });
+    const archetype1Id = sel[0], archetype2Id = sel[1];
+    const archetype1Label = archetype1Id ? this.archetypeDefs.find(a => a.id === archetype1Id).label : '';
+    const archetype2Label = archetype2Id ? this.archetypeDefs.find(a => a.id === archetype2Id).label : '';
+    const archetype1Desc = archetype1Id ? this.archetypeDefs.find(a => a.id === archetype1Id).desc : '';
+    const archetype2Desc = archetype2Id ? this.archetypeDefs.find(a => a.id === archetype2Id).desc : '';
+    const hasProposition = !!(f.vpAudience && f.vpGoal && f.vpSystem);
+    const aboutPainTextColor = this.contrastColor(f.colorPrimary);
+    const aboutGapTextColor = this.bestTextColor(f.colorAccent2).color;
+    const competitorPillsArr = [f.competitor1, f.competitor2, f.competitor3].filter(Boolean);
+    const aboutBusinessWhatNodes = this.formatBlock(f.businessWhat);
+    const aboutOriginStoryNodes = this.formatBlock(f.originStory);
+    const aboutIdealAudienceNodes = this.formatBlock(f.idealAudience);
+    const aboutPainQuoteNodes = this.formatBlock(f.audiencePainQuote);
+    const aboutPainNodes = this.formatBlock(f.audiencePain);
+    const aboutWhyChooseNodes = this.formatBlock(f.whyChooseYou);
+    const aboutGapNodes = this.formatBlock(f.competitorGap);
+    const modeTestLightTextColor = this.contrastColor(f.colorAccent1);
+    const hasArchetype1 = !!archetype1Id;
+    const hasArchetype2 = !!archetype2Id;
+    const hasBothArchetypes = hasArchetype1 && hasArchetype2 && !!(f.value1Always && f.value2Always);
+    const valuesAlwaysCombined = [f.value1Always, f.value2Always].filter(Boolean).join(' and ');
+    const valuesNeverCombined = [f.value1Never, f.value2Never].filter(Boolean).join(' and ');
+    const hasValue1 = !!(f.value1Always || f.value1Never);
+    const hasValue2 = !!(f.value2Always || f.value2Never);
+    const notAnyValues = !hasValue1 && !hasValue2;
+    const value1Display = hasValue1
+      ? [`I will always ${f.value1Always || '...'}`, `I will never ${f.value1Never || '...'}`]
+      : ['I will always...', 'I will never...'];
+    const value2Display = hasValue2
+      ? [`I will always ${f.value2Always || '...'}`, `I will never ${f.value2Never || '...'}`]
+      : ['I will always...', 'I will never...'];
+    const value1Color = hasValue1 ? '#1A1A1A' : '#8a8a86';
+    const value2Color = hasValue2 ? '#1A1A1A' : '#8a8a86';
+
+    const stressTest = (yes, no) => yes ? { status: 'PASS', color: '#1A7F37' } : (no ? { status: 'NEEDS WORK', color: '#B3261E' } : { status: 'NOT TESTED', color: '#8a8a86' });
+    const dt = stressTest(f.darkLightPass_yes, f.darkLightPass_no);
+    const st = stressTest(f.scalePass_yes, f.scalePass_no);
+    const stressTestsArr = [
+      { label: 'Dark / Light Mode Test', status: dt.status, color: dt.color },
+      { label: 'Scale Test', status: st.status, color: st.color }
+    ];
+
+    const avatarTestSizes = [200, 175, 149, 124, 98].map(size => ({
+      size,
+      px: size + 'px',
+      pxLabel: size + ' x ' + size
+    }));
+
+    const stressMarksBase = [{ id: 'brand-logo', label: 'Logo' }];
+    const multiMark = stressMarksBase.length > 1;
+    const stressMarks = stressMarksBase.map(m => ({
+      ...m,
+      roundedLabel: 'Rounded stress test' + (multiMark ? ' — ' + m.label : ''),
+      squareLabel: 'Square stress test' + (multiMark ? ' — ' + m.label : '')
+    }));
+
+    const colorLawsArr = [
+      { hex: f.colorPrimary, label: 'Primary', col: '1 / 3', height: '128px' },
+      { hex: f.colorSecondary, label: 'Secondary', col: '1 / 3', height: '92px' },
+      { hex: f.colorAccent1, label: 'Accent 1', col: '1 / 2', height: '64px' },
+      { hex: f.colorAccent2, label: 'Accent 2', col: '2 / 3', height: '64px' }
+    ].map(c => ({ ...c, textColor: this.contrastColor(c.hex) }));
+
+    const moodSwatchArr = colorLawsArr.map(c => ({ hex: c.hex, textColor: c.textColor }));
+    const moodSlotDefs = [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({ id: 'mood' + n, label: 'Image ' + n }));
+
+    const logoGridFilesRaw = this.state.logoGridFiles || [];
+    const logoGridCount = logoGridFilesRaw.length;
+    const logoGridHasFiles = logoGridCount > 0;
+    const logoGridCols = 3;
+    const logoGridCountLabel = logoGridCount === 0 ? 'No logos uploaded yet — add 3–6 to build the grid.' : (logoGridCount + ' of 6 uploaded' + (logoGridCount < 3 ? ' — add at least 3 for a full grid.' : '.'));
+    
+    const logoGridThumbs = logoGridHasFiles ? logoGridFilesRaw.map(item => 
+      React.createElement('div', { key: item.id, style: { position: 'relative', aspectRatio: '1', border: '1px solid #D8D8D4', borderRadius: '8px', overflow: 'hidden', background: '#fff' } },
+        React.createElement('img', { src: item.dataUrl, style: { width: '100%', height: '100%', objectFit: 'contain', padding: '8px', boxSizing: 'border-box' } }),
+        React.createElement('button', { onClick: () => this.removeLogoGridFile(item.id), style: { position: 'absolute', top: '4px', right: '4px', width: '20px', height: '20px', borderRadius: '50%', border: 'none', background: '#1A1A1A', color: '#fff', fontSize: '12px', lineHeight: '1', cursor: 'pointer', padding: '0' } }, '×')
+      )
+    ) : null;
+    
+    const logoGridOutput = logoGridHasFiles ? logoGridFilesRaw.map(item =>
+      React.createElement('div', { key: item.id, style: { aspectRatio: '1', border: '1px solid #E5E5E5', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FAFAF9', padding: '24px', boxSizing: 'border-box' } },
+        React.createElement('img', { src: item.dataUrl, style: { maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' } })
+      )
+    ) : null;
+
+    const paletteSummary = 'Primary ' + f.colorPrimary + ', Secondary ' + f.colorSecondary + ', Accent 1 ' + f.colorAccent1 + ', Accent 2 ' + f.colorAccent2 + '.';
+
+    const toolbarBg = f.colorSecondary;
+    const toolbarTextColor = this.bestTextColor(f.colorSecondary).color;
+    const pageBg = f.colorPrimary;
+    const blockBg = f.colorAccent1;
+    const blockHeaderColor = f.colorSecondary;
+    const toasts = (this.state.toasts || []).map(t => ({ ...t, dismiss: () => this.dismissToast(t.id) }));
+
+    const sectionFoundationComplete = this.isSectionComplete('foundation');
+    const sectionValuesComplete = this.isSectionComplete('values');
+    const sectionVisualComplete = this.isSectionComplete('visual');
+    const sectionStressComplete = this.isSectionComplete('stress');
+
+    return {
+      f: {
+        ...f,
+        brandNameOrPlaceholder: f.brandName || 'Project Name',
+        industryOrPlaceholder: f.industry || 'Add type of industry',
+        archetype1Label,
+        archetype2Label,
+        businessWhatDisplay: f.businessWhat,
+        idealAudienceDisplay: f.idealAudience,
+        competitorsCombined: [f.competitor1, f.competitor2, f.competitor3].filter(Boolean).join(', ')
+      },
+      h,
+      archetype1Label,
+      archetype2Label,
+      archetype1Desc,
+      archetype2Desc,
+      hasProposition,
+      aboutPainTextColor,
+      aboutGapTextColor,
+      competitorPillsArr,
+      aboutBusinessWhatNodes,
+      aboutOriginStoryNodes,
+      aboutIdealAudienceNodes,
+      aboutPainQuoteNodes,
+      aboutPainNodes,
+      aboutWhyChooseNodes,
+      aboutGapNodes,
+      modeTestLightTextColor,
+      modeTestLightBorder: this.state.modeTestLightFilled ? 'none' : '1.5px dashed rgba(0,0,0,0.25)',
+      modeTestDarkBorder: this.state.modeTestDarkFilled ? 'none' : '1.5px dashed rgba(255,255,255,0.5)',
+      exportMenuOpen: this.state.exportMenuOpen,
+      leftPanelWidth: this.state.leftPanelWidth,
+      isMobile: this.state.isMobile,
+      notMobile: !this.state.isMobile,
+      mobileBackdropVisible: this.state.isMobile && this.state.sidebarOpen,
+      leftPanelStyle: this.state.isMobile
+        ? (this.state.sidebarOpen
+          ? ('position:fixed; top:0; left:0; height:100%; width:85vw; min-width:320px; max-width:85vw; overflow-y:auto; border-right:1px solid #E5E5E0; background:#FFFFFF; z-index:50; box-shadow:0 0 40px rgba(0,0,0,0.35); transition:' + (this.state.suppressSidebarTransition ? 'none' : 'transform .25s ease') + '; transform:translateX(0);')
+          : 'width:40px; min-width:40px; max-width:40px; height:100%; overflow:hidden; border-right:none; background:#FFFFFF; position:relative; padding:0;')
+        : (this.state.sidebarOpen
+          ? ('width:' + this.state.leftPanelWidth + '%; min-width:320px; max-width:540px; height:100%; overflow-y:auto; border-right:1px solid #E5E5E0; background:#FFFFFF; position:relative;')
+          : 'width:40px; min-width:40px; max-width:40px; height:100%; overflow:hidden; border-right:none; background:#FFFFFF; position:relative; padding:0;'),
+      sidebarCollapsed: !this.state.sidebarOpen,
+      sidebarExpanded: this.state.sidebarOpen,
+      toolbarHeightPx: this.state.toolbarHeight + 'px',
+      showDivider: !this.state.isMobile && this.state.sidebarOpen,
+      dashboardTitle: f.brandName ? (f.brandName + ' Brand Dashboard — Live Preview') : 'Brand Dashboard — Live Preview',
+      allFontOptions: this.allFontOptions,
+      headerFontOptions,
+      bodyFontOptions,
+      accentFontOptions,
+      headerFontCountLabel: this.state.headerFontSearch ? (headerFontOptions.length + ' match' + (headerFontOptions.length === 1 ? '' : 'es')) : (this.allFontOptions.length + ' fonts — type to search'),
+      bodyFontCountLabel: this.state.bodyFontSearch ? (bodyFontOptions.length + ' match' + (bodyFontOptions.length === 1 ? '' : 'es')) : (this.allFontOptions.length + ' fonts — type to search'),
+      accentFontCountLabel: this.state.accentFontSearch ? (accentFontOptions.length + ' match' + (accentFontOptions.length === 1 ? '' : 'es')) : (this.allFontOptions.length + ' fonts — type to search'),
+      headerFontSearch: this.state.headerFontSearch,
+      bodyFontSearch: this.state.bodyFontSearch,
+      accentFontSearch: this.state.accentFontSearch,
+      headerFontFieldValue: this.state.headerFontOpen ? this.state.headerFontSearch : (this.state.headerFontSearch || f.headerFont),
+      bodyFontFieldValue: this.state.bodyFontOpen ? this.state.bodyFontSearch : (this.state.bodyFontSearch || f.bodyFont),
+      accentFontFieldValue: this.state.accentFontOpen ? this.state.accentFontSearch : (this.state.accentFontSearch || f.accentFont),
+      headerFontOpen: this.state.headerFontOpen,
+      bodyFontOpen: this.state.bodyFontOpen,
+      accentFontOpen: this.state.accentFontOpen,
+      notBusinessWhat: !f.businessWhat,
+      notIdealAudience: !f.idealAudience,
+      notAudiencePain: !f.audiencePain,
+      notWhyChooseYou: !f.whyChooseYou,
+      notCompetitor1: !f.competitor1,
+      notCompetitorGap: !f.competitorGap,
+      notOriginStory: !f.originStory,
+      notVibeWords: !(f.vibeWord1 && f.vibeWord2 && f.vibeWord3 && f.vibeWord4),
+      paletteSummary,
+      archetypesArr,
+      hasArchetype1,
+      hasArchetype2,
+      notArchetype1Label: !archetype1Label,
+      notArchetype2Label: !archetype2Label,
+      hasBothArchetypes,
+      notBothArchetypes: !hasBothArchetypes,
+      hasValue1,
+      hasValue2,
+      notAnyValues,
+      value1Line1: value1Display[0],
+      value1Line2: value1Display[1],
+      value2Line1: value2Display[0],
+      value2Line2: value2Display[1],
+      value1Color,
+      value2Color,
+      valuesAlwaysCombined,
+      valuesNeverCombined,
+      moodSwatchArr,
+      moodSlotDefs,
+      logoGridThumbs,
+      logoGridOutput,
+      logoGridHasFiles,
+      notLogoGridHasFiles: !logoGridHasFiles,
+      logoGridCols,
+      logoGridCountLabel,
+      stressTestsArr,
+      colorLawsArr,
+      avatarTestSizes,
+      stressMarks,
+      notLogoUsageRules: !f.logoUsageRules,
+      checkFoundation: sectionFoundationComplete ? '✓' : '✕',
+      checkValues: sectionValuesComplete ? '✓' : '✕',
+      checkVisual: sectionVisualComplete ? '✓' : '✕',
+      checkStress: sectionStressComplete ? '✓' : '✕',
+      checkMoodboard: this.isSectionComplete('moodboard') ? '✓' : '✕',
+      checkLogoVariations: this.isSectionComplete('logoVariations') ? '✓' : '✕',
+      summaryItemStyleFoundation: this.summaryItemStyle('foundation'),
+      summaryItemStyleValues: this.summaryItemStyle('values'),
+      summaryItemStyleVisual: this.summaryItemStyle('visual'),
+      summaryItemStyleStress: this.summaryItemStyle('stress'),
+      summaryItemStyleMoodboard: this.summaryItemStyle('moodboard'),
+      summaryItemStyleLogoVariations: this.summaryItemStyle('logoVariations'),
+      toolbarBg,
+      toolbarTextColor,
+      pageBg,
+      blockBg,
+      blockHeaderColor,
+      toasts,
+      saveLabel: this.state.justSaved ? 'Saved ✓' : 'Save'
+    };
+  }
+}
+</script>
+</body>
+</html>

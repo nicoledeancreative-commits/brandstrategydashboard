@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  brandName String @default("")
+  industry  String @default("")
+
+  businessWhat      String @default("")
+  originStory       String @default("")
+  idealAudience     String @default("")
+  audiencePainQuote String @default("")
+  audiencePain      String @default("")
+  whyChooseYou      String @default("")
+
+  competitor1   String @default("")
+  competitor2   String @default("")
+  competitor3   String @default("")
+  competitorGap String @default("")
+
+  // JSON array of up to 2 archetype ids, e.g. ["coach","anchor"]
+  archetypesSelected String @default("[]")
+
+  value1Always String @default("")
+  value1Never  String @default("")
+  value2Always String @default("")
+  value2Never  String @default("")
+
+  vpAudience String @default("")
+  vpGoal     String @default("")
+  vpSystem   String @default("")
+
+  vibeWord1 String @default("")
+  vibeWord2 String @default("")
+  vibeWord3 String @default("")
+  vibeWord4 String @default("")
+
+  headerFont String @default("Anton")
+  bodyFont   String @default("Inter")
+  accentFont String @default("Caveat")
+
+  colorPrimary   String @default("#1A1A1A")
+  colorSecondary String @default("#8A8A86")
+  colorAccent1   String @default("#E5E5E5")
+  colorAccent2   String @default("#FFFFFF")
+
+  darkLightPassYes Boolean @default(false)
+  darkLightPassNo  Boolean @default(false)
+  darkLightAdj     String  @default("")
+  scalePassYes     Boolean @default(false)
+  scalePassNo      Boolean @default(false)
+  scaleAdj         String  @default("")
+
+  logoUsageRules String @default("")
+
+  // Images are stored on disk under public/uploads; these columns hold the served URL.
+  primaryLogoUrl   String?
+  faviconUrl       String?
+  modeTestLightUrl String?
+  modeTestDarkUrl  String?
+
+  // JSON array of 8 entries, each a URL string or null: ["/uploads/x.webp", null, ...]
+  moodboardImages String @default("[null,null,null,null,null,null,null,null]")
+
+  // JSON array of { id: string, url: string, name: string }, 0-6 entries
+  logoVariations String @default("[]")
+}

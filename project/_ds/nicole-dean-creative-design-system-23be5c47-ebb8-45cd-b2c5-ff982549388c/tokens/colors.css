@@ -1,0 +1,26 @@
+:root {
+  /* Primary */
+  --color-primary: #002222;
+  
+  /* Secondary */
+  --color-secondary: #01817F;
+  
+  /* Accents */
+  --color-accent-1: #ECF2F2;
+  --color-accent-2: #CB8F16;
+  
+  /* Semantic color aliases */
+  --text-primary: #002222;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9F9;
+  --bg-tertiary: #ECF2F2;
+  
+  --border-primary: #D0D5D5;
+  --border-secondary: #E0E5E5;
+  
+  --accent-warm: #CB8F16;
+  --accent-cool: #01817F;
+}
