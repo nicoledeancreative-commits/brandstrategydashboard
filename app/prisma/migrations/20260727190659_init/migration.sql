@@ -1,8 +1,11 @@
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
+
 -- CreateTable
 CREATE TABLE "Project" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "brandName" TEXT NOT NULL DEFAULT '',
     "industry" TEXT NOT NULL DEFAULT '',
     "businessWhat" TEXT NOT NULL DEFAULT '',
@@ -46,5 +49,7 @@ CREATE TABLE "Project" (
     "modeTestLightUrl" TEXT,
     "modeTestDarkUrl" TEXT,
     "moodboardImages" TEXT NOT NULL DEFAULT '[null,null,null,null,null,null,null,null]',
-    "logoVariations" TEXT NOT NULL DEFAULT '[]'
+    "logoVariations" TEXT NOT NULL DEFAULT '[]',
+
+    CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );
