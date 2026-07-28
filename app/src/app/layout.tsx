@@ -22,7 +22,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Brand Strategy Dashboard (preview test)",
+  title: "Brand Strategy Dashboard",
   description: "Brand strategy intake and live preview dashboard",
 };
 
