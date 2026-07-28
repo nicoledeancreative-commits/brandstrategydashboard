@@ -85,7 +85,7 @@ export function ImageSlot({
         position: "relative",
         display: "inline-block",
         overflow: "hidden",
-        background: url ? "transparent" : "rgba(0,0,0,0.04)",
+        background: "transparent",
         borderRadius,
         cursor: readOnly ? "default" : "pointer",
         ...style,
