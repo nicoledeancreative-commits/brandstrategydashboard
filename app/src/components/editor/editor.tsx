@@ -469,7 +469,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           maxWidth: "85vw",
           overflowY: "auto" as const,
           borderRight: "1px solid #E5E5E0",
-          background: "#FFFFFF",
+          background: "#F4F4F2",
           zIndex: 50,
           boxShadow: "0 0 40px rgba(0,0,0,0.35)",
           transition: suppressSidebarTransition ? "none" : "transform .25s ease",
@@ -482,7 +482,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           height: "100%",
           overflow: "hidden" as const,
           borderRight: "none",
-          background: "#FFFFFF",
+          background: "#F4F4F2",
           position: "relative" as const,
           padding: 0,
         }
@@ -494,7 +494,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           height: "100%",
           overflowY: "auto" as const,
           borderRight: "1px solid #E5E5E0",
-          background: "#FFFFFF",
+          background: "#F4F4F2",
           position: "relative" as const,
         }
       : {
@@ -504,7 +504,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           height: "100%",
           overflow: "hidden" as const,
           borderRight: "none",
-          background: "#FFFFFF",
+          background: "#F4F4F2",
           position: "relative" as const,
           padding: 0,
         };
@@ -532,7 +532,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
 
       <div ref={leftPanelRef} className="om-left-panel" style={leftPanelStyle}>
         {!sidebarOpen ? (
-          <div style={{ width: 40, height: "100%", background: "#FFFFFF", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ width: 40, height: "100%", background: "#F4F4F2", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <button
               onClick={() => setSidebarOpen(true)}
               title="Edit brand details"
