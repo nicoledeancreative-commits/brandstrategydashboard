@@ -150,34 +150,32 @@ export function ImageSlot({
           }}
         />
       ) : (
-        !readOnly && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 6,
-              textAlign: "center",
-              padding: 12,
-              boxSizing: "border-box",
-              color: "rgba(0,0,0,0.55)",
-              font: "13px/1.3 system-ui,-apple-system,sans-serif",
-            }}
-          >
-            <ImageIcon size={26} strokeWidth={1.6} style={{ opacity: 0.45 }} />
-            <div style={{ maxWidth: "90%", fontWeight: 500, letterSpacing: "0.01em" }}>
-              {busy ? "Uploading…" : placeholder}
-            </div>
-            {!busy && (
-              <div style={{ fontSize: 11 }}>
-                or <u style={{ textUnderlineOffset: 2 }}>browse files</u>
-              </div>
-            )}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            textAlign: "center",
+            padding: 12,
+            boxSizing: "border-box",
+            color: "rgba(0,0,0,0.55)",
+            font: "13px/1.3 system-ui,-apple-system,sans-serif",
+          }}
+        >
+          <ImageIcon size={26} strokeWidth={1.6} style={{ opacity: 0.45 }} />
+          <div style={{ maxWidth: "90%", fontWeight: 500, letterSpacing: "0.01em" }}>
+            {busy ? "Uploading…" : placeholder}
           </div>
-        )
+          {!readOnly && !busy && (
+            <div style={{ fontSize: 11 }}>
+              or <u style={{ textUnderlineOffset: 2 }}>browse files</u>
+            </div>
+          )}
+        </div>
       )}
 
       {ring && !url && !readOnly && (
