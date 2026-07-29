@@ -297,7 +297,7 @@ export function PreviewPanel({
                 url={f.modeTestLightUrl}
                 onUpload={(u) => patchImage({ modeTestLightUrl: u })}
                 onRemove={() => patchImage({ modeTestLightUrl: null })}
-                placeholder="Drop logo (jpg, png, svg)"
+                placeholder="Drop logo image"
                 fit="contain"
                 shape="rect"
                 style={{ width: "100%", height: "100%" }}
@@ -311,7 +311,7 @@ export function PreviewPanel({
                 url={f.modeTestDarkUrl}
                 onUpload={(u) => patchImage({ modeTestDarkUrl: u })}
                 onRemove={() => patchImage({ modeTestDarkUrl: null })}
-                placeholder="Drop logo (jpg, png, svg)"
+                placeholder="Drop logo image"
                 fit="contain"
                 shape="rect"
                 style={{ width: "100%", height: "100%" }}

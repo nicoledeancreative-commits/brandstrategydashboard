@@ -360,7 +360,7 @@ export function SidebarForm({
 
         <div>
           <div className="mb-2.5 font-sans text-editor-body font-normal text-[#1A1A1A]">
-            Primary Logo <span style={requiredMarkStyle}>*</span>
+            Primary logo <span style={requiredMarkStyle}>*</span>
           </div>
           <div style={{ minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <ImageSlot
@@ -385,7 +385,7 @@ export function SidebarForm({
               url={project.faviconUrl}
               onUpload={(url) => patchImage({ faviconUrl: url })}
               onRemove={() => patchImage({ faviconUrl: null })}
-              placeholder="Drag & drop your favicon here (PNG, JPG, or SVG)"
+              placeholder="Drag & drop your favicon here"
               fit="contain"
               radius={8}
               ring={false}
@@ -408,8 +408,8 @@ export function SidebarForm({
         <div>
           <div className="mb-2 font-sans text-editor-body font-normal text-[#1A1A1A]">Stress test</div>
           <div className="font-sans text-editor-label font-normal leading-relaxed text-[#1A1A1A]">
-            Pulled automatically from your Section 03 upload(s) — shown at 200, 175, 149, 124, and 98px below. Upload only a logo/icon or only a
-            wordmark and that mark is tested; upload both and you&apos;ll see both, each labeled.
+            Pulled automatically from your Primary Logo and Favicon uploads in Section 03 — shown at 200, 175, 149, 124, and 98px below (plus 16 and
+            32px for the favicon), so you can check legibility at every size.
           </div>
         </div>
 
@@ -464,7 +464,7 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px" }}>
         <div className="mb-4 font-sans text-editor-label font-semibold text-[#1A1A1A]">
-          Upload Images <span style={requiredMarkStyle}>*</span>
+          Upload images <span style={requiredMarkStyle}>*</span>
         </div>
         <div className="om-mood-upload-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
           {project.moodboardImages.map((url, i) => (
@@ -500,7 +500,7 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px", display: "flex", flexDirection: "column", gap: 13 }}>
         <div className="font-sans text-editor-label font-semibold text-[#1A1A1A]">
-          Logo Variations <span style={requiredMarkStyle}>*</span>
+          Logo variations <span style={requiredMarkStyle}>*</span>
         </div>
         <label
           className="om-file-label"
@@ -519,7 +519,7 @@ export function SidebarForm({
           }}
         >
           <span className="font-sans text-editor-label font-bold text-[#1A1A1A]">Click to upload logo files</span>
-          <span className="font-sans text-editor-label font-normal text-[#666666]">Select 3–6 images at once (PNG, JPG, SVG)</span>
+          <span className="font-sans text-editor-label font-normal text-[#666666]">Select 3–6 images at once</span>
           <input
             type="file"
             accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml"
@@ -595,6 +595,7 @@ export function SidebarForm({
                 onClick={() => onScrollToSection(key)}
                 onMouseEnter={() => onHoverSection(key)}
                 onMouseLeave={() => onHoverSection(null)}
+                aria-label={`${SECTION_LABELS[key]}: ${completion[key] ? "Complete" : "Incomplete"}`}
                 className="font-sans text-editor-label"
                 style={{
                   display: "flex",
@@ -610,8 +611,8 @@ export function SidebarForm({
                   background: hovered ? "rgba(255,255,255,0.12)" : "transparent",
                 }}
               >
-                <span>{SECTION_LABELS[key]}</span>
-                <span style={{ fontSize: 17 }}>{completion[key] ? "✓" : "✕"}</span>
+                <span aria-hidden="true">{SECTION_LABELS[key]}</span>
+                <span aria-hidden="true" style={{ fontSize: 17 }}>{completion[key] ? "✓" : "✕"}</span>
               </button>
             );
           })}
