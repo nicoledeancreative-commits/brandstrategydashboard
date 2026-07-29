@@ -349,7 +349,7 @@ export function PreviewPanel({
         {project.logoVariations.length > 0 ? (
           <div className="om-logo-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 19 }}>
             {project.logoVariations.map((item) => (
-              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAF9", padding: 24, boxSizing: "border-box" }}>
+              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", padding: 24, boxSizing: "border-box" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
               </div>

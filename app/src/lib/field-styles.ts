@@ -6,8 +6,8 @@ export const requiredMarkStyle: React.CSSProperties = {
 };
 
 export const sectionHeaderStyle: React.CSSProperties = {
-  background: "#F4F4F2",
-  color: "#1A1A1A",
+  background: "#5C5C58",
+  color: "#F4F4F2",
   padding: "24px 32px",
   display: "flex",
   alignItems: "baseline",
@@ -19,7 +19,7 @@ export const sectionTitleStyle: React.CSSProperties = {
   letterSpacing: "0.2px",
   fontSize: 22,
   fontWeight: 400,
-  color: "#1A1A1A",
+  color: "#F4F4F2",
 };
 
 export const sectionDescStyle: React.CSSProperties = {
@@ -28,7 +28,7 @@ export const sectionDescStyle: React.CSSProperties = {
   fontWeight: 500,
   marginTop: 10,
   lineHeight: 1.5,
-  color: "#1A1A1A",
+  color: "#CBCBC7",
 };
 
 export const sectionPadStyle: React.CSSProperties = {

@@ -64,8 +64,8 @@ export function ImageSlot({
       try {
         const uploadedUrl = await uploadFile(file);
         onUpload?.(uploadedUrl);
-      } catch {
-        toast.error("Could not upload that image. Try again.");
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Could not upload that image. Try again.");
       } finally {
         setBusy(false);
       }

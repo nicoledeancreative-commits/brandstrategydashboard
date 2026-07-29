@@ -456,7 +456,7 @@ export function SidebarForm({
       </div>
 
       {/* 05. Moodboard Imagery */}
-      <div ref={setRef("moodboard")} style={{ background: "#F4F4F2", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("moodboard")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={sectionTitleStyle}>05.&nbsp;Moodboard Imagery</div>
         <div style={sectionDescStyle}>Upload 8 images for the moodboard grid — each will crop to fill its frame.</div>
       </div>
@@ -490,7 +490,7 @@ export function SidebarForm({
       </div>
 
       {/* 06. Logo Variations Grid */}
-      <div ref={setRef("logoVariations")} style={{ background: "#F4F4F2", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("logoVariations")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={sectionTitleStyle}>06.&nbsp;Logo Variations Grid</div>
         <div style={sectionDescStyle}>
           Upload 3–6 logo variations (icon, wordmark, reversed, mono, stacked, etc.) in one go — they&apos;ll display together in a grid.
@@ -567,8 +567,8 @@ export function SidebarForm({
       </div>
 
       {/* Section Completion Summary */}
-      <div style={{ background: "#F4F4F2", borderTop: "1px solid #E5E5E0", padding: "23px 32px", marginTop: 24 }}>
-        <div style={{ fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#1A1A1A" }}>
+      <div style={{ background: "#5C5C58", padding: "23px 32px", marginTop: 24 }}>
+        <div style={{ fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#F4F4F2" }}>
           Section Completion Summary
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
@@ -592,8 +592,8 @@ export function SidebarForm({
                   padding: 8,
                   borderRadius: 4,
                   margin: -8,
-                  color: hovered ? "#000000" : "#1A1A1A",
-                  background: hovered ? "#F4F4F2" : "transparent",
+                  color: hovered ? "#FFFFFF" : "#F4F4F2",
+                  background: hovered ? "rgba(255,255,255,0.12)" : "transparent",
                 }}
               >
                 <span>{SECTION_LABELS[key]}</span>
