@@ -20,9 +20,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ARCHETYPE_DEFS, AVATAR_TEST_SIZES, type ProjectData, type ProjectPatch } from "@/lib/types";
+import { toast } from "sonner";
 import { bestTextColor, contrastColor, contrastRatio } from "@/lib/contrast";
 import { formatBlock } from "@/lib/rich-text";
-import { useEditorToast, EditorToastProvider } from "./toast-host";
 import { SidebarForm, type SectionKey } from "./sidebar-form";
 import { PreviewPanel } from "./preview-panel";
 
@@ -78,7 +78,6 @@ function isSectionComplete(section: SectionKey, project: ProjectData): boolean {
 
 function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   const router = useRouter();
-  const { addToast } = useEditorToast();
 
   const [project, setProject] = useState<ProjectData>(initialProject);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -109,10 +108,10 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         });
         if (!res.ok) throw new Error();
       } catch {
-        addToast("Could not save that change — check your connection.");
+        toast.error("Could not save that change — check your connection.");
       }
     },
-    [project.id, addToast]
+    [project.id]
   );
 
   /** Local-only update (matches the prototype: text/color edits live in memory until Save is clicked). */
@@ -135,7 +134,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorSecondary") || touched("colorAccent1")) {
         const ratio = contrastRatio(p.colorSecondary, p.colorAccent1);
         if (ratio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: block header text (Secondary) on block background (Accent 1) is only ${ratio.toFixed(2)}:1 — fails WCAG AA (needs 4.5:1).`
           );
         }
@@ -143,7 +142,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorSecondary")) {
         const best = bestTextColor(p.colorSecondary);
         if (best.ratio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: no readable text color for the header background (Secondary) — best is ${best.ratio.toFixed(2)}:1, fails WCAG AA.`
           );
         }
@@ -151,13 +150,13 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorAccent1")) {
         const bodyRatio = contrastRatio("#1A1A1A", p.colorAccent1);
         if (bodyRatio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: default block body text on new block background (Accent 1) is only ${bodyRatio.toFixed(2)}:1 — fails WCAG AA (needs 4.5:1).`
           );
         }
       }
     },
-    [addToast]
+    []
   );
 
   // Contrast check once on mount, matching the prototype's componentDidMount() call.
@@ -191,11 +190,11 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       setJustSaved(true);
       setTimeout(() => setJustSaved(false), 2000);
     } catch {
-      addToast("Could not save — check your connection and try again.");
+      toast.error("Could not save — check your connection and try again.");
     } finally {
       setSaving(false);
     }
-  }, [project, addToast]);
+  }, [project]);
 
   const handleReset = useCallback(async () => {
     setResetOpen(false);
@@ -204,11 +203,11 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (!res.ok) throw new Error();
       const fresh = await res.json();
       setProject(fresh);
-      addToast("All fields and images have been reset.");
+      toast.success("All fields and images have been reset.");
     } catch {
-      addToast("Could not reset this project.");
+      toast.error("Could not reset this project.");
     }
-  }, [project.id, addToast]);
+  }, [project.id]);
 
   // ---- Layout: mobile detection, resizer, toolbar height ------------------
 
@@ -305,7 +304,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           const { url } = await res.json();
           uploaded.push({ id: `logo_${Date.now()}_${Math.random().toString(36).slice(2)}`, url, name: file.name });
         } catch {
-          addToast(`Could not upload "${file.name}".`);
+          toast.error(`Could not upload "${file.name}".`);
         }
       }
       if (uploaded.length) {
@@ -313,7 +312,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         patchImage({ logoVariations: next });
       }
     },
-    [project.logoVariations, patchImage, addToast]
+    [project.logoVariations, patchImage]
   );
 
   const removeLogoVariation = useCallback(
@@ -371,9 +370,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         URL.revokeObjectURL(url);
       });
     } catch {
-      addToast("Could not generate PNG. Try again.");
+      toast.error("Could not generate PNG. Try again.");
     }
-  }, [captureFullPreview, project.brandName, addToast]);
+  }, [captureFullPreview, project.brandName]);
 
   const exportPDF = useCallback(async () => {
     try {
@@ -396,9 +395,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       doc.addImage(source.toDataURL("image/png"), "PNG", 0, 0, w, h);
       doc.save((project.brandName || "brand-dashboard").toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".pdf");
     } catch {
-      addToast("Could not generate PDF. Try again.");
+      toast.error("Could not generate PDF. Try again.");
     }
-  }, [captureFullPreview, project.brandName, addToast]);
+  }, [captureFullPreview, project.brandName]);
 
   // ---- Computed / derived values ---------------------------------------------
 
@@ -740,11 +739,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
 }
 
 export function Editor({ initialProject }: { initialProject: ProjectData }) {
-  return (
-    <EditorToastProvider>
-      <EditorInner initialProject={initialProject} />
-    </EditorToastProvider>
-  );
+  return <EditorInner initialProject={initialProject} />;
 }
 
 // Re-exported for the preview panel's rich-text rendering.

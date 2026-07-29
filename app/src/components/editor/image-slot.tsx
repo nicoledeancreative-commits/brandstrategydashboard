@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef, useState } from "react";
 import { ImageIcon } from "lucide-react";
-import { useEditorToast } from "./toast-host";
+import { toast } from "sonner";
 
 const ACCEPT = "image/png,image/jpeg,image/webp,image/avif,image/svg+xml";
 
@@ -44,7 +44,6 @@ export function ImageSlot({
   ring = true,
   style,
 }: ImageSlotProps) {
-  const { addToast } = useEditorToast();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -58,7 +57,7 @@ export function ImageSlot({
     async (file: File | undefined) => {
       if (!file) return;
       if (!ACCEPT.split(",").includes(file.type)) {
-        addToast("Drop a PNG, JPEG, WebP, AVIF, or SVG image.");
+        toast.error("Drop a PNG, JPEG, WebP, AVIF, or SVG image.");
         return;
       }
       setBusy(true);
@@ -66,12 +65,12 @@ export function ImageSlot({
         const uploadedUrl = await uploadFile(file);
         onUpload?.(uploadedUrl);
       } catch {
-        addToast("Could not upload that image. Try again.");
+        toast.error("Could not upload that image. Try again.");
       } finally {
         setBusy(false);
       }
     },
-    [addToast, onUpload]
+    [onUpload]
   );
 
   const handleClick = () => {
@@ -163,7 +162,9 @@ export function ImageSlot({
             padding: 12,
             boxSizing: "border-box",
             color: "rgba(0,0,0,0.55)",
-            font: "13px/1.3 system-ui,-apple-system,sans-serif",
+            fontFamily: "var(--font-manrope), sans-serif",
+            fontSize: 13,
+            lineHeight: 1.3,
           }}
         >
           <ImageIcon size={26} strokeWidth={1.6} style={{ opacity: 0.45 }} />
@@ -255,5 +256,7 @@ const controlButtonStyle: React.CSSProperties = {
   cursor: "pointer",
   background: "rgba(0,0,0,.65)",
   color: "#fff",
-  font: "11px/1 system-ui,-apple-system,sans-serif",
+  fontFamily: "var(--font-manrope), sans-serif",
+  fontSize: 11,
+  lineHeight: 1,
 };

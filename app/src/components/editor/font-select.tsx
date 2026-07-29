@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import { ALL_FONT_OPTIONS, ensureFontsLoaded } from "@/lib/fonts";
 import { requiredMarkStyle } from "@/lib/field-styles";
+import { Label } from "@/components/ui/label";
 
 const CAP = 60;
 
@@ -20,6 +21,7 @@ export function FontSelect({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const id = useId();
 
   const filtered = useMemo(() => {
     const list = search
@@ -41,11 +43,12 @@ export function FontSelect({
 
   return (
     <div style={{ flex: "1 1 150px", minWidth: 150 }}>
-      <div style={{ fontSize: 11, fontWeight: 400, marginBottom: 6, color: "#1A1A1A" }}>
+      <Label htmlFor={id} className="mb-1.5 block font-sans text-editor-label font-bold text-[#1A1A1A]">
         {label} {required && <span style={requiredMarkStyle}>*</span>}
-      </div>
+      </Label>
       <div style={{ position: "relative" }}>
         <input
+          id={id}
           type="text"
           value={fieldValue}
           onChange={(e) => setSearch(e.target.value)}
@@ -60,10 +63,11 @@ export function FontSelect({
           style={{
             width: "100%",
             border: "1px solid #D8D8D4",
-            borderRadius: 6,
-            padding: 8,
+            borderRadius: 8,
+            padding: "10px 14px",
             fontFamily: "var(--font-manrope), sans-serif",
-            fontSize: 11,
+            fontSize: 13,
+            fontWeight: 500,
             boxSizing: "border-box",
             outline: "none",
             background: "#F4F4F2",

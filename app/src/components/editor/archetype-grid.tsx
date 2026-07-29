@@ -14,8 +14,10 @@ export function ArchetypeGrid({
       {ARCHETYPE_DEFS.map((a) => {
         const isSel = selected.includes(a.id);
         return (
-          <div
+          <button
             key={a.id}
+            type="button"
+            aria-pressed={isSel}
             onClick={() => onToggle(a.id)}
             style={{
               border: "1px solid #D8D8D4",
@@ -30,10 +32,10 @@ export function ArchetypeGrid({
             <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 11, fontWeight: 700, color: isSel ? "#FFFFFF" : "#1A1A1A" }}>
               {a.label}
             </div>
-            <div style={{ fontSize: 10.5, marginTop: 4, color: isSel ? "#CBCBCB" : "#666666", lineHeight: 1.4 }}>
+            <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 10.5, marginTop: 4, color: isSel ? "#CBCBCB" : "#666666", lineHeight: 1.4 }}>
               {a.desc}
             </div>
-          </div>
+          </button>
         );
       })}
     </div>
