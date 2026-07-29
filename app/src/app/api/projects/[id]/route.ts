@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { toProjectData, patchToPrismaData } from "@/lib/project-serializer";
 import { DEFAULT_PROJECT_PATCH } from "@/lib/types";
+import { projectPatchSchema } from "@/lib/validation";
 
 type Params = Promise<{ id: string }>;
 
@@ -18,7 +19,11 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
   if (!patch || typeof patch !== "object") {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
-  const data = patchToPrismaData(patch);
+  const result = projectPatchSchema.safeParse(patch);
+  if (!result.success) {
+    return NextResponse.json({ error: "Invalid project data", details: result.error.flatten() }, { status: 400 });
+  }
+  const data = patchToPrismaData(result.data);
   try {
     const row = await prisma.project.update({ where: { id }, data });
     return NextResponse.json(toProjectData(row));
