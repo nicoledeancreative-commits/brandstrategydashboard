@@ -69,7 +69,7 @@ export function EditorToastProvider({ children }: { children: React.ReactNode })
               display: "flex",
               alignItems: "flex-start",
               gap: 8,
-              fontFamily: "'Manrope',sans-serif",
+              fontFamily: "var(--font-manrope), sans-serif",
               fontSize: 11,
               fontWeight: 500,
               lineHeight: 1.45,

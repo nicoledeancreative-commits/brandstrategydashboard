@@ -5,9 +5,9 @@ export const fieldInputStyle: React.CSSProperties = {
   border: "1px solid #D8D8D4",
   borderRadius: 8,
   padding: "11px 14px",
-  fontFamily: "'Manrope',sans-serif",
-  fontSize: 11,
-  fontWeight: 400,
+  fontFamily: "var(--font-manrope), sans-serif",
+  fontSize: 13,
+  fontWeight: 500,
   background: "#F4F4F2",
   color: "#1A1A1A",
   outline: "none",
@@ -16,10 +16,13 @@ export const fieldInputStyle: React.CSSProperties = {
 
 export const textareaStyle: React.CSSProperties = {
   ...fieldInputStyle,
+  fontWeight: 400,
+  lineHeight: 1.55,
   resize: "vertical",
 };
 
 export const fieldLabelStyle: React.CSSProperties = {
+  fontFamily: "var(--font-manrope), sans-serif",
   fontSize: 12,
   fontWeight: 700,
   color: "#1A1A1A",
@@ -52,14 +55,15 @@ export const sectionHeaderStyle: React.CSSProperties = {
 };
 
 export const sectionTitleStyle: React.CSSProperties = {
-  fontFamily: "'Caudex',serif",
+  fontFamily: "var(--font-libre-caslon-display), serif",
   letterSpacing: "0.2px",
-  fontSize: 21,
-  fontWeight: 700,
+  fontSize: 22,
+  fontWeight: 400,
   color: "#1A1A1A",
 };
 
 export const sectionDescStyle: React.CSSProperties = {
+  fontFamily: "var(--font-manrope), sans-serif",
   fontSize: 12,
   fontWeight: 500,
   marginTop: 10,

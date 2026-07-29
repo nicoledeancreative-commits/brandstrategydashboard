@@ -130,10 +130,10 @@ export function SidebarForm({
               border: "none",
               borderBottom: "1px solid #444",
               color: "#CBCBCB",
-              fontFamily: "'Caudex',serif",
+              fontFamily: "var(--font-libre-caslon-display), serif",
               letterSpacing: "0.82px",
-              fontSize: 23,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 400,
               padding: "6px 0",
               outline: "none",
             }}
@@ -150,7 +150,7 @@ export function SidebarForm({
               border: "none",
               borderBottom: "1px solid #444",
               color: "#CBCBCB",
-              fontFamily: "'Manrope',sans-serif",
+              fontFamily: "var(--font-manrope), sans-serif",
               fontSize: 12,
               fontWeight: 600,
               padding: "4px 0",
@@ -256,7 +256,7 @@ export function SidebarForm({
         <div>
           <div style={{ fontSize: 12, fontWeight: 400, marginBottom: 16, color: "#1A1A1A" }}>
             <b>
-              Core value statements <span style={{ color: "#D64545" }}>*</span>
+              Core value statements <span style={requiredMarkStyle}>*</span>
             </b>
           </div>
           {(
@@ -372,7 +372,7 @@ export function SidebarForm({
               placeholder="Drag & drop your logo here"
               fit="contain"
               ring={false}
-              style={{ width: 241, maxWidth: "100%", height: 240, border: "2px dashed #01817F", borderRadius: 8, background: "#1A1A1A" }}
+              style={{ width: 241, maxWidth: "100%", height: 240, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
             />
           </div>
         </div>
@@ -390,7 +390,7 @@ export function SidebarForm({
               fit="contain"
               radius={8}
               ring={false}
-              style={{ width: 241, maxWidth: "100%", height: 160, border: "2px dashed #01817F", borderRadius: 8, background: "#1A1A1A" }}
+              style={{ width: 241, maxWidth: "100%", height: 160, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
             />
           </div>
         </div>
@@ -446,7 +446,7 @@ export function SidebarForm({
         <div style={{ color: "#1A1A1A" }}>
           <div style={{ fontSize: 11, fontWeight: 600, marginBottom: 8 }}>
             <b>
-              Logo usage rules (when to use full wordmark vs. simplified icon) <span style={{ color: "#CB8F16" }}>*</span>
+              Logo usage rules (when to use full wordmark vs. simplified icon) <span style={requiredMarkStyle}>*</span>
             </b>
           </div>
           <textarea
@@ -465,7 +465,7 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px" }}>
         <div style={{ fontSize: 11, fontWeight: 600, marginBottom: 16, color: "#1A1A1A" }}>
-          Upload Images <span style={{ color: "#C41E3A" }}>*</span>
+          Upload Images <span style={requiredMarkStyle}>*</span>
         </div>
         <div className="om-mood-upload-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
           {project.moodboardImages.map((url, i) => (
@@ -501,7 +501,7 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px", display: "flex", flexDirection: "column", gap: 13 }}>
         <div style={{ fontSize: 11, fontWeight: 600, color: "#1A1A1A" }}>
-          Logo Variations <span style={{ color: "#C41E3A" }}>*</span>
+          Logo Variations <span style={requiredMarkStyle}>*</span>
         </div>
         <label
           style={{
@@ -570,7 +570,7 @@ export function SidebarForm({
 
       {/* Section Completion Summary */}
       <div style={{ background: "#F4F4F2", borderTop: "1px solid #E5E5E0", padding: "23px 32px", marginTop: 24 }}>
-        <div style={{ fontFamily: "'Caudex',serif", letterSpacing: "0.2px", fontSize: 21, fontWeight: 700, marginBottom: 16, color: "#1A1A1A" }}>
+        <div style={{ fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#1A1A1A" }}>
           Section Completion Summary
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
@@ -592,7 +592,7 @@ export function SidebarForm({
                   borderRadius: 4,
                   margin: -8,
                   color: hovered ? "#000000" : "#1A1A1A",
-                  background: hovered ? "#ECF2F2" : "transparent",
+                  background: hovered ? "#F4F4F2" : "transparent",
                 }}
               >
                 <span>{SECTION_LABELS[key]}</span>
@@ -652,7 +652,7 @@ function StressTestCard({
             border: "none",
             borderBottom: "1px solid #1A1A1A",
             padding: "6px 2px",
-            fontFamily: "'Manrope',sans-serif",
+            fontFamily: "var(--font-manrope), sans-serif",
             fontSize: 11,
             outline: "none",
             background: "transparent",

@@ -7,7 +7,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
-  --font-heading: var(--font-caudex);
+  --font-heading: var(--font-libre-caslon-display);
+
+  /* Editor type scale — Manrope throughout, Libre Caslon Display reserved for
+     major section/sheet headings only. Weight is baked into each token's
+     usage, not the token itself, since Manrope and Libre Caslon Display don't
+     share a weight range (Caslon Display only ships regular). */
+  --text-editor-heading-lg: 1.625rem; /* 26px, weight 800 — page/brand title */
+  --text-editor-heading: 1.375rem; /* 22px, weight 400 (serif) — section/sheet titles */
+  --text-editor-h3: 0.875rem; /* 14px, weight 700 — field-group headers */
+  --text-editor-body: 0.8125rem; /* 13px, weight 500 — body copy, inputs */
+  --text-editor-label: 0.75rem; /* 12px, weight 700 — field labels */
+  --text-editor-helper: 0.75rem; /* 12px, weight 400 — helper/caption text */
+  --text-editor-button: 0.8125rem; /* 13px, weight 700 — buttons */
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);

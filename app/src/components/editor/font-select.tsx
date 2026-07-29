@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ALL_FONT_OPTIONS, ensureFontsLoaded } from "@/lib/fonts";
+import { requiredMarkStyle } from "@/lib/field-styles";
 
 const CAP = 60;
 
@@ -41,7 +42,7 @@ export function FontSelect({
   return (
     <div style={{ flex: "1 1 150px", minWidth: 150 }}>
       <div style={{ fontSize: 11, fontWeight: 400, marginBottom: 6, color: "#1A1A1A" }}>
-        {label} {required && <span style={{ color: "#D64545", fontWeight: 700 }}>*</span>}
+        {label} {required && <span style={requiredMarkStyle}>*</span>}
       </div>
       <div style={{ position: "relative" }}>
         <input
@@ -61,7 +62,7 @@ export function FontSelect({
             border: "1px solid #D8D8D4",
             borderRadius: 6,
             padding: 8,
-            fontFamily: "'Manrope',sans-serif",
+            fontFamily: "var(--font-manrope), sans-serif",
             fontSize: 11,
             boxSizing: "border-box",
             outline: "none",
@@ -110,7 +111,7 @@ export function FontSelect({
                   padding: 8,
                   cursor: "pointer",
                   borderBottom: "1px solid #eee",
-                  background: value === name ? "#ECF2F2" : "white",
+                  background: value === name ? "#F4F4F2" : "white",
                   fontFamily: `'${name}',sans-serif`,
                 }}
               >

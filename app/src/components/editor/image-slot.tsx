@@ -185,7 +185,7 @@ export function ImageSlot({
             inset: 0,
             pointerEvents: "none",
             borderRadius,
-            border: `1.5px dashed ${dragOver ? "#01817F" : "rgba(0,0,0,0.25)"}`,
+            border: `1.5px dashed ${dragOver ? "#1A1A1A" : "rgba(0,0,0,0.25)"}`,
             transition: "border-color .12s",
           }}
         />
@@ -196,9 +196,9 @@ export function ImageSlot({
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            outline: "2px solid #01817F",
+            outline: "2px solid #1A1A1A",
             outlineOffset: -2,
-            background: "rgba(1,129,127,0.10)",
+            background: "rgba(0,0,0,0.06)",
             borderRadius,
           }}
         />
