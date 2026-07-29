@@ -13,16 +13,22 @@ see `../README.md` and `../chats/` in the repo root for the original design sour
 - **Tailwind CSS v4** + **shadcn/ui** (`new-york` style) for app chrome (project list,
   dialogs, dropdown menu, toasts). The brand-dashboard editor itself is hand-styled to
   match the design prototype pixel-for-pixel.
-- **Prisma** + **SQLite** (via `@prisma/adapter-better-sqlite3`) for persistence —
-  one `Project` row per saved brand dashboard.
-- Uploaded images are written to `public/uploads/` and referenced by URL.
+- **Prisma** + **Postgres** (via `@prisma/adapter-pg`) for persistence — one
+  `Project` row per saved brand dashboard.
+- Uploaded images are stored in **Vercel Blob** and referenced by their served URL.
 - `html2canvas` + `jsPDF` power the toolbar's Export as PDF/PNG.
+- **Zod** validates API request bodies (`src/lib/validation.ts`) before they
+  reach Prisma.
 
 ## Getting started
 
+Copy `.env.example` to `.env` and fill in `DATABASE_URL` (a Postgres
+connection string) and `BLOB_READ_WRITE_TOKEN` (from your Vercel project's
+Storage tab — see comments in `.env.example`).
+
 ```bash
 npm install
-npx prisma migrate deploy   # creates dev.db from the committed migrations
+npx prisma migrate deploy   # applies the committed migrations
 npm run dev
 ```
 
@@ -33,8 +39,7 @@ projects; "New Project" creates one and opens its editor at `/project/[id]`.
 
 See `prisma/schema.prisma` for the full `Project` shape. Array-ish fields
 (`archetypesSelected`, `moodboardImages`, `logoVariations`) are stored as JSON text
-columns since SQLite has no native list type — see `src/lib/project-serializer.ts`
-for the (de)serialization.
+columns — see `src/lib/project-serializer.ts` for the (de)serialization.
 
 ## Notable implementation choices
 
@@ -50,12 +55,13 @@ for the (de)serialization.
   html2canvas's document clone re-resolves every stylesheet it finds (slow with
   ~180 of them) and because Tailwind's default oklch()-based theme isn't parseable
   by html2canvas at all — this app's theme uses hsl() instead for that reason.
-- **No auth**: every saved project is visible to anyone who can reach the app, by
-  design (matches what was scoped for this build).
+- **No auth (for now)**: every saved project is visible to anyone who can reach
+  the app. Deferred deliberately since this is currently a single-operator tool
+  with an unshared URL; can be added later without a data model rework.
 
 ## Scripts
 
 - `npm run dev` — start the dev server
 - `npm run build` / `npm start` — production build and serve
-- `npx prisma studio` — browse/edit the SQLite data directly
+- `npx prisma studio` — browse/edit the database directly
 - `npx prisma migrate dev --name <name>` — after changing `schema.prisma`

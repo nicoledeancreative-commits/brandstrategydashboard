@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { put } from "@vercel/blob";
 
 const ACCEPTED: Record<string, string> = {
   "image/png": "png",
@@ -31,12 +30,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "File is too large (12MB max)." }, { status: 400 });
   }
 
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadsDir, { recursive: true });
-
   const filename = `${randomUUID()}.${ext}`;
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(uploadsDir, filename), bytes);
-
-  return NextResponse.json({ url: `/uploads/${filename}` }, { status: 201 });
+  try {
+    const blob = await put(`uploads/${filename}`, file, {
+      access: "public",
+      contentType: file.type,
+      addRandomSuffix: false,
+    });
+    return NextResponse.json({ url: blob.url }, { status: 201 });
+  } catch {
+    return NextResponse.json({ error: "Could not store that file. Try again." }, { status: 502 });
+  }
 }
