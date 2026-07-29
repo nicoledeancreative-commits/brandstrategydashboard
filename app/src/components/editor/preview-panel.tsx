@@ -412,9 +412,9 @@ function SheetTitle({
 }) {
   return (
     <>
-      <div style={{ fontFamily: headerFontFamily, fontSize: 19, fontWeight: 800, textTransform: "uppercase", lineHeight: 1.1, color, letterSpacing: 0 }}>
+      <h2 style={{ margin: 0, fontFamily: headerFontFamily, fontSize: 19, fontWeight: 800, textTransform: "uppercase", lineHeight: 1.1, color, letterSpacing: 0 }}>
         {children}
-      </div>
+      </h2>
       <div style={{ width: 36, height: 4, background: color, margin: `8px 0 ${marginBottom}px 0` }} />
     </>
   );

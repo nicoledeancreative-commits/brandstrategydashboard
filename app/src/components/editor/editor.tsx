@@ -606,8 +606,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             flexWrap: isMobile ? "wrap" : "nowrap",
           }}
         >
-          <div
+          <h1
             style={{
+              margin: 0,
               textAlign: "left",
               fontFamily: `'${project.headerFont}',sans-serif`,
               fontSize: 16,
@@ -618,7 +619,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             }}
           >
             {dashboardTitle}
-          </div>
+          </h1>
           <div style={{ display: "flex", gap: 8, position: "relative", flexShrink: 0 }}>
             <Button
               variant="outline"

@@ -48,7 +48,9 @@ export function ImageSlot({
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const dragDepth = useRef(0);
+  const showControls = hovered || focused;
 
   const borderRadius =
     shape === "circle" ? "50%" : shape === "rect" ? 0 : radius;
@@ -80,6 +82,10 @@ export function ImageSlot({
 
   return (
     <div
+      className="om-image-slot"
+      role={readOnly ? undefined : "button"}
+      tabIndex={readOnly ? undefined : 0}
+      aria-label={readOnly ? undefined : url ? "Replace image" : placeholder}
       style={{
         position: "relative",
         display: "inline-block",
@@ -90,8 +96,19 @@ export function ImageSlot({
         ...style,
       }}
       onClick={handleClick}
+      onKeyDown={(e) => {
+        if (readOnly || busy || e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
+      }}
       onDragEnter={(e) => {
         if (readOnly) return;
         e.preventDefault();
@@ -215,8 +232,8 @@ export function ImageSlot({
             display: "flex",
             gap: 6,
             zIndex: 2,
-            opacity: hovered ? 1 : 0,
-            pointerEvents: hovered ? "auto" : "none",
+            opacity: showControls ? 1 : 0,
+            pointerEvents: showControls ? "auto" : "none",
             transition: "opacity .12s",
           }}
         >

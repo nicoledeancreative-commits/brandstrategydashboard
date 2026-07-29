@@ -15,6 +15,7 @@ export const sectionHeaderStyle: React.CSSProperties = {
 };
 
 export const sectionTitleStyle: React.CSSProperties = {
+  margin: 0,
   fontFamily: "var(--font-libre-caslon-display), serif",
   letterSpacing: "0.2px",
   fontSize: 22,

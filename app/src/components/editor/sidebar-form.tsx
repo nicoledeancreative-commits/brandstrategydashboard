@@ -32,9 +32,9 @@ function SectionHeader({ number, title, description }: { number: string; title: 
   return (
     <div style={sectionHeaderStyle}>
       <div style={{ flex: 1 }}>
-        <div style={sectionTitleStyle}>
+        <h2 style={sectionTitleStyle}>
           {number}&nbsp;&nbsp;{title}
-        </div>
+        </h2>
         <div style={sectionDescStyle}>{description}</div>
       </div>
     </div>
@@ -457,7 +457,7 @@ export function SidebarForm({
 
       {/* 05. Moodboard Imagery */}
       <div ref={setRef("moodboard")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={sectionTitleStyle}>05.&nbsp;Moodboard Imagery</div>
+        <h2 style={sectionTitleStyle}>05.&nbsp;Moodboard Imagery</h2>
         <div style={sectionDescStyle}>Upload 8 images for the moodboard grid — each will crop to fill its frame.</div>
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px" }}>
@@ -491,7 +491,7 @@ export function SidebarForm({
 
       {/* 06. Logo Variations Grid */}
       <div ref={setRef("logoVariations")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={sectionTitleStyle}>06.&nbsp;Logo Variations Grid</div>
+        <h2 style={sectionTitleStyle}>06.&nbsp;Logo Variations Grid</h2>
         <div style={sectionDescStyle}>
           Upload 3–6 logo variations (icon, wordmark, reversed, mono, stacked, etc.) in one go — they&apos;ll display together in a grid.
         </div>
@@ -501,6 +501,7 @@ export function SidebarForm({
           Logo Variations <span style={requiredMarkStyle}>*</span>
         </div>
         <label
+          className="om-file-label"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -521,11 +522,22 @@ export function SidebarForm({
             type="file"
             accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml"
             multiple
+            aria-label="Upload logo variation files"
             onChange={(e) => {
               if (e.target.files?.length) onLogoVariationsUpload(e.target.files);
               e.target.value = "";
             }}
-            style={{ display: "none" }}
+            style={{
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0,0,0,0)",
+              whiteSpace: "nowrap",
+              border: 0,
+            }}
           />
         </label>
         {project.logoVariations.length > 0 && (
@@ -568,9 +580,9 @@ export function SidebarForm({
 
       {/* Section Completion Summary */}
       <div style={{ background: "#5C5C58", padding: "23px 32px", marginTop: 24 }}>
-        <div style={{ fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#F4F4F2" }}>
+        <h2 style={{ margin: 0, fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#F4F4F2" }}>
           Section Completion Summary
-        </div>
+        </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
           {(Object.keys(SECTION_LABELS) as SectionKey[]).map((key) => {
             const hovered = hoveredSection === key;
@@ -658,6 +670,7 @@ function StressTestCard({
         <input
           value={adjustment}
           onChange={(e) => onAdjustmentChange(e.target.value)}
+          aria-label={`${title} — required adjustment`}
           placeholder={adjustmentPlaceholder}
           style={{
             width: "100%",
