@@ -226,7 +226,7 @@ export function PreviewPanel({
             {f.logoUsageRules ? (
               <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#333" }}>{f.logoUsageRules}</div>
             ) : (
-              <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#999", fontStyle: "italic" }}>
+              <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#6B6B6B", fontStyle: "italic" }}>
                 Clear guidelines on when to use your full wordmark versus a simplified icon mark.
               </div>
             )}
@@ -453,7 +453,7 @@ function ArchetypeSummaryCard({
           <div style={{ fontFamily: bodyFontFamily, fontSize: 11, color: "#555555", marginTop: 3 }}>{archetype.desc}</div>
         </>
       ) : (
-        <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, color: "#c9c9c3" }}>Select in the form</div>
+        <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, color: "#666666" }}>Select in the form</div>
       )}
     </div>
   );

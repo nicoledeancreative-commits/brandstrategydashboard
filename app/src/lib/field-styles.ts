@@ -29,7 +29,7 @@ export const sectionDescStyle: React.CSSProperties = {
   fontWeight: 500,
   marginTop: 10,
   lineHeight: 1.5,
-  color: "#CBCBC7",
+  color: "#D9D9D5",
 };
 
 export const sectionPadStyle: React.CSSProperties = {

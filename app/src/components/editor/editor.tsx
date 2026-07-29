@@ -224,6 +224,15 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   }, []);
 
   useEffect(() => {
+    if (!isMobile || !sidebarOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSidebarOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobile, sidebarOpen]);
+
+  useEffect(() => {
     if (!isResizing) return;
     const onMove = (e: MouseEvent) => {
       const container = leftPanelRef.current?.parentElement;
@@ -428,8 +437,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   const value2Display: [string, string] = hasValue2
     ? [`I will always ${project.value2Always || "..."}`, `I will never ${project.value2Never || "..."}`]
     : ["I will always...", "I will never..."];
-  const value1Color = hasValue1 ? "#1A1A1A" : "#8a8a86";
-  const value2Color = hasValue2 ? "#1A1A1A" : "#8a8a86";
+  const value1Color = hasValue1 ? "#1A1A1A" : "#666666";
+  const value2Color = hasValue2 ? "#1A1A1A" : "#666666";
 
   const aboutPainTextColor = contrastColor(project.colorPrimary);
   const aboutGapTextColor = bestTextColor(project.colorAccent2).color;
@@ -577,9 +586,25 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
 
       {!isMobile && sidebarOpen && (
         <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize panels"
+          aria-valuenow={Math.round(leftPanelWidth)}
+          aria-valuemin={25}
+          aria-valuemax={75}
+          tabIndex={0}
+          className="om-resize-handle"
           onMouseDown={() => {
             document.body.classList.add("om-resizing");
             setIsResizing(true);
+          }}
+          onKeyDown={(e) => {
+            if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+            e.preventDefault();
+            const delta = e.key === "ArrowRight" ? 2 : -2;
+            const next = Math.min(75, Math.max(25, leftPanelWidth + delta));
+            setLeftPanelWidth(next);
+            localStorage.setItem("brandDashboardLeftPanelWidth", String(Math.round(next)));
           }}
           style={{ width: 8, height: "100%", background: "transparent", cursor: "col-resize", position: "relative", zIndex: 6, userSelect: "none" }}
         />

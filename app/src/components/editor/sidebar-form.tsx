@@ -370,6 +370,7 @@ export function SidebarForm({
               placeholder="Drag & drop your logo here"
               fit="contain"
               ring={false}
+              dark
               style={{ width: 241, maxWidth: "100%", height: 240, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
             />
           </div>
@@ -388,6 +389,7 @@ export function SidebarForm({
               fit="contain"
               radius={8}
               ring={false}
+              dark
               style={{ width: 241, maxWidth: "100%", height: 160, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
             />
           </div>

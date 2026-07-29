@@ -129,10 +129,15 @@
   outline: 2px solid #1a1a1a;
   outline-offset: 2px;
 }
+.om-resize-handle:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: -1px;
+  background: rgba(26, 26, 26, 0.08);
+}
 .rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
   height: 0;
-  color: #8a8a86;
+  color: #6b6b6b;
   pointer-events: none;
 }

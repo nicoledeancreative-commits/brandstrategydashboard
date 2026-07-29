@@ -29,6 +29,8 @@ export interface ImageSlotProps {
   readOnly?: boolean;
   /** Draws the component's own thin dashed empty-state ring. Disable when the caller already supplies a border via `style`. */
   ring?: boolean;
+  /** Use a light placeholder text/icon color for slots with a dark background. */
+  dark?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -42,6 +44,7 @@ export function ImageSlot({
   fit = "cover",
   readOnly = false,
   ring = true,
+  dark = false,
   style,
 }: ImageSlotProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -178,7 +181,7 @@ export function ImageSlot({
             textAlign: "center",
             padding: 12,
             boxSizing: "border-box",
-            color: "rgba(0,0,0,0.55)",
+            color: dark ? "rgba(255,255,255,0.65)" : "#6B6B6B",
             fontFamily: "var(--font-manrope), sans-serif",
             fontSize: 13,
             lineHeight: 1.3,
@@ -203,7 +206,7 @@ export function ImageSlot({
             inset: 0,
             pointerEvents: "none",
             borderRadius,
-            border: `1.5px dashed ${dragOver ? "#1A1A1A" : "rgba(0,0,0,0.25)"}`,
+            border: `1.5px dashed ${dragOver ? (dark ? "#FFFFFF" : "#1A1A1A") : dark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.25)"}`,
             transition: "border-color .12s",
           }}
         />
@@ -214,9 +217,9 @@ export function ImageSlot({
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            outline: "2px solid #1A1A1A",
+            outline: `2px solid ${dark ? "#FFFFFF" : "#1A1A1A"}`,
             outlineOffset: -2,
-            background: "rgba(0,0,0,0.06)",
+            background: dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
             borderRadius,
           }}
         />
