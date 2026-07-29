@@ -363,6 +363,41 @@ export function PreviewPanel({
           </div>
         )}
       </Sheet>
+
+      {/* Illustrations Grid */}
+      <Sheet blockBg={blockBg}>
+        <SheetTitle headerFontFamily={headerFontFamily} color={blockHeaderColor}>
+          Illustrations Grid
+        </SheetTitle>
+        {project.illustrations.length > 0 ? (
+          <div className="om-logo-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 19 }}>
+            {project.illustrations.map((item) => (
+              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", padding: 24, boxSizing: "border-box" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.url} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 19 }}>
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} style={{ aspectRatio: "1", background: "transparent", borderRadius: 8, border: "1.5px dashed rgba(0,0,0,0.25)" }} />
+            ))}
+          </div>
+        )}
+      </Sheet>
+
+      {/* Patterns */}
+      <Sheet blockBg={blockBg}>
+        <SheetTitle headerFontFamily={headerFontFamily} color={blockHeaderColor}>
+          Patterns
+        </SheetTitle>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 19 }}>
+          {[0, 1].map((i) => (
+            <ImageSlot key={i} url={project.patterns[i]} placeholder={`Pattern ${i + 1}`} fit="cover" radius={8} readOnly style={{ width: "100%", aspectRatio: "1" }} />
+          ))}
+        </div>
+      </Sheet>
     </>
   );
 }

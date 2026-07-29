@@ -72,6 +72,10 @@ function isSectionComplete(section: SectionKey, project: ProjectData): boolean {
       return project.moodboardImages.every((u) => u != null);
     case "logoVariations":
       return project.logoVariations.length > 0;
+    case "illustrations":
+      return project.illustrations.length > 0;
+    case "patterns":
+      return project.patterns.every((u) => u != null);
   }
 }
 
@@ -330,6 +334,40 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
     [project.logoVariations, patchImage]
   );
 
+  // ---- Illustrations grid ----------------------------------------------------
+
+  const handleIllustrationsUpload = useCallback(
+    async (files: FileList) => {
+      const slotsLeft = 12 - project.illustrations.length;
+      const list = Array.from(files).slice(0, Math.max(0, slotsLeft));
+      const uploaded = [];
+      for (const file of list) {
+        const form = new FormData();
+        form.append("file", file);
+        try {
+          const res = await fetch("/api/upload", { method: "POST", body: form });
+          if (!res.ok) throw new Error();
+          const { url } = await res.json();
+          uploaded.push({ id: `illustration_${Date.now()}_${Math.random().toString(36).slice(2)}`, url, name: file.name });
+        } catch {
+          toast.error(`Could not upload "${file.name}".`);
+        }
+      }
+      if (uploaded.length) {
+        const next = [...project.illustrations, ...uploaded].slice(0, 12);
+        patchImage({ illustrations: next });
+      }
+    },
+    [project.illustrations, patchImage]
+  );
+
+  const removeIllustration = useCallback(
+    (id: string) => {
+      patchImage({ illustrations: project.illustrations.filter((f) => f.id !== id) });
+    },
+    [project.illustrations, patchImage]
+  );
+
   // ---- Export ---------------------------------------------------------------
 
   const captureFullPreview = useCallback(async () => {
@@ -417,6 +455,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       stress: isSectionComplete("stress", project),
       moodboard: isSectionComplete("moodboard", project),
       logoVariations: isSectionComplete("logoVariations", project),
+      illustrations: isSectionComplete("illustrations", project),
+      patterns: isSectionComplete("patterns", project),
     }),
     [project]
   );
@@ -580,6 +620,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             onScrollToSection={scrollToSection}
             onLogoVariationsUpload={handleLogoVariationsUpload}
             onLogoVariationRemove={removeLogoVariation}
+            onIllustrationsUpload={handleIllustrationsUpload}
+            onIllustrationRemove={removeIllustration}
           />
         )}
       </div>

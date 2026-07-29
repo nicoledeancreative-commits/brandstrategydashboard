@@ -12,7 +12,15 @@ import { ArchetypeGrid } from "./archetype-grid";
 import { FontSelect } from "./font-select";
 import { ImageSlot } from "./image-slot";
 
-export type SectionKey = "foundation" | "values" | "visual" | "stress" | "moodboard" | "logoVariations";
+export type SectionKey =
+  | "foundation"
+  | "values"
+  | "visual"
+  | "stress"
+  | "moodboard"
+  | "logoVariations"
+  | "illustrations"
+  | "patterns";
 
 const SECTION_LABELS: Record<SectionKey, string> = {
   foundation: "01. Brand Foundation",
@@ -21,6 +29,8 @@ const SECTION_LABELS: Record<SectionKey, string> = {
   stress: "04. Stress Test & System Laws",
   moodboard: "05. Moodboard Imagery",
   logoVariations: "06. Logo Variations Grid",
+  illustrations: "07. Illustrations Grid",
+  patterns: "08. Patterns",
 };
 
 const inputClass =
@@ -56,6 +66,8 @@ export function SidebarForm({
   onScrollToSection,
   onLogoVariationsUpload,
   onLogoVariationRemove,
+  onIllustrationsUpload,
+  onIllustrationRemove,
 }: {
   project: ProjectData;
   patch: (p: ProjectPatch) => void;
@@ -71,6 +83,8 @@ export function SidebarForm({
   onScrollToSection: (key: SectionKey) => void;
   onLogoVariationsUpload: (files: FileList) => void;
   onLogoVariationRemove: (id: string) => void;
+  onIllustrationsUpload: (files: FileList) => void;
+  onIllustrationRemove: (id: string) => void;
 }) {
   const setRef = (key: SectionKey) => (el: HTMLDivElement | null) => {
     if (el) sectionRefs.current[key] = el;
@@ -577,6 +591,123 @@ export function SidebarForm({
           {project.logoVariations.length === 0
             ? "No logos uploaded yet — add 3–6 to build the grid."
             : `${project.logoVariations.length} of 6 uploaded${project.logoVariations.length < 3 ? " — add at least 3 for a full grid." : "."}`}
+        </div>
+      </div>
+
+      {/* 07. Illustrations Grid */}
+      <div ref={setRef("illustrations")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+        <h2 style={sectionTitleStyle}>07.&nbsp;Illustrations Grid</h2>
+        <div style={sectionDescStyle}>Upload illustration tiles in one go — they&apos;ll display together in a grid, same as the logo variations above.</div>
+      </div>
+      <div className="om-form-pad" style={{ padding: "23px 32px", display: "flex", flexDirection: "column", gap: 13 }}>
+        <div className="font-sans text-editor-label font-semibold text-[#1A1A1A]">Illustrations</div>
+        <label
+          className="om-file-label"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            border: "1.5px dashed rgba(0,0,0,0.25)",
+            borderRadius: 8,
+            padding: 21,
+            cursor: "pointer",
+            textAlign: "center",
+            boxSizing: "border-box",
+          }}
+        >
+          <span className="font-sans text-editor-label font-bold text-[#1A1A1A]">Click to upload illustration files</span>
+          <span className="font-sans text-editor-label font-normal text-[#666666]">Select up to 12 images at once</span>
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml"
+            multiple
+            aria-label="Upload illustration files"
+            onChange={(e) => {
+              if (e.target.files?.length) onIllustrationsUpload(e.target.files);
+              e.target.value = "";
+            }}
+            style={{
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0,0,0,0)",
+              whiteSpace: "nowrap",
+              border: 0,
+            }}
+          />
+        </label>
+        {project.illustrations.length > 0 && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+            {project.illustrations.map((item: LogoVariationFile) => (
+              <div key={item.id} style={{ position: "relative", aspectRatio: "1", border: "1px solid #D8D8D4", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 8, boxSizing: "border-box" }} />
+                <button
+                  onClick={() => onIllustrationRemove(item.id)}
+                  aria-label={`Remove ${item.name}`}
+                  style={{
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    border: "none",
+                    background: "#1A1A1A",
+                    color: "#fff",
+                    fontSize: 12,
+                    lineHeight: 1,
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="font-sans text-editor-label font-normal text-[#1A1A1A]">
+          {project.illustrations.length === 0
+            ? "No illustrations uploaded yet."
+            : `${project.illustrations.length} of 12 uploaded.`}
+        </div>
+      </div>
+
+      {/* 08. Patterns */}
+      <div ref={setRef("patterns")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+        <h2 style={sectionTitleStyle}>08.&nbsp;Patterns</h2>
+        <div style={sectionDescStyle}>Upload 2 pattern images to show alongside the brand board.</div>
+      </div>
+      <div className="om-form-pad" style={{ padding: "23px 32px" }}>
+        <div className="mb-4 font-sans text-editor-label font-semibold text-[#1A1A1A]">Patterns</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 8 }}>
+          {project.patterns.map((url, i) => (
+            <div key={i} style={{ aspectRatio: "1", width: "100%" }}>
+              <ImageSlot
+                url={url}
+                onUpload={(u) => {
+                  const arr = [...project.patterns];
+                  arr[i] = u;
+                  patchImage({ patterns: arr });
+                }}
+                onRemove={() => {
+                  const arr = [...project.patterns];
+                  arr[i] = null;
+                  patchImage({ patterns: arr });
+                }}
+                placeholder={`Pattern ${i + 1}`}
+                fit="cover"
+                radius={8}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
