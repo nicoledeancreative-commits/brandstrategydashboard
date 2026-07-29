@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button";
 import { ARCHETYPE_DEFS, AVATAR_TEST_SIZES, type ProjectData, type ProjectPatch } from "@/lib/types";
 import { toast } from "sonner";
 import { bestTextColor, contrastColor, contrastRatio } from "@/lib/contrast";
-import { formatBlock } from "@/lib/rich-text";
 import { SidebarForm, type SectionKey } from "./sidebar-form";
 import { PreviewPanel } from "./preview-panel";
 
@@ -741,6 +740,3 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
 export function Editor({ initialProject }: { initialProject: ProjectData }) {
   return <EditorInner initialProject={initialProject} />;
 }
-
-// Re-exported for the preview panel's rich-text rendering.
-export { formatBlock };

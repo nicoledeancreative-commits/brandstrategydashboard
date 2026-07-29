@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { RichTextarea } from "./rich-textarea";
+import { RichTextEditor } from "./rich-text-editor";
 import { ArchetypeGrid } from "./archetype-grid";
 import { FontSelect } from "./font-select";
 import { ImageSlot } from "./image-slot";
@@ -158,44 +158,44 @@ export function SidebarForm({
         <SectionHeader number="01." title="Brand Foundation" description="The core of your brand: what you do, who it's for, and why they choose you." />
       </div>
       <div className="om-form-pad" style={sectionPadStyle}>
-        <RichTextarea
+        <RichTextEditor
           label="What is your service or product? Be literal and concise."
           required
-          rows={3}
+          minHeight={80}
           value={project.businessWhat}
           onChange={(v) => patch({ businessWhat: v })}
         />
-        <RichTextarea
+        <RichTextEditor
           label="Is there a unique story behind the name — how and why did you start?"
-          rows={6}
+          minHeight={160}
           value={project.originStory}
           onChange={(v) => patch({ originStory: v })}
         />
-        <RichTextarea
+        <RichTextEditor
           label="Who is your ideal audience? Think age, role, personality, income."
           required
-          rows={2}
+          minHeight={56}
           value={project.idealAudience}
           onChange={(v) => patch({ idealAudience: v })}
         />
-        <RichTextarea
+        <RichTextEditor
           label="A direct quote from your ideal client describing that stressor"
-          rows={2}
+          minHeight={56}
           placeholder={'"My business deserves to be taken seriously, but..."'}
           value={project.audiencePainQuote}
           onChange={(v) => patch({ audiencePainQuote: v })}
         />
-        <RichTextarea
+        <RichTextEditor
           label="What core stressor is keeping your ideal client up at 2am?"
           required
-          rows={2}
+          minHeight={56}
           value={project.audiencePain}
           onChange={(v) => patch({ audiencePain: v })}
         />
-        <RichTextarea
+        <RichTextEditor
           label="Why would customers pick YOU over your competitors?"
           required
-          rows={2}
+          minHeight={56}
           value={project.whyChooseYou}
           onChange={(v) => patch({ whyChooseYou: v })}
         />
@@ -217,10 +217,9 @@ export function SidebarForm({
             ))}
           </div>
           <div style={{ marginTop: 32 }}>
-            <RichTextarea
+            <RichTextEditor
               label="The Gap You Can Own"
               required
-              rows={2}
               minHeight={120}
               placeholder="What visual/verbal gap are they missing? (e.g. all sites are cold corporate blue; there's room for warm, approachable tones)"
               value={project.competitorGap}

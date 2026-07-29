@@ -2,7 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import type { ProjectData, ProjectPatch } from "@/lib/types";
-import { formatBlock } from "@/lib/rich-text";
+import { toDisplayHtml } from "@/lib/rich-text";
 import { ImageSlot } from "./image-slot";
 
 interface ArchetypeInfo {
@@ -99,19 +99,27 @@ export function PreviewPanel({
             <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: aboutPainTextColor, opacity: 0.65, marginBottom: 12 }}>
               THE 2AM PROBLEM
             </div>
-            <div style={{ fontFamily: accentFontFamily, fontSize: 23, lineHeight: 1.4, color: aboutPainTextColor, whiteSpace: "pre-wrap", maxWidth: 880, marginBottom: 16 }}>
-              {formatBlock(f.audiencePainQuote)}
-            </div>
-            <div style={{ fontFamily: bodyFontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.6, color: aboutPainTextColor, opacity: 0.9, whiteSpace: "pre-wrap", maxWidth: 880 }}>
-              {formatBlock(f.audiencePain)}
-            </div>
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: accentFontFamily, fontSize: 23, lineHeight: 1.4, color: aboutPainTextColor, maxWidth: 880, marginBottom: 16 }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.audiencePainQuote) }}
+            />
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: bodyFontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.6, color: aboutPainTextColor, opacity: 0.9, maxWidth: 880 }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.audiencePain) }}
+            />
           </div>
 
           <div style={{ display: "flex", gap: 22, alignItems: "flex-start", background: "#FFFFFF", borderLeft: `5px solid ${f.colorSecondary}`, borderRadius: "0 10px 10px 0", padding: "22px 26px", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
             <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, letterSpacing: "0.06em", color: f.colorSecondary, textTransform: "uppercase", flexShrink: 0, width: 150 }}>
               Why Choose You
             </div>
-            <div style={{ fontFamily: bodyFontFamily, fontSize: 13, lineHeight: 1.6, color: "#1A1A1A", whiteSpace: "pre-wrap" }}>{formatBlock(f.whyChooseYou)}</div>
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: bodyFontFamily, fontSize: 13, lineHeight: 1.6, color: "#1A1A1A" }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.whyChooseYou) }}
+            />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", borderRadius: 10, overflow: "hidden", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
@@ -129,9 +137,11 @@ export function PreviewPanel({
               <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: aboutGapTextColor, opacity: 0.75, marginBottom: 14 }}>
                 THE GAP YOU CAN OWN
               </div>
-              <div style={{ fontFamily: bodyFontFamily, fontSize: 13, fontWeight: 600, lineHeight: 1.6, color: aboutGapTextColor, whiteSpace: "pre-wrap" }}>
-                {formatBlock(f.competitorGap)}
-              </div>
+              <div
+                className="om-rich-content"
+                style={{ fontFamily: bodyFontFamily, fontSize: 13, fontWeight: 600, lineHeight: 1.6, color: aboutGapTextColor }}
+                dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.competitorGap) }}
+              />
             </div>
           </div>
         </div>
@@ -414,7 +424,11 @@ function FoundationCard({ bodyFontFamily, color, label, content }: { bodyFontFam
   return (
     <div style={{ background: "#FFFFFF", borderRadius: 10, padding: "20px 18px 18px", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
       <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color, marginBottom: 8 }}>{label}</div>
-      <div style={{ fontFamily: bodyFontFamily, fontSize: 12, lineHeight: 1.6, color: "#1A1A1A", whiteSpace: "pre-wrap" }}>{formatBlock(content)}</div>
+      <div
+        className="om-rich-content"
+        style={{ fontFamily: bodyFontFamily, fontSize: 12, lineHeight: 1.6, color: "#1A1A1A" }}
+        dangerouslySetInnerHTML={{ __html: toDisplayHtml(content) }}
+      />
     </div>
   );
 }

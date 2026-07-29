@@ -100,3 +100,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Rich-text content — shared between the TipTap editor (components/editor/rich-text-editor.tsx)
+   and the read-only live-preview rendering (components/editor/preview-panel.tsx) so stored
+   HTML looks identical in both places. */
+.om-rich-content p {
+  margin: 0 0 8px;
+}
+.om-rich-content p:last-child {
+  margin-bottom: 0;
+}
+.om-rich-content ul {
+  margin: 4px 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+.om-rich-content li {
+  margin-bottom: 4px;
+}
+.rich-text-editor .ProseMirror {
+  outline: none;
+}
+.rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: #8a8a86;
+  pointer-events: none;
+}
