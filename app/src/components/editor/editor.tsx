@@ -93,6 +93,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   const [saving, setSaving] = useState(false);
   const [resetOpen, setResetOpen] = useState(false);
   const [toolbarHeight, setToolbarHeight] = useState(70);
+  const [formDark, setFormDark] = useState(false);
 
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
@@ -265,6 +266,17 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
     const saved = localStorage.getItem("brandDashboardLeftPanelWidth");
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved) setLeftPanelWidth(parseInt(saved, 10));
+    const savedTheme = localStorage.getItem("brandDashboardFormTheme");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (savedTheme) setFormDark(savedTheme === "dark");
+  }, []);
+
+  const toggleFormDark = useCallback(() => {
+    setFormDark((prev) => {
+      const next = !prev;
+      localStorage.setItem("brandDashboardFormTheme", next ? "dark" : "light");
+      return next;
+    });
   }, []);
 
   useEffect(() => {
@@ -515,8 +527,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           minWidth: 320,
           maxWidth: "85vw",
           overflowY: "auto" as const,
-          borderRight: "1px solid #E5E5E0",
-          background: "#FFFFFF",
+          borderRight: "1px solid var(--om-panel-border, #E5E5E0)",
+          background: "var(--om-panel-bg, #FFFFFF)",
           zIndex: 50,
           boxShadow: "0 0 40px rgba(0,0,0,0.35)",
           transition: suppressSidebarTransition ? "none" : "transform .25s ease",
@@ -529,7 +541,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           height: "100%",
           overflow: "hidden" as const,
           borderRight: "none",
-          background: "#FFFFFF",
+          background: "var(--om-panel-bg, #FFFFFF)",
           position: "relative" as const,
           padding: 0,
         }
@@ -540,8 +552,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           maxWidth: 540,
           height: "100%",
           overflowY: "auto" as const,
-          borderRight: "1px solid #E5E5E0",
-          background: "#FFFFFF",
+          borderRight: "1px solid var(--om-panel-border, #E5E5E0)",
+          background: "var(--om-panel-bg, #FFFFFF)",
           position: "relative" as const,
         }
       : {
@@ -551,7 +563,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           height: "100%",
           overflow: "hidden" as const,
           borderRight: "none",
-          background: "#FFFFFF",
+          background: "var(--om-panel-bg, #FFFFFF)",
           position: "relative" as const,
           padding: 0,
         };
@@ -577,7 +589,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         />
       )}
 
-      <div ref={leftPanelRef} className="om-left-panel" style={leftPanelStyle}>
+      <div ref={leftPanelRef} className={`om-left-panel${formDark ? " dark" : ""}`} style={leftPanelStyle}>
         {!sidebarOpen ? (
           <div style={{ width: 40, height: "100%", background: "#FFFFFF", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <button
@@ -622,6 +634,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             onLogoVariationRemove={removeLogoVariation}
             onIllustrationsUpload={handleIllustrationsUpload}
             onIllustrationRemove={removeIllustration}
+            isDark={formDark}
+            onToggleDark={toggleFormDark}
           />
         )}
       </div>

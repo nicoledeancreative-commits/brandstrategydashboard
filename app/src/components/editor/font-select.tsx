@@ -65,7 +65,7 @@ export function FontSelect({
 
   return (
     <div style={{ flex: "1 1 150px", minWidth: 150 }}>
-      <Label htmlFor={id} className="mb-1.5 block font-sans text-editor-label font-bold text-[#1A1A1A]">
+      <Label htmlFor={id} className="mb-1.5 block font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]">
         {label} {required && <span style={requiredMarkStyle}>*</span>}
       </Label>
       <div style={{ position: "relative" }}>
@@ -121,7 +121,7 @@ export function FontSelect({
           placeholder="Search fonts"
           style={{
             width: "100%",
-            border: "1px solid #D8D8D4",
+            border: "1px solid var(--om-input-border, #D8D8D4)",
             borderRadius: 8,
             padding: "10px 14px",
             fontFamily: "var(--font-manrope), sans-serif",
@@ -129,8 +129,8 @@ export function FontSelect({
             fontWeight: 500,
             boxSizing: "border-box",
             outline: "none",
-            background: "#F4F4F2",
-            color: "#1A1A1A",
+            background: "var(--om-input-bg, #F4F4F2)",
+            color: "var(--om-text, #1A1A1A)",
           }}
         />
         {open && (
@@ -146,9 +146,9 @@ export function FontSelect({
               marginTop: 4,
               maxHeight: 200,
               overflowY: "auto",
-              border: "1px solid #D8D8D4",
+              border: "1px solid var(--om-input-border, #D8D8D4)",
               borderRadius: 6,
-              background: "#FFFFFF",
+              background: "var(--om-surface, #FFFFFF)",
               zIndex: 20,
               boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
             }}
@@ -157,9 +157,9 @@ export function FontSelect({
               style={{
                 padding: "8px 10px",
                 fontSize: 11,
-                color: "#555555",
-                borderBottom: "1px solid #eee",
-                background: "#fafafa",
+                color: "var(--om-text-muted, #555555)",
+                borderBottom: "1px solid var(--om-divider, #eee)",
+                background: "var(--om-surface-subtle, #fafafa)",
               }}
             >
               {countLabel}
@@ -177,8 +177,9 @@ export function FontSelect({
                 style={{
                   padding: 8,
                   cursor: "pointer",
-                  borderBottom: "1px solid #eee",
-                  background: i === activeIndex ? "#E8E8E4" : value === name ? "#F4F4F2" : "white",
+                  borderBottom: "1px solid var(--om-divider, #eee)",
+                  color: "var(--om-text, #1A1A1A)",
+                  background: i === activeIndex ? "var(--om-hover-bg, #E8E8E4)" : value === name ? "var(--om-input-bg, #F4F4F2)" : "var(--om-surface, white)",
                   fontFamily: `'${name}',sans-serif`,
                 }}
               >

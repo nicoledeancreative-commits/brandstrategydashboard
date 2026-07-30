@@ -181,7 +181,7 @@ export function ImageSlot({
             textAlign: "center",
             padding: 12,
             boxSizing: "border-box",
-            color: dark ? "rgba(255,255,255,0.65)" : "#6B6B6B",
+            color: dark ? "rgba(255,255,255,0.65)" : "var(--om-text-muted, #6B6B6B)",
             fontFamily: "var(--font-manrope), sans-serif",
             fontSize: 13,
             lineHeight: 1.3,
@@ -206,7 +206,7 @@ export function ImageSlot({
             inset: 0,
             pointerEvents: "none",
             borderRadius,
-            border: `1.5px dashed ${dragOver ? (dark ? "#FFFFFF" : "#1A1A1A") : dark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.25)"}`,
+            border: `1.5px dashed ${dragOver ? (dark ? "#FFFFFF" : "var(--om-text, #1A1A1A)") : dark ? "rgba(255,255,255,0.3)" : "var(--om-dashed-border, rgba(0,0,0,0.25))"}`,
             transition: "border-color .12s",
           }}
         />
@@ -217,9 +217,9 @@ export function ImageSlot({
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            outline: `2px solid ${dark ? "#FFFFFF" : "#1A1A1A"}`,
+            outline: `2px solid ${dark ? "#FFFFFF" : "var(--om-text, #1A1A1A)"}`,
             outlineOffset: -2,
-            background: dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
+            background: dark ? "rgba(255,255,255,0.08)" : "var(--om-dragover-bg, rgba(0,0,0,0.06))",
             borderRadius,
           }}
         />

@@ -20,8 +20,8 @@ export function ArchetypeGrid({
             aria-pressed={isSel}
             onClick={() => onToggle(a.id)}
             style={{
-              border: "1px solid #D8D8D4",
-              background: isSel ? "#1A1A1A" : "#F4F4F2",
+              border: "1px solid var(--om-input-border, #D8D8D4)",
+              background: isSel ? "var(--om-accent-bg, #1A1A1A)" : "var(--om-input-bg, #F4F4F2)",
               borderRadius: 8,
               padding: "11px 10px",
               cursor: "pointer",
@@ -29,10 +29,10 @@ export function ArchetypeGrid({
               transition: "all .15s",
             }}
           >
-            <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 11, fontWeight: 700, color: isSel ? "#FFFFFF" : "#1A1A1A" }}>
+            <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 11, fontWeight: 700, color: isSel ? "var(--om-accent-fg, #FFFFFF)" : "var(--om-text, #1A1A1A)" }}>
               {a.label}
             </div>
-            <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 10.5, marginTop: 4, color: isSel ? "#CBCBCB" : "#666666", lineHeight: 1.4 }}>
+            <div style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 10.5, marginTop: 4, color: isSel ? "var(--om-accent-desc, #CBCBCB)" : "var(--om-text-muted, #666666)", lineHeight: 1.4 }}>
               {a.desc}
             </div>
           </button>

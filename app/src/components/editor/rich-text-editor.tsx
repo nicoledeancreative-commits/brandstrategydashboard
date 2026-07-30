@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 const toolbarButtonClass =
-  "flex h-[22px] w-[22px] items-center justify-center rounded border border-[#D8D8D4] bg-white text-editor-label text-[#1A1A1A] hover:bg-[#F4F4F2] data-[active=true]:border-[#1A1A1A] data-[active=true]:bg-[#1A1A1A] data-[active=true]:text-white";
+  "flex h-[22px] w-[22px] items-center justify-center rounded border border-[var(--om-input-border,#D8D8D4)] bg-[var(--om-surface,#fff)] text-editor-label text-[var(--om-text,#1A1A1A)] hover:bg-[var(--om-input-bg,#F4F4F2)] data-[active=true]:border-[var(--om-accent-bg,#1A1A1A)] data-[active=true]:bg-[var(--om-accent-bg,#1A1A1A)] data-[active=true]:text-[var(--om-accent-fg,#fff)]";
 
 export function RichTextEditor({
   label,
@@ -69,7 +69,7 @@ export function RichTextEditor({
   return (
     <div>
       <div className="mb-2 flex items-baseline justify-between gap-2">
-        <Label htmlFor={id} className="font-sans text-editor-label font-bold text-[#1A1A1A]">
+        <Label htmlFor={id} className="font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]">
           {label} {required && <span style={requiredMarkStyle}>*</span>}
         </Label>
         <div className="flex flex-shrink-0 gap-1">
@@ -105,7 +105,7 @@ export function RichTextEditor({
       <EditorContent
         editor={editor}
         style={{ minHeight }}
-        className="rich-text-editor w-full rounded-lg border border-[#D8D8D4] bg-[#F4F4F2] px-3.5 py-2.5 font-sans text-editor-body font-normal leading-relaxed text-[#1A1A1A] focus-within:border-[#1A1A1A] focus-within:ring-2 focus-within:ring-[#1A1A1A]/15"
+        className="rich-text-editor w-full rounded-lg border border-[var(--om-input-border,#D8D8D4)] bg-[var(--om-input-bg,#F4F4F2)] px-3.5 py-2.5 font-sans text-editor-body font-normal leading-relaxed text-[var(--om-text,#1A1A1A)] focus-within:border-[var(--om-text,#1A1A1A)] focus-within:ring-2 focus-within:ring-[var(--om-text,#1A1A1A)]/15"
       />
     </div>
   );

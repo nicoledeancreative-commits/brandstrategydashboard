@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, type RefObject } from "react";
+import { Moon, Sun } from "lucide-react";
 import type { LogoVariationFile, ProjectData, ProjectPatch } from "@/lib/types";
 import { requiredMarkStyle, sectionDescStyle, sectionHeaderStyle, sectionPadStyle, sectionTitleStyle } from "@/lib/field-styles";
 import { Input } from "@/components/ui/input";
@@ -34,9 +35,9 @@ const SECTION_LABELS: Record<SectionKey, string> = {
 };
 
 const inputClass =
-  "h-auto w-full rounded-lg border border-[#D8D8D4] bg-[#F4F4F2] px-3.5 py-2.5 font-sans text-editor-body font-medium text-[#1A1A1A] shadow-none outline-none focus-visible:border-[#1A1A1A] focus-visible:ring-2 focus-visible:ring-[#1A1A1A]/15";
+  "h-auto w-full rounded-lg border border-[var(--om-input-border,#D8D8D4)] bg-[var(--om-input-bg,#F4F4F2)] px-3.5 py-2.5 font-sans text-editor-body font-medium text-[var(--om-text,#1A1A1A)] shadow-none outline-none focus-visible:border-[var(--om-text,#1A1A1A)] focus-visible:ring-2 focus-visible:ring-[var(--om-text,#1A1A1A)]/15";
 
-const groupLabelClass = "font-sans text-editor-label font-bold text-[#1A1A1A]";
+const groupLabelClass = "font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]";
 
 function SectionHeader({ number, title, description }: { number: string; title: string; description: string }) {
   return (
@@ -68,6 +69,8 @@ export function SidebarForm({
   onLogoVariationRemove,
   onIllustrationsUpload,
   onIllustrationRemove,
+  isDark,
+  onToggleDark,
 }: {
   project: ProjectData;
   patch: (p: ProjectPatch) => void;
@@ -85,6 +88,8 @@ export function SidebarForm({
   onLogoVariationRemove: (id: string) => void;
   onIllustrationsUpload: (files: FileList) => void;
   onIllustrationRemove: (id: string) => void;
+  isDark: boolean;
+  onToggleDark: () => void;
 }) {
   const setRef = (key: SectionKey) => (el: HTMLDivElement | null) => {
     if (el) sectionRefs.current[key] = el;
@@ -94,6 +99,29 @@ export function SidebarForm({
   return (
     <>
       <div style={{ padding: "27px 32px", borderBottom: "1px solid #000000", background: "#000000", position: "sticky", top: 0, zIndex: 30 }}>
+        <button
+          onClick={onToggleDark}
+          title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={isDark ? "Switch form to light mode" : "Switch form to dark mode"}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 40,
+            width: 40,
+            height: toolbarHeight,
+            flexShrink: 0,
+            background: "transparent",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            padding: 0,
+            color: "#CBCBCB",
+          }}
+        >
+          {isDark ? <Sun size={17} strokeWidth={2} /> : <Moon size={17} strokeWidth={2} />}
+        </button>
         <button
           onClick={onCloseSidebar}
           title="Close"
@@ -119,7 +147,7 @@ export function SidebarForm({
             <path d="m6 6 12 12" />
           </svg>
         </button>
-        <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#CBCBCB", fontWeight: 500, maxWidth: "calc(100% - 72px)" }}>
+        <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#CBCBCB", fontWeight: 500, maxWidth: "calc(100% - 112px)" }}>
           Brand Strategy One Pager
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -220,7 +248,7 @@ export function SidebarForm({
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {(["competitor1", "competitor2", "competitor3"] as const).map((key, i) => (
               <div key={key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span className="font-sans text-editor-body font-normal text-[#1A1A1A]">{i + 1}.</span>
+                <span className="font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">{i + 1}.</span>
                 <Input
                   aria-label={`Competitor ${i + 1}`}
                   value={project[key]}
@@ -253,7 +281,7 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={sectionPadStyle}>
         <div>
-          <div className="mb-1 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-1 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             <b>Select two archetypes that best describe how you naturally run your business</b>{" "}
             <span style={requiredMarkStyle}>*</span>
           </div>
@@ -261,7 +289,7 @@ export function SidebarForm({
         </div>
 
         <div>
-          <div className="mb-4 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-4 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             <b>
               Core value statements <span style={requiredMarkStyle}>*</span>
             </b>
@@ -273,8 +301,8 @@ export function SidebarForm({
             ] as const
           ).map(([label, alwaysKey, neverKey], i) => (
             <div key={label} style={{ marginBottom: i === 0 ? 28 : 0 }}>
-              <div className="mb-2.5 font-sans text-editor-label font-bold text-[#666666]">{label}</div>
-              <div className="mb-1 font-sans text-[14px] text-[#1A1A1A]">
+              <div className="mb-2.5 font-sans text-editor-label font-bold text-[var(--om-text-muted,#666666)]">{label}</div>
+              <div className="mb-1 font-sans text-[14px] text-[var(--om-text,#1A1A1A)]">
                 <b>&quot;I will always...&quot;</b>
               </div>
               <Input
@@ -284,7 +312,7 @@ export function SidebarForm({
                 placeholder="deliver clean, one-page execution frameworks."
                 className={inputClass}
               />
-              <div className="mt-4 mb-1 font-sans text-[14px] text-[#1A1A1A]">
+              <div className="mt-4 mb-1 font-sans text-[14px] text-[var(--om-text,#1A1A1A)]">
                 <b>&quot;I will never...&quot;</b>
               </div>
               <Input
@@ -299,22 +327,22 @@ export function SidebarForm({
         </div>
 
         <div>
-          <div className="mb-2.5 font-sans text-editor-label font-bold text-[#666666]">
+          <div className="mb-2.5 font-sans text-editor-label font-bold text-[var(--om-text-muted,#666666)]">
             Craft your core value proposition <span style={requiredMarkStyle}>*</span>
           </div>
-          <div className="mt-2 mb-1 font-sans text-editor-body font-medium text-[#333333]">
-            <b className="text-[14px] text-[#1A1A1A]">&quot;I help...&quot;</b>
+          <div className="mt-2 mb-1 font-sans text-editor-body font-medium text-[var(--om-text-muted,#333333)]">
+            <b className="text-[14px] text-[var(--om-text,#1A1A1A)]">&quot;I help...&quot;</b>
           </div>
           <div style={{ marginBottom: 10 }}>
             <Input aria-label="Target audience" value={project.vpAudience} onChange={(e) => patch({ vpAudience: e.target.value })} placeholder="target audience" className={inputClass} />
           </div>
-          <div className="mt-2 mb-1 font-sans text-[14px] font-medium text-[#333333]">
+          <div className="mt-2 mb-1 font-sans text-[14px] font-medium text-[var(--om-text-muted,#333333)]">
             <b>&quot;achieve...&quot;</b>
           </div>
           <div style={{ marginBottom: 10 }}>
             <Input aria-label="Specific goal or transformation" value={project.vpGoal} onChange={(e) => patch({ vpGoal: e.target.value })} placeholder="specific goal / transformation" className={inputClass} />
           </div>
-          <div className="mt-2 mb-1 font-sans text-[14px] font-medium text-[#1A1A1A]">
+          <div className="mt-2 mb-1 font-sans text-[14px] font-medium text-[var(--om-text,#1A1A1A)]">
             <b>&quot;through...&quot;</b>
           </div>
           <Input aria-label="Unique system or values" value={project.vpSystem} onChange={(e) => patch({ vpSystem: e.target.value })} placeholder="your unique system / values" className={inputClass} />
@@ -345,7 +373,7 @@ export function SidebarForm({
         </div>
 
         <div>
-          <div className="mb-2.5 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-2.5 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             Strategic color palette <span style={requiredMarkStyle}>*</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(70px, 1fr))", gap: 11 }}>
@@ -364,16 +392,16 @@ export function SidebarForm({
                   className="om-color-swatch"
                   value={project[key]}
                   onChange={(e) => onColorChange(key, e.target.value)}
-                  style={{ width: "100%", height: 44, border: "1px solid #D8D8D4", borderRadius: 6, padding: 0, cursor: "pointer" }}
+                  style={{ width: "100%", height: 44, border: "1px solid var(--om-input-border, #D8D8D4)", borderRadius: 6, padding: 0, cursor: "pointer" }}
                 />
-                <div className="font-sans text-editor-label font-semibold uppercase text-[#1A1A1A]">{label}</div>
+                <div className="font-sans text-editor-label font-semibold uppercase text-[var(--om-text,#1A1A1A)]">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         <div>
-          <div className="mb-2.5 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-2.5 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             Primary logo <span style={requiredMarkStyle}>*</span>
           </div>
           <div style={{ minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -391,7 +419,7 @@ export function SidebarForm({
         </div>
 
         <div>
-          <div className="mb-2.5 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-2.5 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             Favicon <span style={requiredMarkStyle}>*</span>
           </div>
           <div style={{ minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -420,15 +448,15 @@ export function SidebarForm({
       </div>
       <div className="om-form-pad" style={{ ...sectionPadStyle, gap: 23 }}>
         <div>
-          <div className="mb-2 font-sans text-editor-body font-normal text-[#1A1A1A]">Stress test</div>
-          <div className="font-sans text-editor-label font-normal leading-relaxed text-[#1A1A1A]">
+          <div className="mb-2 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">Stress test</div>
+          <div className="font-sans text-editor-label font-normal leading-relaxed text-[var(--om-text,#1A1A1A)]">
             Pulled automatically from your Primary Logo and Favicon uploads in Section 03 — shown at 200, 175, 149, 124, and 98px below (plus 16 and
             32px for the favicon), so you can check legibility at every size.
           </div>
         </div>
 
         <div>
-          <div className="mb-2.5 font-sans text-editor-body font-normal text-[#1A1A1A]">
+          <div className="mb-2.5 font-sans text-editor-body font-normal text-[var(--om-text,#1A1A1A)]">
             The real-world stress test <span style={requiredMarkStyle}>*</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 13 }}>
@@ -458,7 +486,7 @@ export function SidebarForm({
         </div>
 
         <div>
-          <Label htmlFor={logoUsageRulesId} className="mb-2 block font-sans text-editor-label font-semibold text-[#1A1A1A]">
+          <Label htmlFor={logoUsageRulesId} className="mb-2 block font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">
             Logo usage rules (when to use full wordmark vs. simplified icon) <span style={requiredMarkStyle}>*</span>
           </Label>
           <Textarea
@@ -472,12 +500,12 @@ export function SidebarForm({
       </div>
 
       {/* 05. Moodboard Imagery */}
-      <div ref={setRef("moodboard")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("moodboard")} style={{ background: "var(--om-band-bg, #5C5C58)", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <h2 style={sectionTitleStyle}>05.&nbsp;Moodboard Imagery</h2>
         <div style={sectionDescStyle}>Upload 8 images for the moodboard grid — each will crop to fill its frame.</div>
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px" }}>
-        <div className="mb-4 font-sans text-editor-label font-semibold text-[#1A1A1A]">
+        <div className="mb-4 font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">
           Upload images <span style={requiredMarkStyle}>*</span>
         </div>
         <div className="om-mood-upload-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
@@ -506,14 +534,14 @@ export function SidebarForm({
       </div>
 
       {/* 06. Logo Variations Grid */}
-      <div ref={setRef("logoVariations")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("logoVariations")} style={{ background: "var(--om-band-bg, #5C5C58)", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <h2 style={sectionTitleStyle}>06.&nbsp;Logo Variations Grid</h2>
         <div style={sectionDescStyle}>
           Upload 3–6 logo variations (icon, wordmark, reversed, mono, stacked, etc.) in one go — they&apos;ll display together in a grid.
         </div>
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px", display: "flex", flexDirection: "column", gap: 13 }}>
-        <div className="font-sans text-editor-label font-semibold text-[#1A1A1A]">
+        <div className="font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">
           Logo variations <span style={requiredMarkStyle}>*</span>
         </div>
         <label
@@ -524,7 +552,7 @@ export function SidebarForm({
             alignItems: "center",
             justifyContent: "center",
             gap: 6,
-            border: "1.5px dashed rgba(0,0,0,0.25)",
+            border: "1.5px dashed var(--om-dashed-border, rgba(0,0,0,0.25))",
             borderRadius: 8,
             padding: 21,
             cursor: "pointer",
@@ -532,8 +560,8 @@ export function SidebarForm({
             boxSizing: "border-box",
           }}
         >
-          <span className="font-sans text-editor-label font-bold text-[#1A1A1A]">Click to upload logo files</span>
-          <span className="font-sans text-editor-label font-normal text-[#666666]">Select 3–6 images at once</span>
+          <span className="font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]">Click to upload logo files</span>
+          <span className="font-sans text-editor-label font-normal text-[var(--om-text-muted,#666666)]">Select 3–6 images at once</span>
           <input
             type="file"
             accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml"
@@ -559,7 +587,7 @@ export function SidebarForm({
         {project.logoVariations.length > 0 && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
             {project.logoVariations.map((item: LogoVariationFile) => (
-              <div key={item.id} style={{ position: "relative", aspectRatio: "1", border: "1px solid #D8D8D4", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+              <div key={item.id} style={{ position: "relative", aspectRatio: "1", border: "1px solid var(--om-input-border, #D8D8D4)", borderRadius: 8, overflow: "hidden", background: "var(--om-surface, #fff)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 8, boxSizing: "border-box" }} />
                 <button
@@ -587,7 +615,7 @@ export function SidebarForm({
             ))}
           </div>
         )}
-        <div className="font-sans text-editor-label font-normal text-[#1A1A1A]">
+        <div className="font-sans text-editor-label font-normal text-[var(--om-text,#1A1A1A)]">
           {project.logoVariations.length === 0
             ? "No logos uploaded yet — add 3–6 to build the grid."
             : `${project.logoVariations.length} of 6 uploaded${project.logoVariations.length < 3 ? " — add at least 3 for a full grid." : "."}`}
@@ -595,12 +623,12 @@ export function SidebarForm({
       </div>
 
       {/* 07. Illustrations Grid */}
-      <div ref={setRef("illustrations")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("illustrations")} style={{ background: "var(--om-band-bg, #5C5C58)", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <h2 style={sectionTitleStyle}>07.&nbsp;Illustrations Grid</h2>
         <div style={sectionDescStyle}>Upload illustration tiles in one go — they&apos;ll display together in a grid, same as the logo variations above.</div>
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px", display: "flex", flexDirection: "column", gap: 13 }}>
-        <div className="font-sans text-editor-label font-semibold text-[#1A1A1A]">Illustrations</div>
+        <div className="font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">Illustrations</div>
         <label
           className="om-file-label"
           style={{
@@ -609,7 +637,7 @@ export function SidebarForm({
             alignItems: "center",
             justifyContent: "center",
             gap: 6,
-            border: "1.5px dashed rgba(0,0,0,0.25)",
+            border: "1.5px dashed var(--om-dashed-border, rgba(0,0,0,0.25))",
             borderRadius: 8,
             padding: 21,
             cursor: "pointer",
@@ -617,8 +645,8 @@ export function SidebarForm({
             boxSizing: "border-box",
           }}
         >
-          <span className="font-sans text-editor-label font-bold text-[#1A1A1A]">Click to upload illustration files</span>
-          <span className="font-sans text-editor-label font-normal text-[#666666]">Select up to 12 images at once</span>
+          <span className="font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]">Click to upload illustration files</span>
+          <span className="font-sans text-editor-label font-normal text-[var(--om-text-muted,#666666)]">Select up to 12 images at once</span>
           <input
             type="file"
             accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml"
@@ -644,7 +672,7 @@ export function SidebarForm({
         {project.illustrations.length > 0 && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
             {project.illustrations.map((item: LogoVariationFile) => (
-              <div key={item.id} style={{ position: "relative", aspectRatio: "1", border: "1px solid #D8D8D4", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+              <div key={item.id} style={{ position: "relative", aspectRatio: "1", border: "1px solid var(--om-input-border, #D8D8D4)", borderRadius: 8, overflow: "hidden", background: "var(--om-surface, #fff)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 8, boxSizing: "border-box" }} />
                 <button
@@ -672,7 +700,7 @@ export function SidebarForm({
             ))}
           </div>
         )}
-        <div className="font-sans text-editor-label font-normal text-[#1A1A1A]">
+        <div className="font-sans text-editor-label font-normal text-[var(--om-text,#1A1A1A)]">
           {project.illustrations.length === 0
             ? "No illustrations uploaded yet."
             : `${project.illustrations.length} of 12 uploaded.`}
@@ -680,12 +708,12 @@ export function SidebarForm({
       </div>
 
       {/* 08. Patterns */}
-      <div ref={setRef("patterns")} style={{ background: "#5C5C58", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div ref={setRef("patterns")} style={{ background: "var(--om-band-bg, #5C5C58)", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 8 }}>
         <h2 style={sectionTitleStyle}>08.&nbsp;Patterns</h2>
         <div style={sectionDescStyle}>Upload 2 pattern images to show alongside the brand board.</div>
       </div>
       <div className="om-form-pad" style={{ padding: "23px 32px" }}>
-        <div className="mb-4 font-sans text-editor-label font-semibold text-[#1A1A1A]">Patterns</div>
+        <div className="mb-4 font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">Patterns</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 8 }}>
           {project.patterns.map((url, i) => (
             <div key={i} style={{ aspectRatio: "1", width: "100%" }}>
@@ -712,7 +740,7 @@ export function SidebarForm({
       </div>
 
       {/* Section Completion Summary */}
-      <div style={{ background: "#5C5C58", padding: "23px 32px", marginTop: 24 }}>
+      <div style={{ background: "var(--om-band-bg, #5C5C58)", padding: "23px 32px", marginTop: 24 }}>
         <h2 style={{ margin: 0, fontFamily: "var(--font-libre-caslon-display), serif", letterSpacing: "0.2px", fontSize: 22, fontWeight: 400, marginBottom: 16, color: "#F4F4F2" }}>
           Section Completion Summary
         </h2>
@@ -779,23 +807,23 @@ function StressTestCard({
   const groupValue = pass ? "pass" : fail ? "fail" : "";
 
   return (
-    <div style={{ border: "1px solid #D8D8D4", borderRadius: 8, padding: "13px 16px", background: "#F4F4F2" }}>
-      <div className="font-sans text-editor-label font-bold text-[#1A1A1A]">{title}</div>
-      <div className="mt-1 font-sans text-editor-label font-normal text-[#1A1A1A]">{description}</div>
+    <div style={{ border: "1px solid var(--om-input-border, #D8D8D4)", borderRadius: 8, padding: "13px 16px", background: "var(--om-input-bg, #F4F4F2)" }}>
+      <div className="font-sans text-editor-label font-bold text-[var(--om-text,#1A1A1A)]">{title}</div>
+      <div className="mt-1 font-sans text-editor-label font-normal text-[var(--om-text,#1A1A1A)]">{description}</div>
       <RadioGroup
         value={groupValue}
         onValueChange={(v) => (v === "pass" ? onPass() : onFail())}
         className="mt-2 flex flex-row gap-4"
       >
         <div className="flex items-center gap-1.5">
-          <RadioGroupItem value="pass" id={passId} className="border-[#1A1A1A] text-[#1A1A1A]" />
-          <Label htmlFor={passId} className="cursor-pointer font-sans text-editor-label font-semibold text-[#1A1A1A]">
+          <RadioGroupItem value="pass" id={passId} className="border-[var(--om-text,#1A1A1A)] text-[var(--om-text,#1A1A1A)]" />
+          <Label htmlFor={passId} className="cursor-pointer font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">
             Pass
           </Label>
         </div>
         <div className="flex items-center gap-1.5">
-          <RadioGroupItem value="fail" id={failId} className="border-[#1A1A1A] text-[#1A1A1A]" />
-          <Label htmlFor={failId} className="cursor-pointer font-sans text-editor-label font-semibold text-[#1A1A1A]">
+          <RadioGroupItem value="fail" id={failId} className="border-[var(--om-text,#1A1A1A)] text-[var(--om-text,#1A1A1A)]" />
+          <Label htmlFor={failId} className="cursor-pointer font-sans text-editor-label font-semibold text-[var(--om-text,#1A1A1A)]">
             Fail
           </Label>
         </div>
@@ -810,7 +838,8 @@ function StressTestCard({
             width: "100%",
             marginTop: 8,
             border: "none",
-            borderBottom: "1px solid #1A1A1A",
+            borderBottom: "1px solid var(--om-text, #1A1A1A)",
+            color: "var(--om-text, #1A1A1A)",
             padding: "6px 2px",
             fontFamily: "var(--font-manrope), sans-serif",
             fontSize: 11,
