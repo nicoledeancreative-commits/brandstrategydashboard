@@ -413,7 +413,7 @@ export function SidebarForm({
               fit="contain"
               ring={false}
               dark
-              style={{ width: 241, maxWidth: "100%", height: 240, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
+              style={{ width: 241, maxWidth: "100%", height: 240, border: "2px dashed var(--om-hero-slot-bg, #1A1A1A)", borderRadius: 8, background: "var(--om-hero-slot-bg, #1A1A1A)" }}
             />
           </div>
         </div>
@@ -432,7 +432,7 @@ export function SidebarForm({
               radius={8}
               ring={false}
               dark
-              style={{ width: 241, maxWidth: "100%", height: 160, border: "2px dashed #1A1A1A", borderRadius: 8, background: "#1A1A1A" }}
+              style={{ width: 241, maxWidth: "100%", height: 160, border: "2px dashed var(--om-hero-slot-bg, #1A1A1A)", borderRadius: 8, background: "var(--om-hero-slot-bg, #1A1A1A)" }}
             />
           </div>
         </div>

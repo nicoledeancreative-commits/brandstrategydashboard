@@ -91,6 +91,7 @@
   --om-accent-fg: #ffffff;
   --om-accent-desc: #cbcbcb;
   --om-dragover-bg: rgba(0, 0, 0, 0.06);
+  --om-hero-slot-bg: #5c5c58;
 }
 
 .dark {
@@ -133,6 +134,7 @@
   --om-accent-fg: #1a1a1a;
   --om-accent-desc: rgba(26, 26, 26, 0.6);
   --om-dragover-bg: rgba(255, 255, 255, 0.06);
+  --om-hero-slot-bg: #1a1a1a;
 }
 
 @layer base {
