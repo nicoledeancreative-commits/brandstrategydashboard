@@ -76,6 +76,9 @@ model Project {
   // JSON array of 8 entries, each a URL string or null: ["/uploads/x.webp", null, ...]
   moodboardImages String @default("[null,null,null,null,null,null,null,null]")
 
+  // Independent of moodboardImages — lets each live-preview moodboard tile hold its own image.
+  previewMoodboardImages String @default("[null,null,null,null,null,null,null,null]")
+
   // JSON array of { id: string, url: string, name: string }, 0-6 entries
   logoVariations String @default("[]")
 

@@ -64,6 +64,12 @@ export function toProjectData(row: ProjectModel): ProjectData {
       for (let i = 0; i < 8; i++) out[i] = arr[i] ?? null;
       return out;
     })(),
+    previewMoodboardImages: (() => {
+      const arr = parseJsonArray<string | null>(row.previewMoodboardImages, []);
+      const out: (string | null)[] = new Array(8).fill(null);
+      for (let i = 0; i < 8; i++) out[i] = arr[i] ?? null;
+      return out;
+    })(),
     logoVariations: parseJsonArray<LogoVariationFile>(row.logoVariations, []),
     illustrations: parseJsonArray<LogoVariationFile>(row.illustrations, []),
     patterns: (() => {
@@ -105,7 +111,7 @@ export function patchToPrismaData(patch: ProjectPatch): Record<string, unknown> 
     if (value === undefined) continue;
     if (key === "archetypesSelected") {
       data[key] = JSON.stringify((value as string[]).slice(0, 2));
-    } else if (key === "moodboardImages") {
+    } else if (key === "moodboardImages" || key === "previewMoodboardImages") {
       const arr = value as (string | null)[];
       const out: (string | null)[] = new Array(8).fill(null);
       for (let i = 0; i < 8; i++) out[i] = arr[i] ?? null;

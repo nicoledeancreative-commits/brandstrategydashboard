@@ -76,6 +76,8 @@ export interface ProjectData {
 
   /** Always length 8; each entry is a served URL or null. */
   moodboardImages: (string | null)[];
+  /** Independent of moodboardImages — lets each live-preview moodboard tile hold its own image. Always length 8; falls back per-slot to moodboardImages when unset. */
+  previewMoodboardImages: (string | null)[];
   logoVariations: LogoVariationFile[];
   illustrations: LogoVariationFile[];
   /** Always length 2; each entry is a served URL or null. */
@@ -129,6 +131,7 @@ export const DEFAULT_PROJECT_PATCH: ProjectPatch = {
   modeTestLightUrl: null,
   modeTestDarkUrl: null,
   moodboardImages: [null, null, null, null, null, null, null, null],
+  previewMoodboardImages: [null, null, null, null, null, null, null, null],
   logoVariations: [],
   illustrations: [],
   patterns: [null, null],

@@ -69,6 +69,7 @@ export const projectPatchSchema = z
     modeTestDarkUrl: imageUrl,
 
     moodboardImages: z.array(imageUrl).max(8),
+    previewMoodboardImages: z.array(imageUrl).max(8),
     logoVariations: z.array(logoVariationSchema).max(20),
     illustrations: z.array(logoVariationSchema).max(12),
     patterns: z.array(imageUrl).max(2),

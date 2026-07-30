@@ -337,7 +337,24 @@ export function PreviewPanel({
         </SheetTitle>
         <div className="om-moodboard-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridAutoRows: "24.6cqw", gap: 13 }}>
           {[0, 1, 2, 3].map((i) => (
-            <ImageSlot key={i} url={project.moodboardImages[i]} placeholder={`Image ${i + 1}`} fit="cover" radius={8} readOnly style={{ width: "100%", height: "100%" }} />
+            <ImageSlot
+              key={i}
+              url={project.previewMoodboardImages[i] ?? project.moodboardImages[i]}
+              onUpload={(u) => {
+                const arr = [...project.previewMoodboardImages];
+                arr[i] = u;
+                patchImage({ previewMoodboardImages: arr });
+              }}
+              onRemove={() => {
+                const arr = [...project.previewMoodboardImages];
+                arr[i] = null;
+                patchImage({ previewMoodboardImages: arr });
+              }}
+              placeholder={`Image ${i + 1}`}
+              fit="cover"
+              radius={8}
+              style={{ width: "100%", height: "100%" }}
+            />
           ))}
           <div style={{ width: "100%", height: "100%", display: "grid", gridTemplateColumns: "repeat(2,1fr)", gridTemplateRows: "repeat(2,1fr)", borderRadius: 8, overflow: "hidden", border: "1px solid #1A1A1A" }}>
             {colorLaws.map((c) => (
@@ -345,7 +362,24 @@ export function PreviewPanel({
             ))}
           </div>
           {[4, 5, 6, 7].map((i) => (
-            <ImageSlot key={i} url={project.moodboardImages[i]} placeholder={`Image ${i + 1}`} fit="cover" radius={8} readOnly style={{ width: "100%", height: "100%" }} />
+            <ImageSlot
+              key={i}
+              url={project.previewMoodboardImages[i] ?? project.moodboardImages[i]}
+              onUpload={(u) => {
+                const arr = [...project.previewMoodboardImages];
+                arr[i] = u;
+                patchImage({ previewMoodboardImages: arr });
+              }}
+              onRemove={() => {
+                const arr = [...project.previewMoodboardImages];
+                arr[i] = null;
+                patchImage({ previewMoodboardImages: arr });
+              }}
+              placeholder={`Image ${i + 1}`}
+              fit="cover"
+              radius={8}
+              style={{ width: "100%", height: "100%" }}
+            />
           ))}
         </div>
       </Sheet>
