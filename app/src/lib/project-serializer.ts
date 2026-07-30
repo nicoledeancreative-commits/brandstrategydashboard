@@ -54,6 +54,7 @@ export function toProjectData(row: ProjectModel): ProjectData {
     scaleAdj: row.scaleAdj,
     logoUsageRules: row.logoUsageRules,
     primaryLogoUrl: row.primaryLogoUrl,
+    previewLogoUrl: row.previewLogoUrl,
     faviconUrl: row.faviconUrl,
     modeTestLightUrl: row.modeTestLightUrl,
     modeTestDarkUrl: row.modeTestDarkUrl,
@@ -93,7 +94,7 @@ const SCALAR_KEYS = new Set<keyof ProjectPatch>([
   "vibeWord3", "vibeWord4", "headerFont", "bodyFont", "accentFont", "colorPrimary",
   "colorSecondary", "colorAccent1", "colorAccent2", "darkLightPassYes", "darkLightPassNo",
   "darkLightAdj", "scalePassYes", "scalePassNo", "scaleAdj", "logoUsageRules",
-  "primaryLogoUrl", "faviconUrl", "modeTestLightUrl", "modeTestDarkUrl",
+  "primaryLogoUrl", "previewLogoUrl", "faviconUrl", "modeTestLightUrl", "modeTestDarkUrl",
 ]);
 
 /** Converts a partial ProjectData (from a client PATCH body) into Prisma `data` for update/create. */

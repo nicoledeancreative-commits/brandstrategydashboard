@@ -67,6 +67,8 @@ model Project {
 
   // Images are stored on disk under public/uploads; these columns hold the served URL.
   primaryLogoUrl   String?
+  // Independent of primaryLogoUrl — lets the top live-preview logo slot hold its own image.
+  previewLogoUrl   String?
   faviconUrl       String?
   modeTestLightUrl String?
   modeTestDarkUrl  String?

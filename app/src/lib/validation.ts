@@ -63,6 +63,7 @@ export const projectPatchSchema = z
     logoUsageRules: text,
 
     primaryLogoUrl: imageUrl,
+    previewLogoUrl: imageUrl,
     faviconUrl: imageUrl,
     modeTestLightUrl: imageUrl,
     modeTestDarkUrl: imageUrl,

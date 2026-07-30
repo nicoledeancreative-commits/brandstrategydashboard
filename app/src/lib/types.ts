@@ -68,6 +68,8 @@ export interface ProjectData {
   logoUsageRules: string;
 
   primaryLogoUrl: string | null;
+  /** Independent of primaryLogoUrl — lets the top live-preview logo slot hold its own image. Falls back to primaryLogoUrl when unset. */
+  previewLogoUrl: string | null;
   faviconUrl: string | null;
   modeTestLightUrl: string | null;
   modeTestDarkUrl: string | null;
@@ -122,6 +124,7 @@ export const DEFAULT_PROJECT_PATCH: ProjectPatch = {
   scaleAdj: "",
   logoUsageRules: "",
   primaryLogoUrl: null,
+  previewLogoUrl: null,
   faviconUrl: null,
   modeTestLightUrl: null,
   modeTestDarkUrl: null,

@@ -81,7 +81,16 @@ export function PreviewPanel({
           minHeight: 400,
         }}
       >
-        <ImageSlot url={f.primaryLogoUrl} placeholder="Logo will appear here once uploaded" fit="contain" radius={10} readOnly style={{ width: "100%", height: 380 }} />      </div>
+        <ImageSlot
+          url={f.previewLogoUrl ?? f.primaryLogoUrl}
+          onUpload={(u) => patchImage({ previewLogoUrl: u })}
+          onRemove={() => patchImage({ previewLogoUrl: null })}
+          placeholder="Logo will appear here once uploaded"
+          fit="contain"
+          radius={10}
+          style={{ width: "100%", height: 380 }}
+        />
+      </div>
 
       {/* Brand Foundation */}
       <Sheet blockBg={blockBg}>
