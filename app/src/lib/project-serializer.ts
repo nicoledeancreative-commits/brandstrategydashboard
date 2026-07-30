@@ -64,6 +64,13 @@ export function toProjectData(row: ProjectModel): ProjectData {
       return out;
     })(),
     logoVariations: parseJsonArray<LogoVariationFile>(row.logoVariations, []),
+    illustrations: parseJsonArray<LogoVariationFile>(row.illustrations, []),
+    patterns: (() => {
+      const arr = parseJsonArray<string | null>(row.patterns, []);
+      const out: (string | null)[] = new Array(2).fill(null);
+      for (let i = 0; i < 2; i++) out[i] = arr[i] ?? null;
+      return out;
+    })(),
   };
 }
 
@@ -102,8 +109,13 @@ export function patchToPrismaData(patch: ProjectPatch): Record<string, unknown> 
       const out: (string | null)[] = new Array(8).fill(null);
       for (let i = 0; i < 8; i++) out[i] = arr[i] ?? null;
       data[key] = JSON.stringify(out);
-    } else if (key === "logoVariations") {
+    } else if (key === "logoVariations" || key === "illustrations") {
       data[key] = JSON.stringify(value as LogoVariationFile[]);
+    } else if (key === "patterns") {
+      const arr = value as (string | null)[];
+      const out: (string | null)[] = new Array(2).fill(null);
+      for (let i = 0; i < 2; i++) out[i] = arr[i] ?? null;
+      data[key] = JSON.stringify(out);
     } else if (SCALAR_KEYS.has(key)) {
       data[key] = value;
     }

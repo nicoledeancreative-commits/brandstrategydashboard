@@ -20,9 +20,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ARCHETYPE_DEFS, AVATAR_TEST_SIZES, type ProjectData, type ProjectPatch } from "@/lib/types";
+import { toast } from "sonner";
 import { bestTextColor, contrastColor, contrastRatio } from "@/lib/contrast";
-import { formatBlock } from "@/lib/rich-text";
-import { useEditorToast, EditorToastProvider } from "./toast-host";
 import { SidebarForm, type SectionKey } from "./sidebar-form";
 import { PreviewPanel } from "./preview-panel";
 
@@ -73,12 +72,15 @@ function isSectionComplete(section: SectionKey, project: ProjectData): boolean {
       return project.moodboardImages.every((u) => u != null);
     case "logoVariations":
       return project.logoVariations.length > 0;
+    case "illustrations":
+      return project.illustrations.length > 0;
+    case "patterns":
+      return project.patterns.every((u) => u != null);
   }
 }
 
 function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   const router = useRouter();
-  const { addToast } = useEditorToast();
 
   const [project, setProject] = useState<ProjectData>(initialProject);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -109,10 +111,10 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         });
         if (!res.ok) throw new Error();
       } catch {
-        addToast("Could not save that change — check your connection.");
+        toast.error("Could not save that change — check your connection.");
       }
     },
-    [project.id, addToast]
+    [project.id]
   );
 
   /** Local-only update (matches the prototype: text/color edits live in memory until Save is clicked). */
@@ -135,7 +137,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorSecondary") || touched("colorAccent1")) {
         const ratio = contrastRatio(p.colorSecondary, p.colorAccent1);
         if (ratio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: block header text (Secondary) on block background (Accent 1) is only ${ratio.toFixed(2)}:1 — fails WCAG AA (needs 4.5:1).`
           );
         }
@@ -143,7 +145,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorSecondary")) {
         const best = bestTextColor(p.colorSecondary);
         if (best.ratio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: no readable text color for the header background (Secondary) — best is ${best.ratio.toFixed(2)}:1, fails WCAG AA.`
           );
         }
@@ -151,13 +153,13 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (touched("colorAccent1")) {
         const bodyRatio = contrastRatio("#1A1A1A", p.colorAccent1);
         if (bodyRatio < 4.5) {
-          addToast(
+          toast.error(
             `Contrast error: default block body text on new block background (Accent 1) is only ${bodyRatio.toFixed(2)}:1 — fails WCAG AA (needs 4.5:1).`
           );
         }
       }
     },
-    [addToast]
+    []
   );
 
   // Contrast check once on mount, matching the prototype's componentDidMount() call.
@@ -191,11 +193,11 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       setJustSaved(true);
       setTimeout(() => setJustSaved(false), 2000);
     } catch {
-      addToast("Could not save — check your connection and try again.");
+      toast.error("Could not save — check your connection and try again.");
     } finally {
       setSaving(false);
     }
-  }, [project, addToast]);
+  }, [project]);
 
   const handleReset = useCallback(async () => {
     setResetOpen(false);
@@ -204,11 +206,11 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       if (!res.ok) throw new Error();
       const fresh = await res.json();
       setProject(fresh);
-      addToast("All fields and images have been reset.");
+      toast.success("All fields and images have been reset.");
     } catch {
-      addToast("Could not reset this project.");
+      toast.error("Could not reset this project.");
     }
-  }, [project.id, addToast]);
+  }, [project.id]);
 
   // ---- Layout: mobile detection, resizer, toolbar height ------------------
 
@@ -224,6 +226,15 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
     mq.addEventListener("change", handle);
     return () => mq.removeEventListener("change", handle);
   }, []);
+
+  useEffect(() => {
+    if (!isMobile || !sidebarOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSidebarOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobile, sidebarOpen]);
 
   useEffect(() => {
     if (!isResizing) return;
@@ -305,7 +316,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
           const { url } = await res.json();
           uploaded.push({ id: `logo_${Date.now()}_${Math.random().toString(36).slice(2)}`, url, name: file.name });
         } catch {
-          addToast(`Could not upload "${file.name}".`);
+          toast.error(`Could not upload "${file.name}".`);
         }
       }
       if (uploaded.length) {
@@ -313,7 +324,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         patchImage({ logoVariations: next });
       }
     },
-    [project.logoVariations, patchImage, addToast]
+    [project.logoVariations, patchImage]
   );
 
   const removeLogoVariation = useCallback(
@@ -321,6 +332,40 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       patchImage({ logoVariations: project.logoVariations.filter((f) => f.id !== id) });
     },
     [project.logoVariations, patchImage]
+  );
+
+  // ---- Illustrations grid ----------------------------------------------------
+
+  const handleIllustrationsUpload = useCallback(
+    async (files: FileList) => {
+      const slotsLeft = 12 - project.illustrations.length;
+      const list = Array.from(files).slice(0, Math.max(0, slotsLeft));
+      const uploaded = [];
+      for (const file of list) {
+        const form = new FormData();
+        form.append("file", file);
+        try {
+          const res = await fetch("/api/upload", { method: "POST", body: form });
+          if (!res.ok) throw new Error();
+          const { url } = await res.json();
+          uploaded.push({ id: `illustration_${Date.now()}_${Math.random().toString(36).slice(2)}`, url, name: file.name });
+        } catch {
+          toast.error(`Could not upload "${file.name}".`);
+        }
+      }
+      if (uploaded.length) {
+        const next = [...project.illustrations, ...uploaded].slice(0, 12);
+        patchImage({ illustrations: next });
+      }
+    },
+    [project.illustrations, patchImage]
+  );
+
+  const removeIllustration = useCallback(
+    (id: string) => {
+      patchImage({ illustrations: project.illustrations.filter((f) => f.id !== id) });
+    },
+    [project.illustrations, patchImage]
   );
 
   // ---- Export ---------------------------------------------------------------
@@ -371,9 +416,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         URL.revokeObjectURL(url);
       });
     } catch {
-      addToast("Could not generate PNG. Try again.");
+      toast.error("Could not generate PNG. Try again.");
     }
-  }, [captureFullPreview, project.brandName, addToast]);
+  }, [captureFullPreview, project.brandName]);
 
   const exportPDF = useCallback(async () => {
     try {
@@ -396,9 +441,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       doc.addImage(source.toDataURL("image/png"), "PNG", 0, 0, w, h);
       doc.save((project.brandName || "brand-dashboard").toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".pdf");
     } catch {
-      addToast("Could not generate PDF. Try again.");
+      toast.error("Could not generate PDF. Try again.");
     }
-  }, [captureFullPreview, project.brandName, addToast]);
+  }, [captureFullPreview, project.brandName]);
 
   // ---- Computed / derived values ---------------------------------------------
 
@@ -410,6 +455,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
       stress: isSectionComplete("stress", project),
       moodboard: isSectionComplete("moodboard", project),
       logoVariations: isSectionComplete("logoVariations", project),
+      illustrations: isSectionComplete("illustrations", project),
+      patterns: isSectionComplete("patterns", project),
     }),
     [project]
   );
@@ -430,8 +477,8 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
   const value2Display: [string, string] = hasValue2
     ? [`I will always ${project.value2Always || "..."}`, `I will never ${project.value2Never || "..."}`]
     : ["I will always...", "I will never..."];
-  const value1Color = hasValue1 ? "#1A1A1A" : "#8a8a86";
-  const value2Color = hasValue2 ? "#1A1A1A" : "#8a8a86";
+  const value1Color = hasValue1 ? "#1A1A1A" : "#666666";
+  const value2Color = hasValue2 ? "#1A1A1A" : "#666666";
 
   const aboutPainTextColor = contrastColor(project.colorPrimary);
   const aboutGapTextColor = bestTextColor(project.colorAccent2).color;
@@ -517,7 +564,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
         height: "100vh",
         width: "100%",
         overflow: "hidden",
-        fontFamily: "'Manrope',sans-serif",
+        fontFamily: "var(--font-manrope), sans-serif",
         background: "#F4F4F2",
         color: "#1A1A1A",
         position: "relative",
@@ -573,15 +620,33 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             onScrollToSection={scrollToSection}
             onLogoVariationsUpload={handleLogoVariationsUpload}
             onLogoVariationRemove={removeLogoVariation}
+            onIllustrationsUpload={handleIllustrationsUpload}
+            onIllustrationRemove={removeIllustration}
           />
         )}
       </div>
 
       {!isMobile && sidebarOpen && (
         <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize panels"
+          aria-valuenow={Math.round(leftPanelWidth)}
+          aria-valuemin={25}
+          aria-valuemax={75}
+          tabIndex={0}
+          className="om-resize-handle"
           onMouseDown={() => {
             document.body.classList.add("om-resizing");
             setIsResizing(true);
+          }}
+          onKeyDown={(e) => {
+            if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+            e.preventDefault();
+            const delta = e.key === "ArrowRight" ? 2 : -2;
+            const next = Math.min(75, Math.max(25, leftPanelWidth + delta));
+            setLeftPanelWidth(next);
+            localStorage.setItem("brandDashboardLeftPanelWidth", String(Math.round(next)));
           }}
           style={{ width: 8, height: "100%", background: "transparent", cursor: "col-resize", position: "relative", zIndex: 6, userSelect: "none" }}
         />
@@ -608,8 +673,9 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             flexWrap: isMobile ? "wrap" : "nowrap",
           }}
         >
-          <div
+          <h1
             style={{
+              margin: 0,
               textAlign: "left",
               fontFamily: `'${project.headerFont}',sans-serif`,
               fontSize: 16,
@@ -620,7 +686,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
             }}
           >
             {dashboardTitle}
-          </div>
+          </h1>
           <div style={{ display: "flex", gap: 8, position: "relative", flexShrink: 0 }}>
             <Button
               variant="outline"
@@ -638,7 +704,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
                 border: `1px solid ${toolbarTextColor}`,
                 borderRadius: 5,
                 padding: "9px 16px",
-                fontFamily: "'Manrope',sans-serif",
+                fontFamily: "var(--font-manrope), sans-serif",
                 fontWeight: 500,
                 fontSize: 11,
                 cursor: "pointer",
@@ -678,7 +744,7 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
                     border: `1px solid ${toolbarTextColor}`,
                     borderRadius: 5,
                     padding: "9px 16px",
-                    fontFamily: "'Manrope',sans-serif",
+                    fontFamily: "var(--font-manrope), sans-serif",
                     fontWeight: 500,
                     fontSize: 11,
                     cursor: "pointer",
@@ -740,12 +806,5 @@ function EditorInner({ initialProject }: { initialProject: ProjectData }) {
 }
 
 export function Editor({ initialProject }: { initialProject: ProjectData }) {
-  return (
-    <EditorToastProvider>
-      <EditorInner initialProject={initialProject} />
-    </EditorToastProvider>
-  );
+  return <EditorInner initialProject={initialProject} />;
 }
-
-// Re-exported for the preview panel's rich-text rendering.
-export { formatBlock };

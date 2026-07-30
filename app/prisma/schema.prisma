@@ -76,4 +76,10 @@ model Project {
 
   // JSON array of { id: string, url: string, name: string }, 0-6 entries
   logoVariations String @default("[]")
+
+  // JSON array of { id: string, url: string, name: string }, 0-12 entries — small PNG tiles, grid-style like logo variations
+  illustrations String @default("[]")
+
+  // JSON array of 2 entries, each a URL string or null
+  patterns String @default("[null,null]")
 }

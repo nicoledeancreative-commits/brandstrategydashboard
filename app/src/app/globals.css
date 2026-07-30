@@ -7,7 +7,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
-  --font-heading: var(--font-caudex);
+  --font-heading: var(--font-libre-caslon-display);
+
+  /* Editor type scale — Manrope throughout, Libre Caslon Display reserved for
+     major section/sheet headings only. Weight is baked into each token's
+     usage, not the token itself, since Manrope and Libre Caslon Display don't
+     share a weight range (Caslon Display only ships regular). */
+  --text-editor-heading-lg: 1.625rem; /* 26px, weight 800 — page/brand title */
+  --text-editor-heading: 1.375rem; /* 22px, weight 400 (serif) — section/sheet titles */
+  --text-editor-h3: 0.875rem; /* 14px, weight 700 — field-group headers */
+  --text-editor-body: 0.8125rem; /* 13px, weight 500 — body copy, inputs */
+  --text-editor-label: 0.75rem; /* 12px, weight 700 — field labels */
+  --text-editor-helper: 0.75rem; /* 12px, weight 400 — helper/caption text */
+  --text-editor-button: 0.8125rem; /* 13px, weight 700 — buttons */
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -86,4 +99,45 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Rich-text content — shared between the TipTap editor (components/editor/rich-text-editor.tsx)
+   and the read-only live-preview rendering (components/editor/preview-panel.tsx) so stored
+   HTML looks identical in both places. */
+.om-rich-content p {
+  margin: 0 0 8px;
+}
+.om-rich-content p:last-child {
+  margin-bottom: 0;
+}
+.om-rich-content ul {
+  margin: 4px 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+.om-rich-content li {
+  margin-bottom: 4px;
+}
+.rich-text-editor .ProseMirror {
+  outline: none;
+}
+.om-image-slot:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+.om-file-label:focus-within {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+.om-resize-handle:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: -1px;
+  background: rgba(26, 26, 26, 0.08);
+}
+.rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: #6b6b6b;
+  pointer-events: none;
 }

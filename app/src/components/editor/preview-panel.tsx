@@ -2,7 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import type { ProjectData, ProjectPatch } from "@/lib/types";
-import { formatBlock } from "@/lib/rich-text";
+import { toDisplayHtml } from "@/lib/rich-text";
 import { ImageSlot } from "./image-slot";
 
 interface ArchetypeInfo {
@@ -99,19 +99,27 @@ export function PreviewPanel({
             <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: aboutPainTextColor, opacity: 0.65, marginBottom: 12 }}>
               THE 2AM PROBLEM
             </div>
-            <div style={{ fontFamily: accentFontFamily, fontSize: 23, lineHeight: 1.4, color: aboutPainTextColor, whiteSpace: "pre-wrap", maxWidth: 880, marginBottom: 16 }}>
-              {formatBlock(f.audiencePainQuote)}
-            </div>
-            <div style={{ fontFamily: bodyFontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.6, color: aboutPainTextColor, opacity: 0.9, whiteSpace: "pre-wrap", maxWidth: 880 }}>
-              {formatBlock(f.audiencePain)}
-            </div>
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: accentFontFamily, fontSize: 23, lineHeight: 1.4, color: aboutPainTextColor, maxWidth: 880, marginBottom: 16 }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.audiencePainQuote) }}
+            />
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: bodyFontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.6, color: aboutPainTextColor, opacity: 0.9, maxWidth: 880 }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.audiencePain) }}
+            />
           </div>
 
           <div style={{ display: "flex", gap: 22, alignItems: "flex-start", background: "#FFFFFF", borderLeft: `5px solid ${f.colorSecondary}`, borderRadius: "0 10px 10px 0", padding: "22px 26px", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
             <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, letterSpacing: "0.06em", color: f.colorSecondary, textTransform: "uppercase", flexShrink: 0, width: 150 }}>
               Why Choose You
             </div>
-            <div style={{ fontFamily: bodyFontFamily, fontSize: 13, lineHeight: 1.6, color: "#1A1A1A", whiteSpace: "pre-wrap" }}>{formatBlock(f.whyChooseYou)}</div>
+            <div
+              className="om-rich-content"
+              style={{ fontFamily: bodyFontFamily, fontSize: 13, lineHeight: 1.6, color: "#1A1A1A" }}
+              dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.whyChooseYou) }}
+            />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", borderRadius: 10, overflow: "hidden", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
@@ -129,9 +137,11 @@ export function PreviewPanel({
               <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: aboutGapTextColor, opacity: 0.75, marginBottom: 14 }}>
                 THE GAP YOU CAN OWN
               </div>
-              <div style={{ fontFamily: bodyFontFamily, fontSize: 13, fontWeight: 600, lineHeight: 1.6, color: aboutGapTextColor, whiteSpace: "pre-wrap" }}>
-                {formatBlock(f.competitorGap)}
-              </div>
+              <div
+                className="om-rich-content"
+                style={{ fontFamily: bodyFontFamily, fontSize: 13, fontWeight: 600, lineHeight: 1.6, color: aboutGapTextColor }}
+                dangerouslySetInnerHTML={{ __html: toDisplayHtml(f.competitorGap) }}
+              />
             </div>
           </div>
         </div>
@@ -216,7 +226,7 @@ export function PreviewPanel({
             {f.logoUsageRules ? (
               <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#333" }}>{f.logoUsageRules}</div>
             ) : (
-              <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#999", fontStyle: "italic" }}>
+              <div style={{ fontFamily: bodyFontFamily, fontSize: 14, lineHeight: 1.7, color: "#6B6B6B", fontStyle: "italic" }}>
                 Clear guidelines on when to use your full wordmark versus a simplified icon mark.
               </div>
             )}
@@ -287,7 +297,7 @@ export function PreviewPanel({
                 url={f.modeTestLightUrl}
                 onUpload={(u) => patchImage({ modeTestLightUrl: u })}
                 onRemove={() => patchImage({ modeTestLightUrl: null })}
-                placeholder="Drop logo (jpg, png, svg)"
+                placeholder="Drop logo image"
                 fit="contain"
                 shape="rect"
                 style={{ width: "100%", height: "100%" }}
@@ -301,7 +311,7 @@ export function PreviewPanel({
                 url={f.modeTestDarkUrl}
                 onUpload={(u) => patchImage({ modeTestDarkUrl: u })}
                 onRemove={() => patchImage({ modeTestDarkUrl: null })}
-                placeholder="Drop logo (jpg, png, svg)"
+                placeholder="Drop logo image"
                 fit="contain"
                 shape="rect"
                 style={{ width: "100%", height: "100%" }}
@@ -339,7 +349,7 @@ export function PreviewPanel({
         {project.logoVariations.length > 0 ? (
           <div className="om-logo-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 19 }}>
             {project.logoVariations.map((item) => (
-              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAF9", padding: 24, boxSizing: "border-box" }}>
+              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", padding: 24, boxSizing: "border-box" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
               </div>
@@ -352,6 +362,41 @@ export function PreviewPanel({
             ))}
           </div>
         )}
+      </Sheet>
+
+      {/* Illustrations Grid */}
+      <Sheet blockBg={blockBg}>
+        <SheetTitle headerFontFamily={headerFontFamily} color={blockHeaderColor}>
+          Illustrations Grid
+        </SheetTitle>
+        {project.illustrations.length > 0 ? (
+          <div className="om-logo-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 19 }}>
+            {project.illustrations.map((item) => (
+              <div key={item.id} style={{ aspectRatio: "1", border: "1px solid #E5E5E5", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", padding: 24, boxSizing: "border-box" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.url} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 19 }}>
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} style={{ aspectRatio: "1", background: "transparent", borderRadius: 8, border: "1.5px dashed rgba(0,0,0,0.25)" }} />
+            ))}
+          </div>
+        )}
+      </Sheet>
+
+      {/* Patterns */}
+      <Sheet blockBg={blockBg}>
+        <SheetTitle headerFontFamily={headerFontFamily} color={blockHeaderColor}>
+          Patterns
+        </SheetTitle>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 19 }}>
+          {[0, 1].map((i) => (
+            <ImageSlot key={i} url={project.patterns[i]} placeholder={`Pattern ${i + 1}`} fit="cover" radius={8} readOnly style={{ width: "100%", aspectRatio: "1" }} />
+          ))}
+        </div>
       </Sheet>
     </>
   );
@@ -402,9 +447,9 @@ function SheetTitle({
 }) {
   return (
     <>
-      <div style={{ fontFamily: headerFontFamily, fontSize: 19, fontWeight: 800, textTransform: "uppercase", lineHeight: 1.1, color, letterSpacing: 0 }}>
+      <h2 style={{ margin: 0, fontFamily: headerFontFamily, fontSize: 19, fontWeight: 800, textTransform: "uppercase", lineHeight: 1.1, color, letterSpacing: 0 }}>
         {children}
-      </div>
+      </h2>
       <div style={{ width: 36, height: 4, background: color, margin: `8px 0 ${marginBottom}px 0` }} />
     </>
   );
@@ -414,7 +459,11 @@ function FoundationCard({ bodyFontFamily, color, label, content }: { bodyFontFam
   return (
     <div style={{ background: "#FFFFFF", borderRadius: 10, padding: "20px 18px 18px", boxShadow: "0 4px 14px rgba(0,0,0,0.06)" }}>
       <div style={{ fontFamily: bodyFontFamily, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color, marginBottom: 8 }}>{label}</div>
-      <div style={{ fontFamily: bodyFontFamily, fontSize: 12, lineHeight: 1.6, color: "#1A1A1A", whiteSpace: "pre-wrap" }}>{formatBlock(content)}</div>
+      <div
+        className="om-rich-content"
+        style={{ fontFamily: bodyFontFamily, fontSize: 12, lineHeight: 1.6, color: "#1A1A1A" }}
+        dangerouslySetInnerHTML={{ __html: toDisplayHtml(content) }}
+      />
     </div>
   );
 }
@@ -439,7 +488,7 @@ function ArchetypeSummaryCard({
           <div style={{ fontFamily: bodyFontFamily, fontSize: 11, color: "#555555", marginTop: 3 }}>{archetype.desc}</div>
         </>
       ) : (
-        <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, color: "#c9c9c3" }}>Select in the form</div>
+        <div style={{ fontFamily: headerFontFamily, fontSize: 13, fontWeight: 800, color: "#666666" }}>Select in the form</div>
       )}
     </div>
   );

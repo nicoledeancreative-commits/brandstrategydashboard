@@ -75,6 +75,9 @@ export interface ProjectData {
   /** Always length 8; each entry is a served URL or null. */
   moodboardImages: (string | null)[];
   logoVariations: LogoVariationFile[];
+  illustrations: LogoVariationFile[];
+  /** Always length 2; each entry is a served URL or null. */
+  patterns: (string | null)[];
 }
 
 export type ProjectPatch = Partial<Omit<ProjectData, "id" | "createdAt" | "updatedAt">>;
@@ -124,6 +127,8 @@ export const DEFAULT_PROJECT_PATCH: ProjectPatch = {
   modeTestDarkUrl: null,
   moodboardImages: [null, null, null, null, null, null, null, null],
   logoVariations: [],
+  illustrations: [],
+  patterns: [null, null],
 };
 
 export const ARCHETYPE_DEFS = [

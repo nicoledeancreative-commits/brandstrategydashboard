@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef, useState } from "react";
 import { ImageIcon } from "lucide-react";
-import { useEditorToast } from "./toast-host";
+import { toast } from "sonner";
 
 const ACCEPT = "image/png,image/jpeg,image/webp,image/avif,image/svg+xml";
 
@@ -29,6 +29,8 @@ export interface ImageSlotProps {
   readOnly?: boolean;
   /** Draws the component's own thin dashed empty-state ring. Disable when the caller already supplies a border via `style`. */
   ring?: boolean;
+  /** Use a light placeholder text/icon color for slots with a dark background. */
+  dark?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -42,14 +44,16 @@ export function ImageSlot({
   fit = "cover",
   readOnly = false,
   ring = true,
+  dark = false,
   style,
 }: ImageSlotProps) {
-  const { addToast } = useEditorToast();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const dragDepth = useRef(0);
+  const showControls = hovered || focused;
 
   const borderRadius =
     shape === "circle" ? "50%" : shape === "rect" ? 0 : radius;
@@ -58,20 +62,20 @@ export function ImageSlot({
     async (file: File | undefined) => {
       if (!file) return;
       if (!ACCEPT.split(",").includes(file.type)) {
-        addToast("Drop a PNG, JPEG, WebP, AVIF, or SVG image.");
+        toast.error("Drop a PNG, JPEG, WebP, AVIF, or SVG image.");
         return;
       }
       setBusy(true);
       try {
         const uploadedUrl = await uploadFile(file);
         onUpload?.(uploadedUrl);
-      } catch {
-        addToast("Could not upload that image. Try again.");
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Could not upload that image. Try again.");
       } finally {
         setBusy(false);
       }
     },
-    [addToast, onUpload]
+    [onUpload]
   );
 
   const handleClick = () => {
@@ -81,6 +85,10 @@ export function ImageSlot({
 
   return (
     <div
+      className="om-image-slot"
+      role={readOnly ? undefined : "button"}
+      tabIndex={readOnly ? undefined : 0}
+      aria-label={readOnly ? undefined : url ? "Replace image" : placeholder}
       style={{
         position: "relative",
         display: "inline-block",
@@ -91,8 +99,19 @@ export function ImageSlot({
         ...style,
       }}
       onClick={handleClick}
+      onKeyDown={(e) => {
+        if (readOnly || busy || e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
+      }}
       onDragEnter={(e) => {
         if (readOnly) return;
         e.preventDefault();
@@ -162,8 +181,10 @@ export function ImageSlot({
             textAlign: "center",
             padding: 12,
             boxSizing: "border-box",
-            color: "rgba(0,0,0,0.55)",
-            font: "13px/1.3 system-ui,-apple-system,sans-serif",
+            color: dark ? "rgba(255,255,255,0.65)" : "#6B6B6B",
+            fontFamily: "var(--font-manrope), sans-serif",
+            fontSize: 13,
+            lineHeight: 1.3,
           }}
         >
           <ImageIcon size={26} strokeWidth={1.6} style={{ opacity: 0.45 }} />
@@ -185,7 +206,7 @@ export function ImageSlot({
             inset: 0,
             pointerEvents: "none",
             borderRadius,
-            border: `1.5px dashed ${dragOver ? "#01817F" : "rgba(0,0,0,0.25)"}`,
+            border: `1.5px dashed ${dragOver ? (dark ? "#FFFFFF" : "#1A1A1A") : dark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.25)"}`,
             transition: "border-color .12s",
           }}
         />
@@ -196,9 +217,9 @@ export function ImageSlot({
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            outline: "2px solid #01817F",
+            outline: `2px solid ${dark ? "#FFFFFF" : "#1A1A1A"}`,
             outlineOffset: -2,
-            background: "rgba(1,129,127,0.10)",
+            background: dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
             borderRadius,
           }}
         />
@@ -214,8 +235,8 @@ export function ImageSlot({
             display: "flex",
             gap: 6,
             zIndex: 2,
-            opacity: hovered ? 1 : 0,
-            pointerEvents: hovered ? "auto" : "none",
+            opacity: showControls ? 1 : 0,
+            pointerEvents: showControls ? "auto" : "none",
             transition: "opacity .12s",
           }}
         >
@@ -255,5 +276,7 @@ const controlButtonStyle: React.CSSProperties = {
   cursor: "pointer",
   background: "rgba(0,0,0,.65)",
   color: "#fff",
-  font: "11px/1 system-ui,-apple-system,sans-serif",
+  fontFamily: "var(--font-manrope), sans-serif",
+  fontSize: 11,
+  lineHeight: 1,
 };

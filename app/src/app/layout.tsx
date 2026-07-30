@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Caudex, Poppins } from "next/font/google";
+import { Manrope, Libre_Caslon_Display } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -9,16 +9,10 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const caudex = Caudex({
-  variable: "--font-caudex",
+const libreCaslonDisplay = Libre_Caslon_Display({
+  variable: "--font-libre-caslon-display",
   subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${caudex.variable} ${poppins.variable} h-full antialiased`}
+      className={`${manrope.variable} ${libreCaslonDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         {children}

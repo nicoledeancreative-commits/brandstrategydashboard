@@ -8,7 +8,9 @@ export const ALL_FONT_OPTIONS: string[] = Array.from(
   ])
 );
 
-const loadedFonts = new Set(["Manrope", "Poppins", "Caudex"]);
+// Manrope and Libre Caslon Display are self-hosted via next/font in layout.tsx —
+// skip re-fetching them from Google when a client picks one as a brand font.
+const loadedFonts = new Set(["Manrope", "Libre Caslon Display"]);
 
 /** Injects a Google Fonts stylesheet link for each not-yet-loaded font name. Client-side only. */
 export function ensureFontsLoaded(fontNames: (string | undefined | null)[]) {

@@ -30,6 +30,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "File is too large (12MB max)." }, { status: 400 });
   }
 
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    console.error("Upload failed: BLOB_READ_WRITE_TOKEN is not set. Connect a Blob store to this project in the Vercel Storage tab.");
+    return NextResponse.json(
+      { error: "Image storage isn't configured yet. Connect a Blob store in the Vercel project's Storage tab." },
+      { status: 500 }
+    );
+  }
+
   const filename = `${randomUUID()}.${ext}`;
   try {
     const blob = await put(`uploads/${filename}`, file, {
@@ -38,7 +46,8 @@ export async function POST(request: Request) {
       addRandomSuffix: false,
     });
     return NextResponse.json({ url: blob.url }, { status: 201 });
-  } catch {
+  } catch (err) {
+    console.error("Blob upload failed:", err);
     return NextResponse.json({ error: "Could not store that file. Try again." }, { status: 502 });
   }
 }
